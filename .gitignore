@@ -1,0 +1,12 @@
+src/tgGeospatial/obj/
+src/tgGeospatial/bin/
+*.suo
+*.user
+src/tgCommonLibrary/obj/
+src/tgMongo/obj/
+src/tgMongo/bin/
+src/tgCommonLibrary/bin/
+src/tgNet/bin/
+src/tgAWS/bin/
+src/tgAWS/obj/
+src/tgNet/obj/
