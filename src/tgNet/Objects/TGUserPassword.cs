@@ -46,5 +46,18 @@ namespace TreeGecko.Library.Net.Objects
             Rfc2898DeriveBytes hasher = new Rfc2898DeriveBytes(_plainTextPassword, saltBytes, 10000);
             return Convert.ToBase64String(hasher.GetBytes(25));
         }
+
+        public static TGUserPassword GetNew(Guid _userGuid, string _userName, string _password)
+        {
+            TGUserPassword userPassword = new TGUserPassword
+            {
+                Guid = _userGuid,
+                UserGuid = _userGuid, 
+                Salt = GenerateSalt(_userName)
+            };
+            userPassword.HashedPassword = HashPassword(userPassword.Salt, _password);
+
+            return userPassword;
+        }
     }
 }

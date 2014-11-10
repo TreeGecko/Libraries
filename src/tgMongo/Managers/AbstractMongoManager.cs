@@ -44,7 +44,7 @@ namespace TreeGecko.Library.Mongo.Managers
             }
 
             //TODO - Fix so uses ServiceCredentials
-            MongoCredential credential = MongoCredential.CreateMongoCRCredential(_credentials.DBName,
+            MongoCredential credential = MongoCredential.CreateMongoCRCredential(_credentials.AuthenticationDBName,
                                                                                  _credentials.UserName,
                                                                                  _credentials.Password);
 

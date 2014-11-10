@@ -12,6 +12,8 @@ namespace TreeGecko.Library.Mongo.Objects
 
         public string DBName { get; set; }
 
+        public string AuthenticationDBName { get; set; }
+
         public bool UseServiceCredentials { get; set; }
 
         public string UserName { get; set; }

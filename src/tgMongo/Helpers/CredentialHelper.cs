@@ -17,6 +17,8 @@ namespace TreeGecko.Library.Mongo.Helpers
 
             credentials.Port = Config.GetIntValue(_name + "_DBPort", 0);
             credentials.DBName = Config.GetSettingValue(_name + "_DBName");
+            credentials.AuthenticationDBName = Config.GetSettingValue(_name + "_AuthDBName", "admin");
+
             credentials.UseServiceCredentials = Config.GetBooleanValue(_name + "_UseServiceCredentials", true);
 
             //TODO - Replace windows Authentication

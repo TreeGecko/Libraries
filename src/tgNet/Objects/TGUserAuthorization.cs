@@ -23,7 +23,7 @@ namespace TreeGecko.Library.Net.Objects
 
         public bool IsExpired()
         {
-            if (ExpirationDateTime.ToUniversalTime() > DateTime.UtcNow)
+            if (ExpirationDateTime.ToUniversalTime() < DateTime.UtcNow)
             {
                 return true;
             }
@@ -43,7 +43,8 @@ namespace TreeGecko.Library.Net.Objects
                 AuthorizationDateTime = DateTime.UtcNow,
                 DeviceType = _deviceType,
                 ParentGuid = _userGuid,
-                AuthorizationToken = GetToken()
+                AuthorizationToken = GetToken(),
+                ExpirationDateTime =  DateTime.UtcNow.AddDays(7)
             };
             authorization.UpdateExpirationDate();
             return authorization;
