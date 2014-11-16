@@ -403,6 +403,14 @@ namespace TreeGecko.Library.Mongo.DAOs
                                               GetIndexName(_indexName));
         }
 
+        protected void BuildUniqueSparceIndex(string _column, string _indexName)
+        {
+            MongoIndexHelper.BuildUniqueIndex(MongoCollection,
+                new [] {_column},
+                GetIndexName(_indexName),
+                true);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -425,6 +433,18 @@ namespace TreeGecko.Library.Mongo.DAOs
             MongoIndexHelper.BuildUniqueIndex(MongoCollection,
                                               _columns,
                                               GetIndexName(_indexName));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_columns"></param>
+        /// <param name="_indexName"></param>
+        protected void BuildUniqueSparceIndex(IEnumerable<string> _columns, string _indexName)
+        {
+            MongoIndexHelper.BuildUniqueIndex(MongoCollection,
+                _columns,
+                GetIndexName(_indexName), true);
         }
 
         /// <summary>

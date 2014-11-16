@@ -10,7 +10,7 @@ namespace TreeGecko.Library.Net.DAOs
             : base(_mongoDB)
         {
             //WHile parent could have been user typically parents have multiple children. 
-            //Only one to one is desired
+            //Only one to one is desired at the moment
             HasParent = false;
         }
 

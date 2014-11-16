@@ -16,7 +16,7 @@ namespace TreeGecko.Library.Net.Objects
         /// <summary>
         /// 
         /// </summary>
-        public List<string> To { get; set; }
+        public string To { get; set; }
 
         /// <summary>
         /// 
@@ -44,7 +44,7 @@ namespace TreeGecko.Library.Net.Objects
         /// <returns></returns>
         public override TGSerializedObject GetTGSerializedObject()
         {
-            TGSerializedObject tgs = new TGSerializedObject();
+            TGSerializedObject tgs = base.GetTGSerializedObject();
             
             tgs.Add("From", From);
             tgs.Add("To", To);
@@ -58,20 +58,14 @@ namespace TreeGecko.Library.Net.Objects
 
         public override void LoadFromTGSerializedObject(TGSerializedObject _tgs)
         {
+            base.LoadFromTGSerializedObject(_tgs);
+
             From = _tgs.GetString("From");
-            To = _tgs.GetListOfStrings("To");
+            To = _tgs.GetString("To");
             ReplyTo = _tgs.GetString("ReplyTo");
             Body = _tgs.GetString("Body");
             Subject = _tgs.GetString("Subject");
             BodyType = (EmailBodyType)Enum.Parse(typeof(EmailBodyType), _tgs.GetString("BodyType"));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string BCNObjectType
-        {
-            get { return ReflectionHelper.GetTypeName(GetType()); }
         }
     }
 }

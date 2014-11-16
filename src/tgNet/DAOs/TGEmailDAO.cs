@@ -4,7 +4,7 @@ using TreeGecko.Library.Net.Objects;
 
 namespace TreeGecko.Library.Net.DAOs
 {
-    public class TGEmailDAO : AbstractMongoDAO<TGUser>
+    public class TGEmailDAO : AbstractMongoDAO<TGEmail>
     {
         public TGEmailDAO(MongoDatabase _mongoDB) : base(_mongoDB)
         {

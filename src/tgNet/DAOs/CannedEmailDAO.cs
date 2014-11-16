@@ -15,5 +15,17 @@ namespace TreeGecko.Library.Net.DAOs
         {
             get { return "CannedEmail"; }
         }
+
+        public override void BuildTable()
+        {
+            base.BuildTable();
+
+            BuildUniqueIndex("Name", "NAME");
+        }
+
+        public CannedEmail Get(string _name)
+        {
+            return GetOneItem<CannedEmail>("Name", _name);
+        }
     }
 }

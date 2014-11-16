@@ -13,8 +13,11 @@ namespace TreeGecko.Library.Geospatial.Extensions
             if (_tgs.Properties.ContainsKey(_name))
             {
                 string temp = _tgs.Properties[_name].SerializedValue;
-                GeoPoint gp = GeoPoint.Parse(temp);
-                return gp;
+                if (temp != null)
+                {
+                    GeoPoint gp = GeoPoint.Parse(temp);
+                    return gp;
+                }
             }
 
             return null;
