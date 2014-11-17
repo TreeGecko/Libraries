@@ -25,7 +25,8 @@ namespace TreeGecko.Library.Geospatial.Extensions
 
         public static void Add(this TGSerializedObject _tgs, string _name, GeoPoint _geoPoint)
         {
-            _tgs.Add(_name, _geoPoint.ToString());
+            TGSerializedProperty tgsp = new TGSerializedProperty(_name, _geoPoint.ToGeoJson(), true);
+            _tgs.Properties.Add(_name, tgsp);
         }
 
         /// <summary>
