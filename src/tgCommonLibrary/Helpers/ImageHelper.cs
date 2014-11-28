@@ -109,5 +109,23 @@ namespace TreeGecko.Library.Common.Helpers
             return false;
         }
 
+        public static Image GetThumbnailOfMaxSize(Image _image, int _maxDimension)
+        {
+            SizeF sizeF = ImageSizeHelper.SizeThatFits(_image, _maxDimension);
+            Size size = sizeF.ToSize();
+
+            return GetThumbnail(_image, size.Height, size.Width);
+        }
+
+        public static byte[] GetThumbnailBytesOfMaxSize(Image _image, int _maxDimension)
+        {
+            SizeF sizeF = ImageSizeHelper.SizeThatFits(_image, _maxDimension);
+            Size size = sizeF.ToSize();
+
+            Image image = GetThumbnail(_image, size.Height, size.Width);
+
+            return GetBytes(image, ImageFormat.Jpeg);
+        }
+
     }
 }
