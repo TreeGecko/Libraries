@@ -14,8 +14,8 @@ namespace TreeGecko.Library.AWS.Helpers
         /// <returns></returns>
         public static AmazonS3Client GetS3()
         {
-            string user = Config.GetSettingValue("AWSAccessKey");
-            string password = Config.GetSettingValue("AWSSecretKey");
+            string user = Config.GetSettingValue("AWSAccessKey", null);
+            string password = Config.GetSettingValue("AWSSecretKey", null);
 
             return GetS3(user, password);
         }
@@ -28,7 +28,17 @@ namespace TreeGecko.Library.AWS.Helpers
         /// <returns></returns>
         public static AmazonS3Client GetS3(string _accessKey, string _secretKey)
         {
-            AmazonS3Client s3 = new AmazonS3Client(_accessKey, _secretKey);
+            AmazonS3Client s3;
+
+            if (_accessKey == null
+                && _secretKey == null)
+            {
+                s3 = new AmazonS3Client();
+            }
+            else
+            {
+                s3 = new AmazonS3Client(_accessKey, _secretKey); 
+            }
 
             return s3;
         }

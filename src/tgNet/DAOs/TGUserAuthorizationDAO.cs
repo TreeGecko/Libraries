@@ -22,7 +22,8 @@ namespace TreeGecko.Library.Net.DAOs
         {
             TGUserAuthorization authorization = GetOneItem<TGUserAuthorization>("AuthorizationToken", _authToken);
 
-            if (_userGuid.Equals(authorization.ParentGuid))
+            if (authorization != null
+                && _userGuid.Equals(authorization.ParentGuid))
             {
                 return authorization;
             }
