@@ -24,7 +24,7 @@ namespace TreeGecko.Library.Net.Objects
         /// <summary>
         /// 
         /// </summary>
-        public string UserName { get; set; }
+        public Guid UserGuid { get; set; }
 
         /// <summary>
         /// 
@@ -41,7 +41,7 @@ namespace TreeGecko.Library.Net.Objects
 
             tgs.Add("WebLogType", (Int32)WebLogType);
             tgs.Add("Message", Message);
-            tgs.Add("UserName", UserName);
+            tgs.Add("UserGuid", UserGuid);
             tgs.Add("MessageDateTime", MessageDateTime);
             tgs.Add("SourceApplication", SourceApplication);
             tgs.Add("MessageTicks", MessageDateTime.Ticks);
@@ -55,7 +55,7 @@ namespace TreeGecko.Library.Net.Objects
         
             WebLogType = (LogMessageType) _tgs.GetInt32("WebLogType");
             Message = _tgs.GetString("Message");
-            UserName = _tgs.GetString("UserName");
+            UserGuid = _tgs.GetGuid("UserGuid");
             MessageDateTime = _tgs.GetDateTime("MessageDateTime");
             SourceApplication = _tgs.GetString("SourceApplication");
             MessageDateTime = new DateTime(_tgs.GetInt64("MessageTicks"));

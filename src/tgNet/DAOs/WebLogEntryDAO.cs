@@ -4,7 +4,7 @@ using TreeGecko.Library.Net.Objects;
 
 namespace TreeGecko.Library.Net.DAOs
 {
-    public class WebLogEntryDAO: AbstractMongoDAO<CannedEmail>
+    public class WebLogEntryDAO: AbstractMongoDAO<WebLogEntry>
     {
         public WebLogEntryDAO(MongoDatabase _mongoDB) : base(_mongoDB)
         {

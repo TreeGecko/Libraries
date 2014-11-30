@@ -10,3 +10,5 @@ src/tgNet/bin/
 src/tgAWS/bin/
 src/tgAWS/obj/
 src/tgNet/obj/
+src/tgHDF5/bin/
+src/tgHDF5/obj/

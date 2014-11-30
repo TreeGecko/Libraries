@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Amazon.S3;
 using Amazon.S3.Model;
@@ -43,7 +44,6 @@ namespace TreeGecko.Library.AWS.Helpers
             return s3;
         }
 
-        
 
         public static string GetFolder(Guid _fileGuid)
         {
@@ -92,6 +92,30 @@ namespace TreeGecko.Library.AWS.Helpers
             AmazonS3Client client = GetS3();
 
             PersistFile(client, _bucketName, _filename, _mimeType, _data);
+        }
+
+        public static List<string> ListFiles(string _bucketName, int _maxQuantity=0)
+        {
+            AmazonS3Client client = GetS3();
+
+            ListObjectsRequest request = new ListObjectsRequest {BucketName = _bucketName};
+
+            if (_maxQuantity > 0)
+            {
+                request.MaxKeys = _maxQuantity;
+            }
+
+            ListObjectsResponse response = client.ListObjects(request);
+            List<S3Object> s3Objects = response.S3Objects;
+            
+            List<string> keys = new List<string>();
+
+            foreach (S3Object s3Object in s3Objects)
+            {
+                keys.Add(s3Object.Key);
+            }
+
+            return keys;
         }
 
         public static void PersistFile(AmazonS3Client _client, string _bucketName, string _filename,
