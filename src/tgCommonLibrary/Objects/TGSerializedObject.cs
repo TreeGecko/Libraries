@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using TreeGecko.Library.Common.Helpers;
 using TreeGecko.Library.Common.Interfaces;
 
 namespace TreeGecko.Library.Common.Objects
@@ -141,10 +142,8 @@ namespace TreeGecko.Library.Common.Objects
         /// <param name="_value"></param>
         public void Add(string _name, DateTime _value)
         {
-            Properties.Add(_name, new TGSerializedProperty(_name, _value.ToString("u")));
+            Properties.Add(_name, new TGSerializedProperty(_name, DateHelper.ToString(_value)));
         }
-
-        
 
 		/// <summary>
 		/// Add the specified name and value.

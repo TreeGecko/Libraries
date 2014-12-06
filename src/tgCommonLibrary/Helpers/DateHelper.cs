@@ -4,12 +4,17 @@ namespace TreeGecko.Library.Common.Helpers
 {
     public class DateHelper
     {
+        public static string ToString(DateTime _dateTime)
+        {
+            return _dateTime.ToString("u");
+        }
+            
+
         public static DateTime? ParseDate(string _value)
         {
             DateTime? output;
             if (_value != null)
             {
-                
                 DateTime tempDate = new DateTime();
 
                 if (!DateTime.TryParse(_value, out tempDate))
