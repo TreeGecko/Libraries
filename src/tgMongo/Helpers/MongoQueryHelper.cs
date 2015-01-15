@@ -22,6 +22,18 @@ namespace TreeGecko.Library.Mongo.Helpers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static IMongoQuery GetQuery()
+        {
+            IMongoQuery query = new QueryDocument();
+            return query;
+        }
+
+
+
+        /// <summary>
         /// Returns a basic string query with equals operators
         /// </summary>
         /// <param name="_nameValueCollection"></param>

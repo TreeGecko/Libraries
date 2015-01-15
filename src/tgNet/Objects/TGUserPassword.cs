@@ -32,19 +32,19 @@ namespace TreeGecko.Library.Net.Objects
         }
 
 
-        public static string GenerateSalt(string _username)
+        public static string GenerateSalt(string _username, int _size = 25)
         {
             byte[] saltSalt = Guid.NewGuid().ToByteArray();
             Rfc2898DeriveBytes hasher = new Rfc2898DeriveBytes(_username, saltSalt, 10000);
-            return Convert.ToBase64String(hasher.GetBytes(25));
+            return Convert.ToBase64String(hasher.GetBytes(_size));
         }
 
-        public static string HashPassword(string _salt, string _plainTextPassword)
+        public static string HashPassword(string _salt, string _plainTextPassword, int _size = 25)
         {
             byte[] saltBytes = Encoding.UTF8.GetBytes(_salt);
 
             Rfc2898DeriveBytes hasher = new Rfc2898DeriveBytes(_plainTextPassword, saltBytes, 10000);
-            return Convert.ToBase64String(hasher.GetBytes(25));
+            return Convert.ToBase64String(hasher.GetBytes(_size));
         }
 
         public static TGUserPassword GetNew(Guid _userGuid, string _userName, string _password)

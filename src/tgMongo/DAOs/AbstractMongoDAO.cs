@@ -27,7 +27,6 @@ namespace TreeGecko.Library.Mongo.DAOs
         {
             
         }
-   
 
         public virtual bool UniqueName
         {
@@ -546,6 +545,25 @@ namespace TreeGecko.Library.Mongo.DAOs
             if (doc != null)
             {
                 return BsonHelper.Get<U>(doc);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="_mongoCursor"></param>
+        /// <returns></returns>
+        public U GetOneItem<U>(MongoCursor _mongoCursor) where U : AbstractTGObject, new()
+        {
+            MongoCursor cursor = _mongoCursor.SetLimit(1);
+
+            foreach (BsonDocument doc in cursor)
+            {
+                U obj = BsonHelper.Get<U>(doc);
+                return obj;
             }
 
             return null;

@@ -58,7 +58,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MongoDB.Bson">
-      <HintPath>..\bin\MongoDB\MongoDB.Bson.dll</HintPath>
+      <HintPath>..\..\bin\MongoDB\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver">
       <HintPath>..\..\bin\MongoDB\MongoDB.Driver.dll</HintPath>
@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="DAOs\CannedEmailDAO.cs" />
     <Compile Include="DAOs\TGEmailDAO.cs" />
+    <Compile Include="DAOs\TGEulaAgreementDAO.cs" />
+    <Compile Include="DAOs\TGEulaDAO.cs" />
     <Compile Include="DAOs\TGUserAuthorizationDAO.cs" />
     <Compile Include="DAOs\TGUserDAO.cs" />
     <Compile Include="DAOs\TGUserEmailValidationDAO.cs" />
@@ -91,6 +93,8 @@
     <Compile Include="Interfaces\IServerDataManager.cs" />
     <Compile Include="Objects\TGEmail.cs" />
     <Compile Include="Objects\CannedEmail.cs" />
+    <Compile Include="Objects\TGEula.cs" />
+    <Compile Include="Objects\TGEulaAgreement.cs" />
     <Compile Include="Objects\TGUser.cs" />
     <Compile Include="Objects\TGUserPassword.cs" />
     <Compile Include="Objects\TGUserAuthorization.cs" />

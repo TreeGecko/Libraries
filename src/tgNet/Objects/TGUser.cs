@@ -34,6 +34,11 @@ namespace TreeGecko.Library.Net.Objects
         /// <summary>
         /// 
         /// </summary>
+        public bool EulaAccepted { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string DisplayName { get; set; }
 
         /// <summary>
@@ -50,6 +55,7 @@ namespace TreeGecko.Library.Net.Objects
             obj.Add("GivenName", GivenName);
             obj.Add("IsVerified", IsVerified);
             obj.Add("DisplayName", DisplayName);
+            obj.Add("EulaAccepted", EulaAccepted);
 
             return obj;
         }
@@ -64,6 +70,7 @@ namespace TreeGecko.Library.Net.Objects
             GivenName = _tgs.GetString("GivenName");
             IsVerified = _tgs.GetBoolean("IsVerified");
             DisplayName = _tgs.GetString("DisplayName");
+            EulaAccepted = _tgs.GetBoolean("EulaAccepted");
         }
     }
 }

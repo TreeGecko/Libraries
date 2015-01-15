@@ -122,6 +122,8 @@
     <Compile Include="Objects\Property.cs" />
     <Compile Include="Objects\StringClassPropertyType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\CryptoString.cs" />
+    <Compile Include="Security\MD5Hash.cs" />
     <Compile Include="Security\RandomString.cs" />
     <Compile Include="Tracing\AbstractTraceListener.cs" />
     <Compile Include="Tracing\RollingTraceLogListener.cs" />
