@@ -21,6 +21,17 @@ namespace TreeGecko.Library.Net.DAOs
             base.BuildTable();
 
             BuildUniqueIndex("Username", "USERNAME");
+            BuildUniqueSparceIndex("EmailAddress", "EMAIL");
+        }
+
+        public TGUser Get(string _username)
+        {
+            return GetOneItem<TGUser>("Username", _username);
+        }
+
+        public TGUser GetByEmail(string _emailAddress)
+        {
+            return GetOneItem<TGUser>("EmailAddress", _emailAddress);
         }
     }
 }

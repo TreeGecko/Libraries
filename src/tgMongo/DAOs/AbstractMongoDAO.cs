@@ -220,7 +220,7 @@ namespace TreeGecko.Library.Mongo.DAOs
             return Cursor;
         }
 
-        public WriteConcernResult UpdateQursor(IMongoQuery _objectQuery, IMongoUpdate _objectUpdate)
+        public WriteConcernResult UpdateCursor(IMongoQuery _objectQuery, IMongoUpdate _objectUpdate)
         {
             //string _objectIdentifier.
             //BsonBinaryData id = new BsonBinaryData(_objectIdentifier.ToByteArray());

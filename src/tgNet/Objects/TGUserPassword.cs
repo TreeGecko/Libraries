@@ -58,6 +58,6 @@ namespace TreeGecko.Library.Net.Objects
             userPassword.HashedPassword = HashPassword(userPassword.Salt, _password);
 
             return userPassword;
-        }
+        } 
     }
 }

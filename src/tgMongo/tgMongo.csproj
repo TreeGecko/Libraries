@@ -84,10 +84,6 @@
       <Project>{64FE4175-4C97-4835-AD97-3C4F19E7B4DA}</Project>
       <Name>tgCommonLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\tgGeospatial\tgGeospatial.csproj">
-      <Project>{17BE4975-0A99-490E-AA0A-99F6D38F6B8D}</Project>
-      <Name>tgGeospatial</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
