@@ -226,29 +226,38 @@ namespace TreeGecko.Library.Common.Objects
         public void Add(string _name,
 		                List<Guid> _guids)
 		{
-			StringBuilder sb = new StringBuilder();
+            if (_guids != null)
+            {
+                StringBuilder sb = new StringBuilder();
 
-			foreach (Guid item in _guids) 
-			{
-				sb.Append(item);
-				sb.Append("|");
-			}
+                foreach (Guid item in _guids)
+                {
+                    sb.Append(item);
+                    sb.Append("|");
+                }
 
-			if (sb.Length > 0)
-			{
-				sb.Remove(sb.Length - 1, 1);
-			}
+                if (sb.Length > 0)
+                {
+                    sb.Remove(sb.Length - 1, 1);
+                }
 
-			if (sb.Length > 0)
-			{
-			 	Add(_name, sb.ToString());
-			}
-			else
-			{
-				string temp = null;
+                if (sb.Length > 0)
+                {
+                    Add(_name, sb.ToString());
+                }
+                else
+                {
+                    string temp = null;
 
-				Add(_name, temp);
-			}
+                    Add(_name, temp);
+                }
+            }
+            else
+            {
+                string temp = null;
+
+                Add(_name, temp);
+            }
 		}
 
 		public void Add(string _name,

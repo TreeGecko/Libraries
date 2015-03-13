@@ -314,6 +314,25 @@ namespace TreeGecko.Library.Mongo.DAOs
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public long GetCount()
+        {
+            return MongoCollection.Count();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_query"></param>
+        /// <returns></returns>
+        public long GetCount(IMongoQuery _query)
+        {
+            return MongoCollection.Count(_query);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="_cursor"></param>
         /// <returns></returns>
         public T GetFirst(MongoCursor _cursor)

@@ -64,7 +64,7 @@
       <HintPath>..\..\bin\MongoDB\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\bin\Newtonsoft\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\bin\Newtonsoft\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
