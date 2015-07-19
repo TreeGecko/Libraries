@@ -315,6 +315,28 @@ namespace TreeGecko.Library.Mongo.DAOs
         /// 
         /// </summary>
         /// <returns></returns>
+        public List<T> GetActive()
+        {
+            IMongoQuery query = GetQuery("Active", "true");
+
+            return GetList(query);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<T> GetInactive()
+        {
+            IMongoQuery query = GetQuery("Active", "false");
+
+            return GetList(query);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public long GetCount()
         {
             return MongoCollection.Count();
