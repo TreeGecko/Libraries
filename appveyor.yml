@@ -13,6 +13,7 @@ assembly_info:
 nuget:
   account_feed: true
   project_feed: true
+  disable_publish_on_pr: true
 
 platform: x64
 
@@ -22,3 +23,4 @@ build:
   project: src/tgLibraries_2010.sln
   verbosity: Minimal 
   publish_nuget: true
+  
