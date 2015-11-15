@@ -1,8 +1,8 @@
 version: 1.0.{build}
 
 before_build:
-    - nuget restore src/tgLibraries_2010.sln
+  - nuget restore src/tgLibraries_2010.sln
 
 build:
-    project: src/tgLibraries_2010.sln
-    verbosity: Minimal  
+  project: src/tgLibraries_2010.sln
+  verbosity: Minimal  
