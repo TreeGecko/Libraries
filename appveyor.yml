@@ -10,5 +10,4 @@ before_build:
 
 build:
     project: /src/tgLibraries_2010.sln
-    verbosity: Minimal
-	
+    verbosity: Minimal  
