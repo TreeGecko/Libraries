@@ -1,13 +1,5 @@
 version: 1.0.{build}
 
-environment:
-
-cache:
-
-install:
-
-before_build:
-
 build:
     project: /src/tgLibraries_2010.sln
     verbosity: Minimal  
