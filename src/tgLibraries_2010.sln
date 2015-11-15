@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tgCommonLibrary", "tgCommonLibrary\tgCommonLibrary.csproj", "{64FE4175-4C97-4835-AD97-3C4F19E7B4DA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tgGeospatial", "tgGeospatial\tgGeospatial.csproj", "{17BE4975-0A99-490E-AA0A-99F6D38F6B8D}"
@@ -10,6 +12,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tgMongo", "tgMongo\tgMongo.csproj", "{30C94612-2107-49FD-BEA7-9789AF896B01}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tgNet", "tgNet\tgNet.csproj", "{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9FBF2F53-D720-42E9-8BFB-93DF7C74670B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,18 +88,20 @@ Global
 		{30C94612-2107-49FD-BEA7-9789AF896B01}.Release|x64.Build.0 = Release|x64
 		{30C94612-2107-49FD-BEA7-9789AF896B01}.Release|x86.ActiveCfg = Release|x86
 		{30C94612-2107-49FD-BEA7-9789AF896B01}.Release|x86.Build.0 = Release|x86
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|x64.ActiveCfg = Release|Any CPU
-		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|x86.ActiveCfg = Release|Any CPU
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|x64.ActiveCfg = Debug|x64
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|x64.Build.0 = Debug|x64
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|x86.ActiveCfg = Debug|x86
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Debug|x86.Build.0 = Debug|x86
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|Any CPU.ActiveCfg = Release|x86
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|Mixed Platforms.Build.0 = Release|x86
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|x64.ActiveCfg = Release|x64
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|x64.Build.0 = Release|x64
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|x86.ActiveCfg = Release|x86
+		{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
