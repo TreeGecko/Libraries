@@ -1,7 +1,7 @@
 version: 1.0.{build}
 
 before_build:
-  - nuget restore src/hwDataLibrary.sln
+  - nuget restore src/tgLibraries_2010.sln
 
 assembly_info:
   patch: true
