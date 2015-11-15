@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>TreeGeckoLibraries-Geospatial</id>
+    <version>1.0.0</version>
+    <authors>Brian Nelson</authors>
+  </metadata>
+  <files>
+    <file src="src\bin\Debug\*.dll" target="lib" />
+  </files>
+</package>
