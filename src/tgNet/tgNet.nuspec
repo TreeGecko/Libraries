@@ -3,9 +3,9 @@
   <metadata>
     <id>TreeGeckoLibraries.Net</id>
     <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <title>TreeGecko Network Wrapper</title>
+    <authors>Brian Nelson</authors>
+    <owners>Brian Nelson</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Network access library that is part of the TreeGecko suite of libraries.</description>
     <copyright>Copyright 2015</copyright>
