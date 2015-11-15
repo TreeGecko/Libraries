@@ -1,5 +1,5 @@
 version: 1.0.{build}
 
 build:
-    project: /src/tgLibraries_2010.sln
+    project: src/tgLibraries_2010.sln
     verbosity: Minimal  
