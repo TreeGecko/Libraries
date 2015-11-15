@@ -6,3 +6,7 @@ before_build:
 build:
   project: src/tgLibraries_2010.sln
   verbosity: Minimal  
+
+nuget:
+  account_feed: true
+  project_feed: true
