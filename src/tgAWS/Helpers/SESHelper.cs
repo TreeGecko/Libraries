@@ -3,19 +3,26 @@ using Amazon;
 using Amazon.SimpleEmail;
 using Amazon.SimpleEmail.Model;
 using TreeGecko.Library.Common.Helpers;
-using TreeGecko.Library.Net.Enums;
-using TreeGecko.Library.Net.Objects;
+
 
 namespace TreeGecko.Library.AWS.Helpers
 {
     public static class SESHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_from"></param>
+        /// <param name="_to"></param>
+        /// <param name="_replyTo"></param>
+        /// <param name="_subject"></param>
+        /// <param name="_bodyHtml"></param>
+        /// <returns></returns>
         public static Message GetMessage(string _from,
                                          List<string> _to,
                                          string _replyTo,
                                          string _subject,
-                                         string _bodyHtml,
-                                         EmailBodyType _bodyType)
+                                         string _bodyHtml)
         {
             Content subject = new Content(_subject);
 
@@ -26,15 +33,23 @@ namespace TreeGecko.Library.AWS.Helpers
             return message;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_ses"></param>
+        /// <param name="_from"></param>
+        /// <param name="_to"></param>
+        /// <param name="_replyTo"></param>
+        /// <param name="_subject"></param>
+        /// <param name="_body"></param>
         public static void SendMessage(AmazonSimpleEmailServiceClient _ses,
                                        string _from,
                                        List<string> _to,
                                        string _replyTo,
                                        string _subject,
-                                       string _body,
-                                       EmailBodyType _bodyType)
+                                       string _body)
         {
-            Message message = GetMessage(_from, _to, _replyTo, _subject, _body, _bodyType);
+            Message message = GetMessage(_from, _to, _replyTo, _subject, _body);
 
             Destination destination = new Destination(_to);
             SendEmailRequest request = new SendEmailRequest(_from, destination, message);
@@ -55,15 +70,13 @@ namespace TreeGecko.Library.AWS.Helpers
         /// <param name="_replyTo"></param>
         /// <param name="_subject"></param>
         /// <param name="_body"></param>
-        /// <param name="_bodyType"></param>
         public static void SendMessage(string _from,
                                        string _to,
                                        string _replyTo,           
                                        string _subject,
-                                       string _body,
-                                       EmailBodyType _bodyType)
+                                       string _body)
         {
-            SendMessage(_from, new List<string> { _to }, _replyTo, _subject, _body, _bodyType);
+            SendMessage(_from, new List<string> { _to }, _replyTo, _subject, _body);
         }
 
         /// <summary>
@@ -74,41 +87,22 @@ namespace TreeGecko.Library.AWS.Helpers
         /// <param name="_replyTo"></param>
         /// <param name="_subject"></param>
         /// <param name="_body"></param>
-        /// <param name="_bodyType"></param>
         public static void SendMessage(string _from,
                                        List<string> _to,
                                        string _replyTo,
                                        string _subject,
-                                       string _body,
-                                       EmailBodyType _bodyType)
+                                       string _body)
         {
             using (AmazonSimpleEmailServiceClient ses = GetSES())
             {
-                SendMessage(ses, _from, _to, _replyTo, _subject, _body, _bodyType);
+                SendMessage(ses, _from, _to, _replyTo, _subject, _body);
             }
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_email"></param>
-        public static void SendMessage(TGEmail _email)
-        {
-            SendMessage(_email.From, _email.To, _email.ReplyTo, _email.Subject, _email.Body, _email.BodyType);
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_ses"></param>
-        /// <param name="_email"></param>
-        public static void SendMessage(AmazonSimpleEmailServiceClient _ses, TGEmail _email)
-        {
-            List<string> to = new List<string>{_email.To};
 
-            SendMessage(_ses, _email.From, to, _email.ReplyTo, _email.Subject, _email.Body, _email.BodyType);
-        }
+        
 
         /// <summary>
         /// 
@@ -135,11 +129,8 @@ namespace TreeGecko.Library.AWS.Helpers
             {
                 return new AmazonSimpleEmailServiceClient(_accessKey, _secretKey, RegionEndpoint.USEast1);
             }
-            else
-            {
-                return new AmazonSimpleEmailServiceClient(RegionEndpoint.USEast1);
-            }
 
+            return new AmazonSimpleEmailServiceClient(RegionEndpoint.USEast1);
         }
     }
 }

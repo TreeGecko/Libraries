@@ -82,10 +82,6 @@
     <Folder Include="Managers\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\tgNet\tgNet.csproj">
-      <Project>{E6DF32BB-18C9-4BD8-882A-A0CB67383A40}</Project>
-      <Name>tgNet</Name>
-    </ProjectReference>
     <ProjectReference Include="..\tgCommonLibrary\tgCommonLibrary.csproj">
       <Project>{64FE4175-4C97-4835-AD97-3C4F19E7B4DA}</Project>
       <Name>tgCommonLibrary</Name>
