@@ -99,6 +99,7 @@
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\TraceFileHelper.cs" />
     <Compile Include="Interfaces\IActive.cs" />
+    <Compile Include="Interfaces\IRunnable.cs" />
     <Compile Include="Interfaces\ITGSerializable.cs" />
     <Compile Include="Interfaces\IExporter.cs" />
     <Compile Include="Interfaces\IHasAttributes.cs" />
