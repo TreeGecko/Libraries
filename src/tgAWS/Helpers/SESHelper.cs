@@ -100,10 +100,6 @@ namespace TreeGecko.Library.AWS.Helpers
 
         }
 
-
-
-        
-
         /// <summary>
         /// 
         /// </summary>
