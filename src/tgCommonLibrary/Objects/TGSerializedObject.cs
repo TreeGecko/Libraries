@@ -35,35 +35,35 @@ namespace TreeGecko.Library.Common.Objects
         /// <param name="_serializedValue"></param>
         public TGSerializedObject(string _serializedValue)
         {
-			Deserialize(_serializedValue);
+            Deserialize(_serializedValue);
         }
 
-		/// <summary>
-		/// Deserialize the specified serializedValue.
-		/// </summary>
-		/// <param name='_serializedValue'>
-		/// Serialized value.
-		/// </param>
-		private void Deserialize(string _serializedValue)
-		{
-			Properties = new Dictionary<string, TGSerializedProperty>();
-			
-			string[] type = _serializedValue.Split("-".ToCharArray());
-			
-			if (type.Length == 2)
-			{
-				TGObjectType = type[0];
-				
-				string[] parts = type[1].Split("|".ToCharArray());
-				
-				foreach (string part in parts)
-				{
-					TGSerializedProperty property = new TGSerializedProperty(part);
-					
-					Properties.Add(property.PropertyName, property);
-				}
-			}
-		}
+        /// <summary>
+        /// Deserialize the specified serializedValue.
+        /// </summary>
+        /// <param name='_serializedValue'>
+        /// Serialized value.
+        /// </param>
+        private void Deserialize(string _serializedValue)
+        {
+            Properties = new Dictionary<string, TGSerializedProperty>();
+
+            string[] type = _serializedValue.Split("-".ToCharArray());
+
+            if (type.Length == 2)
+            {
+                TGObjectType = type[0];
+
+                string[] parts = type[1].Split("|".ToCharArray());
+
+                foreach (string part in parts)
+                {
+                    TGSerializedProperty property = new TGSerializedProperty(part);
+
+                    Properties.Add(property.PropertyName, property);
+                }
+            }
+        }
 
         /// <summary>
         /// 
@@ -80,18 +80,18 @@ namespace TreeGecko.Library.Common.Objects
             return false;
         }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="TGSerializedObject"/> class.
-		/// </summary>
-		/// <param name='_data'>
-		/// Data.
-		/// </param>
-		public TGSerializedObject(byte[] _data)
-		{
-			string serialized = Encoding.UTF8.GetString(_data);
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TGSerializedObject"/> class.
+        /// </summary>
+        /// <param name='_data'>
+        /// Data.
+        /// </param>
+        public TGSerializedObject(byte[] _data)
+        {
+            string serialized = Encoding.UTF8.GetString(_data);
 
-			Deserialize(serialized);
-		}
+            Deserialize(serialized);
+        }
 
         /// <summary>
         /// 
@@ -113,7 +113,6 @@ namespace TreeGecko.Library.Common.Objects
             Properties.Add(_name, new TGSerializedProperty(_name, _value));
         }
 
-        
 
         /// <summary>
         /// 
@@ -145,18 +144,18 @@ namespace TreeGecko.Library.Common.Objects
             Properties.Add(_name, new TGSerializedProperty(_name, DateHelper.ToString(_value)));
         }
 
-		/// <summary>
-		/// Add the specified name and value.
-		/// </summary>
-		/// <param name='_name'>
-		/// Name.
-		/// </param>
-		/// <param name='_value'>
-		/// Value.
-		/// </param>
-		public void Add(string _name, TimeSpan _value)
+        /// <summary>
+        /// Add the specified name and value.
+        /// </summary>
+        /// <param name='_name'>
+        /// Name.
+        /// </param>
+        /// <param name='_value'>
+        /// Value.
+        /// </param>
+        public void Add(string _name, TimeSpan _value)
         {
-			long ticks = _value.Ticks;
+            long ticks = _value.Ticks;
 
             Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(ticks)));
         }
@@ -224,8 +223,8 @@ namespace TreeGecko.Library.Common.Objects
         /// <param name="_name"></param>
         /// <param name="_guids"></param>
         public void Add(string _name,
-		                List<Guid> _guids)
-		{
+            List<Guid> _guids)
+        {
             if (_guids != null)
             {
                 StringBuilder sb = new StringBuilder();
@@ -258,35 +257,35 @@ namespace TreeGecko.Library.Common.Objects
 
                 Add(_name, temp);
             }
-		}
+        }
 
-		public void Add(string _name,
-		                List<string> _values)
-		{
-			StringBuilder sb = new StringBuilder();
-			
-			foreach (string item in _values) 
-			{
-				sb.Append(item);
-				sb.Append("|");
-			}
-			
-			if (sb.Length > 0)
-			{
-				sb.Remove(sb.Length - 1, 1);
-			}
-			
-			if (sb.Length > 0)
-			{
-				Add(_name, sb.ToString());
-			}
-			else
-			{
-				string temp = null;
-				
-				Add(_name, temp);
-			}
-		}
+        public void Add(string _name,
+            List<string> _values)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (string item in _values)
+            {
+                sb.Append(item);
+                sb.Append("|");
+            }
+
+            if (sb.Length > 0)
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
+
+            if (sb.Length > 0)
+            {
+                Add(_name, sb.ToString());
+            }
+            else
+            {
+                string temp = null;
+
+                Add(_name, temp);
+            }
+        }
 
         /// <summary>
         /// 
@@ -317,48 +316,48 @@ namespace TreeGecko.Library.Common.Objects
         {
             Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(_value).ToLower()));
         }
-		
-		/// <summary>
-		/// Add the specified name and value.
-		/// </summary>
-		/// <param name='_name'>
-		/// Name.
-		/// </param>
-		/// <param name='_value'>
-		/// Value.
-		/// </param>
-		public void Add(string _name, Guid? _value)
+
+        /// <summary>
+        /// Add the specified name and value.
+        /// </summary>
+        /// <param name='_name'>
+        /// Name.
+        /// </param>
+        /// <param name='_value'>
+        /// Value.
+        /// </param>
+        public void Add(string _name, Guid? _value)
         {
-			if (_value != null)
-			{
-				Properties.Add(_name, new TGSerializedProperty(_name, _value.Value.ToString().ToLower()));
-			}
-			else
-			{
-				Properties.Add(_name, new TGSerializedProperty(_name, null));
-			} 
+            if (_value != null)
+            {
+                Add(_name, _value.Value);
+            }
+            else
+            {
+                Properties.Add(_name, new TGSerializedProperty(_name, null));
+            }
         }
 
-		/// <summary>
-		/// Add the specified name and value.
-		/// </summary>
-		/// <param name='_name'>
-		/// Name.
-		/// </param>
-		/// <param name='_value'>
-		/// Value.
-		/// </param>
-		public void Add(string _name, DateTime? _value)
-		{
-			if (_value != null)
-			{
-				Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(_value)));
-			}
-			else
-			{
-				Properties.Add(_name, new TGSerializedProperty(_name, null));
-			} 
-		}
+        /// <summary>
+        /// Add the specified name and value.
+        /// </summary>
+        /// <param name='_name'>
+        /// Name.
+        /// </param>
+        /// <param name='_value'>
+        /// Value.
+        /// </param>
+        public void Add(string _name, DateTime? _value)
+        {
+            if (_value != null)
+            {
+                Add(_name, _value.Value);
+            }
+            else
+            {
+                Properties.Add(_name, new TGSerializedProperty(_name, null));
+            }
+        }
 
         /// <summary>
         /// 
@@ -369,7 +368,7 @@ namespace TreeGecko.Library.Common.Objects
         {
             if (_value != null)
             {
-                Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(_value)));
+                Add(_name, _value.Value);
             }
             else
             {
@@ -386,7 +385,7 @@ namespace TreeGecko.Library.Common.Objects
         {
             if (_value != null)
             {
-                Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(_value)));
+                Add(_name, _value.Value);
             }
             else
             {
@@ -403,7 +402,7 @@ namespace TreeGecko.Library.Common.Objects
         {
             if (_value != null)
             {
-                Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(_value)));
+                Add(_name, _value.Value);
             }
             else
             {
@@ -420,7 +419,7 @@ namespace TreeGecko.Library.Common.Objects
         {
             if (_value != null)
             {
-                Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(_value)));
+                Add(_name, _value.Value);
             }
             else
             {
@@ -437,7 +436,7 @@ namespace TreeGecko.Library.Common.Objects
         {
             if (_value != null)
             {
-                Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(_value)));
+                Add(_name, _value.Value);
             }
             else
             {
@@ -451,7 +450,7 @@ namespace TreeGecko.Library.Common.Objects
         /// <typeparam name="T"></typeparam>
         /// <param name="_name"></param>
         /// <param name="_values"></param>
-        public void Add<T>(string _name, List<T> _values) where T:ITGSerializable, new()
+        public void Add<T>(string _name, List<T> _values) where T : ITGSerializable, new()
         {
             TGListWrapper<T> wrapper = new TGListWrapper<T>(_values);
 
@@ -482,7 +481,6 @@ namespace TreeGecko.Library.Common.Objects
             Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(_value)));
         }
 
-        
 
         /// <summary>
         /// 
@@ -559,17 +557,17 @@ namespace TreeGecko.Library.Common.Objects
         {
             return DateTime.SpecifyKind(GetDateTime(_name), DateTimeKind.Utc);
         }
-        
-		/// <summary>
-		/// Gets the time span.
-		/// </summary>
-		/// <returns>
-		/// The time span.
-		/// </returns>
-		/// <param name='_name'>
-		/// Name.
-		/// </param>
-		public TimeSpan GetTimeSpan(string _name)
+
+        /// <summary>
+        /// Gets the time span.
+        /// </summary>
+        /// <returns>
+        /// The time span.
+        /// </returns>
+        /// <param name='_name'>
+        /// Name.
+        /// </param>
+        public TimeSpan GetTimeSpan(string _name)
         {
             if (Properties.ContainsKey(_name))
             {
@@ -577,7 +575,7 @@ namespace TreeGecko.Library.Common.Objects
 
                 long ticks = Convert.ToInt64(temp);
 
-				return new TimeSpan(ticks);
+                return new TimeSpan(ticks);
             }
 
             return new TimeSpan(0);
@@ -696,10 +694,10 @@ namespace TreeGecko.Library.Common.Objects
             {
                 string temp = Properties[_name].SerializedValue;
 
-				if (!string.IsNullOrEmpty(temp))
-				{
-                	return new Guid(temp);
-				}
+                if (!string.IsNullOrEmpty(temp))
+                {
+                    return new Guid(temp);
+                }
             }
 
             return Guid.Empty;
@@ -713,7 +711,7 @@ namespace TreeGecko.Library.Common.Objects
 
                 if (!string.IsNullOrEmpty(temp))
                 {
-                    return (Enum)Enum.Parse(_type, temp);
+                    return (Enum) Enum.Parse(_type, temp);
                 }
             }
 
@@ -741,38 +739,38 @@ namespace TreeGecko.Library.Common.Objects
             {
                 string temp = Properties[_name].SerializedValue;
 
-				if (!string.IsNullOrEmpty(temp))
-				{
-                	return new Guid(temp);
-				}
+                if (!string.IsNullOrEmpty(temp))
+                {
+                    return new Guid(temp);
+                }
             }
 
             return null;
         }
 
-		/// <summary>
-		/// Gets the nullable date time.
-		/// </summary>
-		/// <returns>
-		/// The nullable date time.
-		/// </returns>
-		/// <param name='_name'>
-		/// Name.
-		/// </param>
-		public DateTime? GetNullableDateTime(string _name)
-		{
-			if (Properties.ContainsKey(_name))
-			{
-				string temp = Properties[_name].SerializedValue;
+        /// <summary>
+        /// Gets the nullable date time.
+        /// </summary>
+        /// <returns>
+        /// The nullable date time.
+        /// </returns>
+        /// <param name='_name'>
+        /// Name.
+        /// </param>
+        public DateTime? GetNullableDateTime(string _name)
+        {
+            if (Properties.ContainsKey(_name))
+            {
+                string temp = Properties[_name].SerializedValue;
 
-				if (!string.IsNullOrEmpty(temp))
-				{
-					return Convert.ToDateTime(temp);
-				}
-			}
-			
-			return null;
-		}
+                if (!string.IsNullOrEmpty(temp))
+                {
+                    return Convert.ToDateTime(temp);
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// 
@@ -997,7 +995,8 @@ namespace TreeGecko.Library.Common.Objects
         /// <returns></returns>
         public static TGSerializedObject FromJSON(string _json)
         {
-            Dictionary<string, TGSerializedProperty> temp = JsonConvert.DeserializeObject<Dictionary<string, TGSerializedProperty>>(_json);
+            Dictionary<string, TGSerializedProperty> temp =
+                JsonConvert.DeserializeObject<Dictionary<string, TGSerializedProperty>>(_json);
 
             TGSerializedObject tg = new TGSerializedObject(temp);
 
@@ -1010,7 +1009,7 @@ namespace TreeGecko.Library.Common.Objects
         /// <typeparam name="T"></typeparam>
         /// <param name="_serialized"></param>
         /// <returns></returns>
-        public static T GetTGSerializable<T>(string _serialized) where T: ITGSerializable, new()
+        public static T GetTGSerializable<T>(string _serialized) where T : ITGSerializable, new()
         {
             T obj = new T();
 
@@ -1057,7 +1056,7 @@ namespace TreeGecko.Library.Common.Objects
             if (temp != null)
             {
                 string[] stringGuids = temp.Split("|".ToCharArray(),
-                                                  StringSplitOptions.RemoveEmptyEntries);
+                    StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (string stringGuid in stringGuids)
                 {
@@ -1068,24 +1067,24 @@ namespace TreeGecko.Library.Common.Objects
             return guids;
         }
 
-		public List<string> GetListOfStrings(string _name)
-		{
-			List<string> values = new List<string>();
+        public List<string> GetListOfStrings(string _name)
+        {
+            List<string> values = new List<string>();
 
-			string temp = GetString(_name);
-			
-			if (temp != null)
-			{
-				string[] valueArray = temp.Split("|".ToCharArray(),
-				                                  StringSplitOptions.RemoveEmptyEntries);
-				
-				foreach (string valueItem in valueArray)
-				{
-					values.Add(valueItem);
-				}
-			}
-			
-			return values;
-		}
+            string temp = GetString(_name);
+
+            if (temp != null)
+            {
+                string[] valueArray = temp.Split("|".ToCharArray(),
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string valueItem in valueArray)
+                {
+                    values.Add(valueItem);
+                }
+            }
+
+            return values;
+        }
     }
 }
