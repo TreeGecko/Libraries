@@ -13,3 +13,5 @@ src/tgNet/obj/
 src/tgHDF5/bin/
 src/tgHDF5/obj/
 src/packages/
+src/tgTests/obj/
+src/tgTests/bin/

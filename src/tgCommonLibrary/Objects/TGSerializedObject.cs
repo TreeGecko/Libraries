@@ -542,7 +542,7 @@ namespace TreeGecko.Library.Common.Objects
             {
                 string temp = Properties[_name].SerializedValue;
 
-                return Convert.ToDateTime(temp);
+                return DateHelper.ParseDateTimeString(temp);
             }
 
             return DateTime.MinValue;
@@ -765,7 +765,7 @@ namespace TreeGecko.Library.Common.Objects
 
                 if (!string.IsNullOrEmpty(temp))
                 {
-                    return Convert.ToDateTime(temp);
+                    return DateHelper.ParseDateTimeString(temp);
                 }
             }
 

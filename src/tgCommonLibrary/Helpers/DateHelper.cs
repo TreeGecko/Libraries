@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace TreeGecko.Library.Common.Helpers
 {
@@ -6,9 +7,24 @@ namespace TreeGecko.Library.Common.Helpers
     {
         public static string ToString(DateTime _dateTime)
         {
-            return _dateTime.ToString("u");
+            return _dateTime.ToString("o");
         }
+
+        /// <summary>
+        /// Requires format of RoundTrip format
+        /// </summary>
+        /// <param name="_value"></param>
+        /// <returns></returns>
+        public static DateTime ParseDateTimeString(string _value)
+        {
+            if (_value == null)
+            {
+                throw new ArgumentNullException("_value", "Supplied date time string cannot be null");
+            }
             
+            DateTime outputValue = DateTime.Parse(_value, null, DateTimeStyles.RoundtripKind);
+            return outputValue;
+        }
 
         public static DateTime? ParseDate(string _value)
         {
