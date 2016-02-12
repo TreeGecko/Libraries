@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Helpers\DateHelperTests.cs" />
+    <Compile Include="Common\Objects\AbstractTGObjectTests.cs" />
     <Compile Include="Common\Objects\TGSerializedObjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

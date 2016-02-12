@@ -11,7 +11,7 @@ namespace TreeGecko.Library.Common.Objects
         {
             Guid = Guid.NewGuid();
             Active = true;
-			LastModifiedDateTime = DateTime.UtcNow;
+            LastModifiedDateTime = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -28,34 +28,33 @@ namespace TreeGecko.Library.Common.Objects
         /// <summary>
         /// 
         /// </summary>
-		public string VersionTimeStamp { get; set; }
+        public string VersionTimeStamp { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public bool Active { get; set; }
-		
-		/// <summary>
-		/// Gets or sets the last modified date time.
-		/// </summary>
-		/// <value>
-		/// The last modified date time.
-		/// </value>
-		public DateTime LastModifiedDateTime { get; set;}
+
+        /// <summary>
+        /// Gets or sets the last modified date time.
+        /// </summary>
+        /// <value>
+        /// The last modified date time.
+        /// </value>
+        public DateTime LastModifiedDateTime { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public Guid LastModifiedBy { get; set; }
+        public Guid? LastModifiedBy { get; set; }
 
-	
-		/// <summary>
-		/// Gets or sets the parent GUID.
-		/// </summary>
-		/// <value>
-		/// The parent GUID.
-		/// </value>
-		public Guid? ParentGuid { get; set; }
+        /// <summary>
+        /// Gets or sets the parent GUID.
+        /// </summary>
+        /// <value>
+        /// The parent GUID.
+        /// </value>
+        public Guid? ParentGuid { get; set; }
 
         /// <summary>
         /// 
@@ -69,14 +68,15 @@ namespace TreeGecko.Library.Common.Objects
         public virtual TGSerializedObject GetTGSerializedObject()
         {
             TGSerializedObject obj = new TGSerializedObject
-                                          {
-                                              TGObjectType = TGObjectType
-                                          };
+            {
+                TGObjectType = TGObjectType
+            };
 
             obj.Add("Guid", Guid);
             obj.Add("Active", Active);
-			obj.Add("LastModifiedDateTime", LastModifiedDateTime);
-			obj.Add("VersionTimeStamp", VersionTimeStamp);
+            obj.Add("LastModifiedBy", LastModifiedBy);
+            obj.Add("LastModifiedDateTime", LastModifiedDateTime);
+            obj.Add("VersionTimeStamp", VersionTimeStamp);
             obj.Add("ParentGuid", ParentGuid);
             obj.Add("VersionGuid", VersionGuid);
             obj.Add("PersistedDateTime", PersistedDateTime);
@@ -91,24 +91,25 @@ namespace TreeGecko.Library.Common.Objects
         public virtual void LoadFromTGSerializedObject(TGSerializedObject _tg)
         {
             Guid = _tg.GetGuid("Guid");
-			if (Guid == Guid.Empty)
-			{
-				Guid = Guid.NewGuid();
-			}
+            if (Guid == Guid.Empty)
+            {
+                Guid = Guid.NewGuid();
+            }
 
             Active = _tg.GetBoolean("Active");
-			LastModifiedDateTime = _tg.GetDateTime("LastModifiedDateTime");
+            LastModifiedDateTime = _tg.GetDateTime("LastModifiedDateTime");
+            LastModifiedBy = _tg.GetNullableGuid("LastModifiedBy");
 
             string versionTimeStamp = _tg.GetString("VersionTimeStamp");
 
             if (VersionTimeStamp == null)
-			{
+            {
                 VersionTimeStamp = DateHelper.GetCurrentTimeStamp();
-			}
-			else
-			{
+            }
+            else
+            {
                 VersionTimeStamp = versionTimeStamp;
-			}
+            }
 
             ParentGuid = _tg.GetNullableGuid("ParentGuid");
             VersionGuid = _tg.GetGuid("VersionGuid");
@@ -138,10 +139,7 @@ namespace TreeGecko.Library.Common.Objects
 
         public virtual string TGObjectType
         {
-            get 
-            { 
-                return ReflectionHelper.GetTypeName(GetType());
-            }
+            get { return ReflectionHelper.GetTypeName(GetType()); }
         }
     }
 }
