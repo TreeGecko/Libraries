@@ -39,7 +39,7 @@ namespace tgTests.Common.Objects
             Assert.AreEqual(tc.PersistedDateTime, newTc.PersistedDateTime);
             Assert.AreEqual(tc.VersionGuid, newTc.VersionGuid);
 
-            Assert.Less(tc.VersionTimeStamp, newTc.VersionTimeStamp);
+            Assert.LessOrEqual(tc.VersionTimeStamp, newTc.VersionTimeStamp);
         }
 
     }
