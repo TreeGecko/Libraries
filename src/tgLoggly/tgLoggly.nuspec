@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>TreeGeckoLibraries.Loggly</id>
+    <version>$version$</version>
+    <title>TreeGecko Loggly Library</title>
+    <authors>Brian Nelson</authors>
+    <owners>Brian Nelson</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>TracefileListener Loggly implementation</description>
+    <copyright>Copyright 2016</copyright>
+    <dependencies>
+      <dependency id="TreeGeckoLibraries.Common" />
+      <dependency id="RestSharp" />
+    </dependencies>
+  </metadata>
+
+</package>

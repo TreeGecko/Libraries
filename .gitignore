@@ -15,3 +15,5 @@ src/tgHDF5/obj/
 src/packages/
 src/tgTests/obj/
 src/tgTests/bin/
+src/tgLoggly/bin/
+src/tgLoggly/obj/

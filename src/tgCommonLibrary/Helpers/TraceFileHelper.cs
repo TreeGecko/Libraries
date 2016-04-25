@@ -33,55 +33,71 @@ namespace TreeGecko.Library.Common.Helpers
             get { return m_MinTraceLevel; }
             set { m_MinTraceLevel = value; }
         }
-		
-        /// <summary>
-        /// Write out Error-level message
-        /// </summary>
-        /// <param name="_message">Message to write</param>
-        public static void Error(string _message)
-        { WriteLineLevel(_message, "ERR", TraceLevel.Error); }
 
-        /// <summary>
-        /// Write out Warning-level message
-        /// </summary>
-        /// <param name="_message">Message to write</param>
-        public static void Warning(string _message)
-        { WriteLineLevel(_message, "WRN", TraceLevel.Warning); }
+	    /// <summary>
+	    /// Write out Error-level message
+	    /// </summary>
+	    /// <param name="_message">Message to write</param>
+	    /// <param name="_parameters"></param>
+	    public static void Error(string _message, params object[] _parameters)
+	    {
+	        WriteLineLevel(_message, "ERR", TraceLevel.Error, _parameters);
+	    }
 
-        /// <summary>
-        /// Write out Exception-level message
-        /// </summary>
-        /// <param name="_message">Message to write</param>
-        public static void Exception(string _message)
-        { 
-            WriteLineLevel(_message, "EXP", TraceLevel.Error); 
-        }
+	    /// <summary>
+	    /// Write out Warning-level message
+	    /// </summary>
+	    /// <param name="_message">Message to write</param>
+	    /// <param name="_parameters"></param>
+	    public static void Warning(string _message, params object[] _parameters)
+	    {
+	        WriteLineLevel(_message, "WRN", TraceLevel.Warning, _parameters);
+	    }
 
-        public static void Exception(Exception _ex)
+	    /// <summary>
+	    /// Write out Exception-level message
+	    /// </summary>
+	    /// <param name="_message">Message to write</param>
+	    /// <param name="_parameters"></param>
+	    public static void Exception(string _message, params object[] _parameters)
         {
-            WriteLineLevel(_ex.ToString(), "EXP", TraceLevel.Error);
+            WriteLineLevel(_message, "EXP", TraceLevel.Error, _parameters); 
         }
 
         /// <summary>
-        /// Write out Info-level message
+        /// 
         /// </summary>
-        /// <param name="_message">Message to write</param>
-        public static void Info(string _message)
-        { 
-            WriteLineLevel(_message, "INF", TraceLevel.Info); 
+        /// <param name="_ex"></param>
+        /// <param name="_parameters"></param>
+        public static void Exception(Exception _ex, params object[] _parameters)
+        {
+            WriteLineLevel(_ex.ToString(), "EXP", TraceLevel.Error, _parameters);
         }
 
-        /// <summary>
-        /// Write out Verbose-level message
-        /// </summary>
-        /// <param name="_message">Message to write</param>
-        public static void Verbose(string _message)
+	    /// <summary>
+	    /// Write out Info-level message
+	    /// </summary>
+	    /// <param name="_message">Message to write</param>
+	    /// <param name="_parameters"></param>
+	    public static void Info(string _message, params object[] _parameters)
+        {
+            WriteLineLevel(_message, "INF", TraceLevel.Info, _parameters); 
+        }
+
+	    /// <summary>
+	    /// Write out Verbose-level message
+	    /// </summary>
+	    /// <param name="_message">Message to write</param>
+	    /// <param name="_parameters"></param>
+	    public static void Verbose(string _message, params object[] _parameters)
         { 
             WriteLineLevel(_message, "VER", TraceLevel.Verbose); 
         }
         
         private static void WriteLineLevel(string _message, 
-            string _category, TraceLevel _traceLevel)
+            string _category, 
+            TraceLevel _traceLevel,
+            params object[] _parameters)
         {
 
             //Don't log if current TraceLevel too low
@@ -90,9 +106,9 @@ namespace TreeGecko.Library.Common.Helpers
 
             if (_message == "")
             { 
-				Trace.WriteLine("");  
-				return; 
-			}
+                Trace.WriteLine("");  
+                return; 
+            }
 
             StringBuilder sb = new StringBuilder();
 
@@ -101,14 +117,28 @@ namespace TreeGecko.Library.Common.Helpers
 
             if (_message.Length < 32000)
             {
-                sb.Append(_message);
+                if (_parameters == null)
+                {
+                    sb.Append(_message);
+                }
+                else
+                {
+                    sb.AppendFormat(_message, _parameters);
+                }
             }
             else
             {
                 sb.Append("Partial Message - ");
-                sb.Append(_message.Substring(0, 32000));
+                if (_parameters == null)
+                {
+                    sb.Append(_message.Substring(0, 32000));
+                }
+                else
+                {
+                    sb.AppendFormat(_message.Substring(0, 32000), _parameters);
+                }
             }
-			
+
             Trace.WriteLine(sb.ToString(), _category);
         }
     
