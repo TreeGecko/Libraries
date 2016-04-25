@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MongoDB.Driver;
+using TreeGecko.Library.Common.Helpers;
 using TreeGecko.Library.Mongo.Managers;
 using TreeGecko.Library.Net.DAOs;
 using TreeGecko.Library.Net.Objects;
@@ -111,23 +112,22 @@ namespace TreeGecko.Library.Net.Managers
         #region Logging
         public void LogWarning(Guid _userGuid, string _message)
         {
-            WebLogEntryDAO dao = new WebLogEntryDAO(MongoDB);
-
+            TraceFileHelper.Warning(_message + "|UserGuid - {0}", _userGuid);
         }
 
         public void LogException(Guid _userGuid, Exception _message)
         {
-
+            TraceFileHelper.Exception(_message + "|UserGuid - {0}", _userGuid);
         }
 
         public void LogInfo(Guid _userGuid, string _message)
         {
-
+            TraceFileHelper.Info(_message + "|UserGuid - {0}", _userGuid);
         }
 
         public void LogVerbose(Guid _userGuid, string _message)
         {
-
+            TraceFileHelper.Verbose(_message + "|UserGuid - {0}", _userGuid);
         }
 
         #endregion
