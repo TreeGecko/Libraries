@@ -47,7 +47,7 @@ namespace TreeGecko.Library.Mongo.Helpers
             IndexKeysBuilder ikb = IndexKeys.GeoSpatialSpherical(_column);
             IMongoIndexOptions options = GetIndexOptions(_indexName, false);
 
-            _table.EnsureIndex(ikb, options);
+            _table.CreateIndex(ikb, options);
         }
 
 
@@ -66,7 +66,7 @@ namespace TreeGecko.Library.Mongo.Helpers
             IMongoIndexKeys keys = GetIndexKeys(_columns);
             IMongoIndexOptions options = GetIndexOptions(_indexName, true, _sparce);
             
-            _table.EnsureIndex(keys, options);
+            _table.CreateIndex(keys, options);
         }
 
 
@@ -99,7 +99,7 @@ namespace TreeGecko.Library.Mongo.Helpers
             IMongoIndexKeys keys = GetIndexKeys(_columns);
             IMongoIndexOptions options = GetIndexOptions(_indexName, false);
 
-            _table.EnsureIndex(keys, options);
+            _table.CreateIndex(keys, options);
         }
 
         public static void BuildNonuniqueIndex(MongoCollection _table,
