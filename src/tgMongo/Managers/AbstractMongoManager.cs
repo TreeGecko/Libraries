@@ -44,9 +44,9 @@ namespace TreeGecko.Library.Mongo.Managers
             }
 
             //TODO - Fix so uses ServiceCredentials
-            MongoCredential credential = MongoCredential.CreateMongoCRCredential(_credentials.AuthenticationDBName,
-                                                                                 _credentials.UserName,
-                                                                                 _credentials.Password);
+            MongoCredential credential = MongoCredential.CreateCredential(_credentials.AuthenticationDBName,
+                _credentials.UserName,
+                _credentials.Password);
 
             List<MongoServerAddress> serverAddresses = new List<MongoServerAddress>();
             
