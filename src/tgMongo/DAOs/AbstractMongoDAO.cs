@@ -317,7 +317,7 @@ namespace TreeGecko.Library.Mongo.DAOs
         /// <returns></returns>
         public List<T> GetActive()
         {
-            IMongoQuery query = GetQuery("Active", "true");
+            IMongoQuery query = GetQuery("Active", Convert.ToString(true));
 
             return GetList(query);
         }
@@ -328,7 +328,7 @@ namespace TreeGecko.Library.Mongo.DAOs
         /// <returns></returns>
         public List<T> GetInactive()
         {
-            IMongoQuery query = GetQuery("Active", "false");
+            IMongoQuery query = GetQuery("Active", Convert.ToString(false));
 
             return GetList(query);
         }
