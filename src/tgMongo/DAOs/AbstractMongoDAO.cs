@@ -103,7 +103,7 @@ namespace TreeGecko.Library.Mongo.DAOs
                 _port = 27017;
             }
 
-            MongoCredential credential = MongoCredential.CreateMongoCRCredential(_database, _userName, _password);
+            MongoCredential credential = MongoCredential.CreateCredential(_database, _userName, _password);
 
             List<MongoServerAddress> serverAddresses = new List<MongoServerAddress>();
             foreach (string serverName in _servers)
