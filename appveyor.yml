@@ -1,5 +1,9 @@
 version: 1.0.{build}
 
+install:
+  - ps: .\install-mongo-on-appveyor.ps1
+  - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
+  
 before_build:
   - nuget restore src/tgLibraries_2010.sln
 
@@ -27,3 +31,7 @@ build:
   verbosity: Minimal 
   publish_nuget: true
   
+after_test: 
+  - c:\projects\libraries\cover.bat
+  - pip install codecov
+  - codecov -f "c:\projects\libraries\tglibraries-coverage.xml" -X gcov  

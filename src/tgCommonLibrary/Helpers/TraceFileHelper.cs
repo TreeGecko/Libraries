@@ -90,9 +90,9 @@ namespace TreeGecko.Library.Common.Helpers
 	    /// <param name="_message">Message to write</param>
 	    /// <param name="_parameters"></param>
 	    public static void Verbose(string _message, params object[] _parameters)
-        { 
-            WriteLineLevel(_message, "VER", TraceLevel.Verbose); 
-        }
+	    {
+	        WriteLineLevel(_message, "VER", TraceLevel.Verbose, _parameters);
+	    }
         
         private static void WriteLineLevel(string _message, 
             string _category, 
@@ -117,7 +117,8 @@ namespace TreeGecko.Library.Common.Helpers
 
             if (_message.Length < 32000)
             {
-                if (_parameters == null)
+                if (_parameters == null 
+                    || _parameters.Length == 0)
                 {
                     sb.Append(_message);
                 }
