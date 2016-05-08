@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9FBF2F
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tgTests", "tgTests\tgTests.csproj", "{D803F5BD-83F6-4C65-9F1D-4B6EB693EEE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeGeckoTests", "tgTests\TreeGeckoTests.csproj", "{D803F5BD-83F6-4C65-9F1D-4B6EB693EEE7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tgLoggly", "tgLoggly\tgLoggly.csproj", "{9F2B0F0C-B007-420D-B6E3-920A8756D47F}"
 EndProject
