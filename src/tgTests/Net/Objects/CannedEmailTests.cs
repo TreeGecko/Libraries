@@ -185,7 +185,7 @@ namespace tgTests.Net.Objects
             };
             mcm.Persist(email2);
 
-            List<CannedEmail> emails = mcm.GetCannedEmails();
+            List<CannedEmail> emails = mcm.GetActiveCannedEmails();
 
             bool has1 = false;
             bool has2 = false;
