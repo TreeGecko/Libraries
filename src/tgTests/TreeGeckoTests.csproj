@@ -77,6 +77,7 @@
     <Compile Include="Common\Objects\TGSerializedObjectTests.cs" />
     <Compile Include="Net\Managers\LogTests.cs" />
     <Compile Include="Net\Managers\MockCoreManager.cs" />
+    <Compile Include="Net\Objects\CannedEmailTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,7 +107,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AWS\" />
     <Folder Include="Common\Managers\" />
+    <Folder Include="Geospatial\" />
+    <Folder Include="Loggly\" />
+    <Folder Include="Mongo\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

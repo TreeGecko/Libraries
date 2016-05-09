@@ -145,6 +145,18 @@ namespace TreeGecko.Library.Net.Managers
             return dao.Get(_cannedEmailGuid);
         }
 
+        public List<CannedEmail> GetCannedEmails()
+        {
+            CannedEmailDAO dao = new CannedEmailDAO(MongoDB);
+            return dao.GetAll();
+        }
+
+        public List<CannedEmail> GetActiveCannedEmails()
+        {
+            CannedEmailDAO dao = new CannedEmailDAO(MongoDB);
+            return dao.GetActive();
+        }
+
         public CannedEmail GetCannedEmail(string _cannedEmailName)
         {
             CannedEmailDAO dao = new CannedEmailDAO(MongoDB);
