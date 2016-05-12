@@ -359,17 +359,7 @@ namespace TreeGecko.Library.Mongo.DAOs
         /// <returns></returns>
         public T GetFirst(MongoCursor _cursor)
         {
-            if (_cursor != null)
-            {
-                _cursor.SetLimit(1);
-
-                foreach (BsonDocument doc in _cursor)
-                {
-                    BsonHelper.Get<T>(doc);
-                }
-            }
-
-            return null;
+            return GetOneItem<T>(_cursor);
         }
 
         /// <summary>
