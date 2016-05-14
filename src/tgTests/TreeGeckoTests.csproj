@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Helpers\ConfigTests.cs" />
     <Compile Include="Common\Helpers\DateHelperTests.cs" />
     <Compile Include="Common\Objects\AbstractTGObjectTests.cs" />
     <Compile Include="Common\Objects\TGSerializedObjectTests.cs" />
