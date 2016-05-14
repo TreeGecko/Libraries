@@ -429,8 +429,8 @@ namespace TreeGecko.Library.Mongo.DAOs
         protected void BuildUniqueIndex(string _column, string _indexName)
         {
             MongoIndexHelper.BuildUniqueIndex(MongoCollection,
-                                              _column,
-                                              GetIndexName(_indexName));
+                _column,
+                GetIndexName(_indexName));
         }
 
         protected void BuildUniqueSparceIndex(string _column, string _indexName)
@@ -449,8 +449,8 @@ namespace TreeGecko.Library.Mongo.DAOs
         protected void BuildNonuniqueIndex(string _column, string _indexName)
         {
             MongoIndexHelper.BuildNonuniqueIndex(MongoCollection,
-                                              _column,
-                                              GetIndexName(_indexName));
+                _column,
+                GetIndexName(_indexName));
         }
 
         /// <summary>
@@ -461,8 +461,8 @@ namespace TreeGecko.Library.Mongo.DAOs
         protected void BuildUniqueIndex(IEnumerable<string> _columns, string _indexName)
         {
             MongoIndexHelper.BuildUniqueIndex(MongoCollection,
-                                              _columns,
-                                              GetIndexName(_indexName));
+                _columns,
+                GetIndexName(_indexName));
         }
 
         /// <summary>
@@ -497,8 +497,8 @@ namespace TreeGecko.Library.Mongo.DAOs
         protected void BuildNonuniqueIndex(IEnumerable<string> _columns, string _indexName)
         {
             MongoIndexHelper.BuildNonuniqueIndex(MongoCollection,
-                                             _columns,
-                                             GetIndexName(_indexName));
+                _columns,
+                GetIndexName(_indexName));
         }
 
         /// <summary>
@@ -625,6 +625,19 @@ namespace TreeGecko.Library.Mongo.DAOs
             IMongoQuery query = GetQuery(_parameters);
 
             return GetOneItem<U>(query);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="_sortColumn"></param>
+        /// <returns></returns>
+        public T GetOneItem<U>(string _sortColumn) where U : AbstractTGObject, new()
+        {
+            MongoCursor cursor = MongoCollection.FindAll().SetSortOrder(SortBy.Ascending(_sortColumn));
+
+            return GetOneItem<T>(cursor);
         }
 
         /// <summary>

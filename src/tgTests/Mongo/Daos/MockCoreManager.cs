@@ -1,5 +1,5 @@
 ﻿using System;
-using MongoDB.Driver;
+using System.Collections.Generic;
 using TreeGecko.Library.Net.Managers;
 
 namespace tgTests.Mongo.Daos
@@ -22,11 +22,22 @@ namespace tgTests.Mongo.Daos
             return dao.Get(_mockObjectGuid);
         }
 
-        //public MockObject GetFirstMockObject()
-        //{
-        //    MockMongoDao dao = new MockMongoDao(MongoDB);
+        public MockObject GetFirstByName()
+        {
+            MockMongoDao dao = new MockMongoDao(MongoDB);
+            return dao.GetFirstByName();
+        }
 
-        //    return dao.GetFirstByName();
-        //}
+        public List<MockObject> GetMockObjects()
+        {
+            MockMongoDao dao = new MockMongoDao(MongoDB);
+            return dao.GetAll();
+        }
+
+        public List<MockObject> GetActiveMockObjects()
+        {
+            MockMongoDao dao = new MockMongoDao(MongoDB);
+            return dao.GetActive();
+        }
     }
 }
