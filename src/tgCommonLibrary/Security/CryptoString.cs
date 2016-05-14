@@ -10,8 +10,8 @@ namespace TreeGecko.Library.Common.Security
     /// </summary>
     public class CryptoString
     {
-        private static byte[] m_SavedKey;
-        private static byte[] m_SavedIV;
+        private byte[] m_SavedKey;
+        private byte[] m_SavedIV;
 
         public CryptoString()
         {
@@ -99,6 +99,11 @@ namespace TreeGecko.Library.Common.Security
 
         public string Encrypt(string _originalString)
         {
+            if ((m_SavedKey == null) || (m_SavedIV == null))
+            {
+                throw new Exception("savedKey and savedIV must be non-null.");
+            }
+
             byte[] originalStringAsBytes = Encoding.ASCII.GetBytes(_originalString);
 
             MemoryStream ms = new MemoryStream(originalStringAsBytes.Length);
@@ -106,11 +111,6 @@ namespace TreeGecko.Library.Common.Security
 
             RdGenerateSecretKey(provider);
             RdGenerateSecretInitVector(provider);
-
-            if ((m_SavedKey == null) || (m_SavedIV == null))
-            {
-                throw new Exception("savedKey and savedIV must be non-null.");
-            }
 
             ICryptoTransform transform = provider.CreateEncryptor(
                 (byte[]) m_SavedKey.Clone(),
@@ -143,7 +143,7 @@ namespace TreeGecko.Library.Common.Security
 
             if ((m_SavedKey == null) || (m_SavedIV == null))
             {
-                throw new Exception("savedKey and saveIV must be non-null");
+                throw new Exception("savedKey and savedIV must be non-null.");
             }
 
             ICryptoTransform transform = provider.CreateDecryptor(

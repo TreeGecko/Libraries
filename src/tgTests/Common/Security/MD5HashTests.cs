@@ -28,11 +28,32 @@ namespace tgTests.Common.Security
         }
 
         [Test]
+        public void TestMD5MissingFile()
+        {
+            string tempFolder = Path.GetTempPath();
+            Guid temp = Guid.NewGuid();
+
+            string file = Path.Combine(tempFolder, temp + ".txt");
+
+            string hash = MD5Hash.GetMD5HashFromFile(file);
+            Assert.IsNull(hash);
+        }
+
+        [Test]
         public void TestMD5String()
         {
             string temp = "This is a test of the emergency broadcast system.";
             string hash = MD5Hash.GetMD5HashFromString(temp);
             Assert.IsNotNull(hash);
         }
+
+        [Test]
+        public void TestMD5NullString()
+        {
+            string hash = MD5Hash.GetMD5HashFromString(null);
+            Assert.IsNull(hash);
+        }
+
+
     }
 }
