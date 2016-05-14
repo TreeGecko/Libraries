@@ -75,6 +75,8 @@
     <Compile Include="Common\Helpers\DateHelperTests.cs" />
     <Compile Include="Common\Objects\AbstractTGObjectTests.cs" />
     <Compile Include="Common\Objects\TGSerializedObjectTests.cs" />
+    <Compile Include="Common\Security\CryptoStringTests.cs" />
+    <Compile Include="Common\Security\MD5HashTests.cs" />
     <Compile Include="Mongo\Daos\AbstractMongoDAOTests.cs" />
     <Compile Include="Mongo\Daos\MockCoreManager.cs" />
     <Compile Include="Mongo\Daos\MockMongoDAO.cs" />
