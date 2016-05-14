@@ -7,76 +7,80 @@ using System.Xml.Serialization;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>Represents a highly-precise rectangle.</summary>
-	/// <remarks>
-	/// 	<para>This class functions similar to the <strong>RectangleF</strong> class in the
-	///     <strong>System.Drawing</strong> namespace, except that it uses
-	///     double-floating-point precision and is also supported on the Compact Framework
-	///     edition of the <strong>GeoFramework</strong>.</para>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because it is
-	///     immutable (its properties can only be changed during constructors).</para>
-	/// </remarks>
+    /// <summary>Represents a highly-precise rectangle.</summary>
+    /// <remarks>
+    /// 	<para>This class functions similar to the <strong>RectangleF</strong> class in the
+    ///     <strong>System.Drawing</strong> namespace, except that it uses
+    ///     double-floating-point precision and is also supported on the Compact Framework
+    ///     edition of the <strong>GeoFramework</strong>.</para>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because it is
+    ///     immutable (its properties can only be changed during constructors).</para>
+    /// </remarks>
     public struct RectangleD : IFormattable, IEquatable<RectangleD>, IXmlSerializable
     {
         private readonly double m_Top;
         private readonly double m_Bottom;
         private readonly double m_Left;
         private readonly double m_Right;
-        
-		#region Fields
 
-		/// <summary>
-		/// Represents a RectangleD having no size.
-		/// </summary>
-		public static readonly RectangleD Empty = new RectangleD(0.0, 0.0, 0.0, 0.0);
-		
+        #region Fields
+
+        /// <summary>
+        /// Represents a RectangleD having no size.
+        /// </summary>
+        public static readonly RectangleD Empty = new RectangleD(0.0, 0.0, 0.0, 0.0);
+
         #endregion
 
-		#region Constructors
+        #region Constructors
 
-	    /// <summary>
-	    /// Creates a new instance using the specified location, width, and height.
-	    /// </summary>
-	    /// <param name="_location"></param>
-	    /// <param name="_size"></param>
-	    public RectangleD(PointD _location, SizeD _size) 
+        /// <summary>
+        /// Creates a new instance using the specified location, width, and height.
+        /// </summary>
+        /// <param name="_location"></param>
+        /// <param name="_size"></param>
+        public RectangleD(PointD _location, SizeD _size)
             : this(_location.X, _location.Y, _location.X + _size.Width, _location.Y + _size.Height)
-		{}
+        {
+        }
 
-		/// <summary>
-		/// Creates a new instance using the specified location, width, and height.
-		/// </summary>
-		/// <param name="_location"></param>
-		/// <param name="_width"></param>
-		/// <param name="_height"></param>
-		public RectangleD(PointD _location, double _width, double _height)
-			: this(_location.X, _location.Y, _location.X + _width, _location.Y + _height)
-		{}
+        /// <summary>
+        /// Creates a new instance using the specified location, width, and height.
+        /// </summary>
+        /// <param name="_location"></param>
+        /// <param name="_width"></param>
+        /// <param name="_height"></param>
+        public RectangleD(PointD _location, double _width, double _height)
+            : this(_location.X, _location.Y, _location.X + _width, _location.Y + _height)
+        {
+        }
 
-		/// <summary>
-		/// Creates a new instance using the specified upper-left and lower-right coordinates.
-		/// </summary>
-		public RectangleD(PointD _upperLeft, PointD _lowerRight) 
+        /// <summary>
+        /// Creates a new instance using the specified upper-left and lower-right coordinates.
+        /// </summary>
+        public RectangleD(PointD _upperLeft, PointD _lowerRight)
             : this(_upperLeft.X, _upperLeft.Y, _lowerRight.X, _lowerRight.Y)
-		{}
-        
-		/// <summary>
-		/// Creates a new instance using the specified latitudes and longitudes.
-		/// </summary>
-		public RectangleD(double _left, double _top, double _right, double _bottom) 
-		{
-			m_Top = _top < _bottom ? _top : _bottom;
-			m_Left = _left < _right ? _left : _right;
-			m_Bottom = _bottom > _top ? _bottom : _top;
-			m_Right = _right > _left ? _right : _left;
-		}
+        {
+        }
 
-		public RectangleD(string _value) 
+        /// <summary>
+        /// Creates a new instance using the specified latitudes and longitudes.
+        /// </summary>
+        public RectangleD(double _left, double _top, double _right, double _bottom)
+        {
+            m_Top = _top < _bottom ? _top : _bottom;
+            m_Left = _left < _right ? _left : _right;
+            m_Bottom = _bottom > _top ? _bottom : _top;
+            m_Right = _right > _left ? _right : _left;
+        }
+
+        public RectangleD(string _value)
             : this(_value, CultureInfo.CurrentCulture)
-		{}
+        {
+        }
 
-		public RectangleD(string _value, CultureInfo _culture)
-		{
+        public RectangleD(string _value, CultureInfo _culture)
+        {
             // Split the string into words
             string[] Values = _value.Split(_culture.TextInfo.ListSeparator.ToCharArray());
 
@@ -93,12 +97,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             {
                 throw new FormatException(Properties.Resources.RectangleD_InvalidFormat);
             }
-		}
+        }
 
         public RectangleD(XmlReader _reader)
         {
             m_Top = double.Parse(
-               _reader.GetAttribute("Top"), CultureInfo.InvariantCulture);
+                _reader.GetAttribute("Top"), CultureInfo.InvariantCulture);
             m_Bottom = double.Parse(
                 _reader.GetAttribute("Bottom"), CultureInfo.InvariantCulture);
             m_Left = double.Parse(
@@ -107,119 +111,83 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 _reader.GetAttribute("Right"), CultureInfo.InvariantCulture);
         }
 
-		#endregion
+        #endregion
 
         #region Public Properties
-        
-		/// <summary>Returns the top side of the rectangle.</summary>
-		/// <value>A <see cref="Latitude"></see> object marking the southern-most latitude.</value>
-		public double Top
-		{
-			get
-			{
-				return m_Top;
-			}
-		}
 
-		/// <summary>Returns the bottom side of the rectangle.</summary>
-		/// <value>A <see cref="Latitude"></see> object marking the southern-most latitude.</value>
-		public double Bottom
-		{
-			get
-			{
-				return m_Bottom;
-			}
-		}
-        
-		/// <summary>Returns the left side of the rectangle.</summary>
-		public double Left
-		{
-			get
-			{
-				return m_Left;
-			}
-		}
+        /// <summary>Returns the top side of the rectangle.</summary>
+        /// <value>A <see cref="Latitude"></see> object marking the southern-most latitude.</value>
+        public double Top
+        {
+            get { return m_Top; }
+        }
 
-		/// <summary>Returns the right side of the rectangle.</summary>
-		public double Right
-		{
-			get
-			{
-				return m_Right;
-			}
-		}
-        
-		/// <summary>Returns the top-to-bottom size of the rectangle.</summary>
-		public double Height
-		{
-			get
-			{
-				return m_Bottom - m_Top;
-			}
-		}
-        
-		/// <summary>Returns the left-to-right size of the rectangle.</summary>
-		public double Width
-		{
-			get
-			{
-				return m_Right - m_Left;
-			}
-		}
-        
-		/// <summary>Returns the width and height of the rectangle.</summary>
-		public SizeD Size
-		{
-			get
-			{
-				return new SizeD(Width, Height);
-			}
-		}
+        /// <summary>Returns the bottom side of the rectangle.</summary>
+        /// <value>A <see cref="Latitude"></see> object marking the southern-most latitude.</value>
+        public double Bottom
+        {
+            get { return m_Bottom; }
+        }
+
+        /// <summary>Returns the left side of the rectangle.</summary>
+        public double Left
+        {
+            get { return m_Left; }
+        }
+
+        /// <summary>Returns the right side of the rectangle.</summary>
+        public double Right
+        {
+            get { return m_Right; }
+        }
+
+        /// <summary>Returns the top-to-bottom size of the rectangle.</summary>
+        public double Height
+        {
+            get { return m_Bottom - m_Top; }
+        }
+
+        /// <summary>Returns the left-to-right size of the rectangle.</summary>
+        public double Width
+        {
+            get { return m_Right - m_Left; }
+        }
+
+        /// <summary>Returns the width and height of the rectangle.</summary>
+        public SizeD Size
+        {
+            get { return new SizeD(Width, Height); }
+        }
 
         /// <summary>Returns the point at the center of the rectangle.</summary>
         public PointD Center
         {
-            get
-            {
-                return new PointD(m_Left + Width * 0.5, m_Top + Height * 0.5);
-            }
+            get { return new PointD(m_Left + Width*0.5, m_Top + Height*0.5); }
         }
 
-		/// <summary>Returns the point at the upper-left corner of the rectangle.</summary>
-		public PointD UpperLeft
-		{
-			get
-			{
-				return new PointD(m_Left, m_Top);
-			}
-		}
+        /// <summary>Returns the point at the upper-left corner of the rectangle.</summary>
+        public PointD UpperLeft
+        {
+            get { return new PointD(m_Left, m_Top); }
+        }
 
-		/// <summary>Returns the point at the upper-right corner of the rectangle.</summary>
-		public PointD UpperRight
-		{
-			get
-			{
-				return new PointD(m_Right, m_Top);
-			}
-		}
+        /// <summary>Returns the point at the upper-right corner of the rectangle.</summary>
+        public PointD UpperRight
+        {
+            get { return new PointD(m_Right, m_Top); }
+        }
 
-		/// <summary>Returns the point at the lower-left corner of the rectangle.</summary>
-		public PointD LowerLeft
-		{
-			get
-			{
-				return new PointD(m_Left, m_Bottom);
-			}
-		}
+        /// <summary>Returns the point at the lower-left corner of the rectangle.</summary>
+        public PointD LowerLeft
+        {
+            get { return new PointD(m_Left, m_Bottom); }
+        }
 
-		/// <summary>Returns the point at the lower-right corner of the rectangle.</summary>
-		public PointD LowerRight
-		{
-			get
-			{
-				return new PointD(m_Right, m_Bottom);
-			}
-		}
+        /// <summary>Returns the point at the lower-right corner of the rectangle.</summary>
+        public PointD LowerRight
+        {
+            get { return new PointD(m_Right, m_Bottom); }
+        }
 
         /// <summary>Returns the ratio of the rectangle's width to its height.</summary>
         /// <remarks>
@@ -230,28 +198,24 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </remarks>
         public double AspectRatio
         {
-            get
-            {
-                return Width / Height;
-            }
+            get { return Width/Height; }
         }
 
-		/// <summary>Indicates if the rectangle has any value.</summary>
-		public bool IsEmpty
-		{
-			get
-			{
-				return (m_Top.Equals(0) 
-                    && m_Bottom.Equals(0)
-                    && m_Left.Equals(0)
-                    && m_Right.Equals(0));
-			}
-		}
+        /// <summary>Indicates if the rectangle has any value.</summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return (m_Top.Equals(0)
+                        && m_Bottom.Equals(0)
+                        && m_Left.Equals(0)
+                        && m_Right.Equals(0));
+            }
+        }
 
         #endregion
 
         #region Public Methods
-
 
         /// <summary>
         /// Changes the size and shape of the RectangleD to match the aspect ratio of the specified RectangleD.
@@ -263,7 +227,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public RectangleD ToAspectRatio(SizeD _size)
         {
             // Calculate the aspect ratio
-            return ToAspectRatio(_size.Width / _size.Height);
+            return ToAspectRatio(_size.Width/_size.Height);
         }
 
 
@@ -283,7 +247,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <returns></returns>
         public bool IsEnclosing(RectangleD _rectangle)
         {
-            return !(_rectangle.Left < m_Left || _rectangle.Right > m_Right || _rectangle.Top < m_Top || _rectangle.Bottom > m_Bottom);
+            return
+                !(_rectangle.Left < m_Left || _rectangle.Right > m_Right || _rectangle.Top < m_Top ||
+                  _rectangle.Bottom > m_Bottom);
         }
 
         public bool IsEnclosing(PointD _point)
@@ -294,7 +260,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Moves the rectangle so that the specified point is at its center.</summary>
         public RectangleD CenterOn(PointD _point)
         {
-            return new RectangleD(new PointD(_point.X - (Width * 0.5), _point.Y - (Height * 0.5)), Size);
+            return new RectangleD(new PointD(_point.X - (Width*0.5), _point.Y - (Height*0.5)), Size);
         }
 
         public RectangleD Inflate(SizeD size)
@@ -350,7 +316,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 LowerRight.RotateAt(_angle, _center),
                 LowerLeft.RotateAt(_angle, _center)
             };
-            
+
             // Now return the smallest rectangle which encloses these points
             return FromArray(points);
         }
@@ -370,7 +336,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 LowerRight.RotateAt(_angle, Center),
                 LowerLeft.RotateAt(_angle, Center)
             };
-            
+
             // Now return the smallest rectangle which encloses these points
             return FromArray(points);
         }
@@ -378,7 +344,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Returns the corner points of the rectangle as an array.</summary>
         public PointD[] ToArray()
         {
-            return new[] { UpperLeft, UpperRight, LowerRight, LowerLeft, UpperLeft };
+            return new[] {UpperLeft, UpperRight, LowerRight, LowerLeft, UpperLeft};
         }
 
         /// <summary>
@@ -393,20 +359,20 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             double currentAspect = AspectRatio;
 
             // Do the values already match?
-            if (currentAspect .Equals(_aspectRatio)) 
+            if (currentAspect.Equals(_aspectRatio))
                 return this;
-            
+
             // Is the new ratio higher or lower?
             if (_aspectRatio > currentAspect)
             {
                 // Inflate the RectangleD to the new height minus the current height
                 // TESTS OK
-                return Inflate(_aspectRatio * Height - Width, 0);
+                return Inflate(_aspectRatio*Height - Width, 0);
             }
             else
             {
                 // Inflate the RectangleD to the new height minus the current height
-                return Inflate(0, Width / _aspectRatio - Height);
+                return Inflate(0, Width/_aspectRatio - Height);
             }
         }
 
@@ -430,7 +396,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public RectangleD ToAspectRatio(RectangleD _rectangle)
         {
             // Calculate the aspect ratio
-            return ToAspectRatio(_rectangle.Width / _rectangle.Height);
+            return ToAspectRatio(_rectangle.Width/_rectangle.Height);
         }
 
         public RectangleD Inflate(double _widthOffset, double _heightOffset)
@@ -442,10 +408,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             double bottom = m_Bottom + _heightOffset;
             double left = m_Left - _widthOffset;
             double right = m_Right + _widthOffset;
-            
+
             if (top > bottom || right < left)
                 return this;
-            
+
             return new RectangleD(left, top, right, bottom);
         }
 
@@ -492,9 +458,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool IsOverlapping(RectangleD rectangle)
         {
             return !((rectangle.Top > m_Bottom)
-            || (rectangle.Bottom < m_Top)
-            || (rectangle.Left > m_Right)
-            || (rectangle.Right < m_Left));
+                     || (rectangle.Bottom < m_Top)
+                     || (rectangle.Left > m_Right)
+                     || (rectangle.Right < m_Left));
             //return true;
 
             //			if(rectangle.Top < Top)
@@ -515,9 +481,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool IsInsideOf(RectangleD rectangle)
         {
             return (Left > rectangle.Left
-                && Right < rectangle.Right
-                && m_Top > rectangle.Top
-                && m_Bottom < rectangle.Bottom);
+                    && Right < rectangle.Right
+                    && m_Top > rectangle.Top
+                    && m_Bottom < rectangle.Bottom);
         }
 
         /// <summary>
@@ -527,9 +493,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool IsEnclosingCenter(RectangleD rectangle)
         {
             return (rectangle.Left <= Center.X
-                && rectangle.Right >= Center.X
-                && rectangle.Top <= Center.Y
-                && rectangle.Bottom >= Center.Y);
+                    && rectangle.Right >= Center.X
+                    && rectangle.Top <= Center.Y
+                    && rectangle.Bottom >= Center.Y);
         }
 
         /// <summary>
@@ -602,7 +568,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             // Return false if the value is null
             if (obj is RectangleD)
-                return this.Equals((RectangleD)obj);
+                return this.Equals((RectangleD) obj);
             return false;
         }
 
@@ -802,24 +768,25 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region Conversions
 
-        public static explicit operator RectangleD(Rectangle value) 
-		{
-			return new RectangleD((double)value.Top, (double)value.Left, (double)value.Bottom, (double)value.Right);
-		}
+        public static explicit operator RectangleD(Rectangle value)
+        {
+            return new RectangleD((double) value.Top, (double) value.Left, (double) value.Bottom, (double) value.Right);
+        }
 
-		public static explicit operator RectangleD(RectangleF value) 
-		{
-			return new RectangleD((double)value.Top, (double)value.Left, (double)value.Bottom, (double)value.Right);
-		}
+        public static explicit operator RectangleD(RectangleF value)
+        {
+            return new RectangleD((double) value.Top, (double) value.Left, (double) value.Bottom, (double) value.Right);
+        }
 
-		public static explicit operator Rectangle(RectangleD value) 
-		{
-			return new Rectangle((int)value.Top, (int)value.Left, (int)(value.Bottom - value.Top), (int)(value.Right - value.Left));
-		}
+        public static explicit operator Rectangle(RectangleD value)
+        {
+            return new Rectangle((int) value.Top, (int) value.Left, (int) (value.Bottom - value.Top),
+                (int) (value.Right - value.Left));
+        }
 
-		public static explicit operator RectangleF(RectangleD value) 
-		{
-			return new RectangleF((float)value.Left, (float)value.Top, (float)(value.Width), (float)(value.Height));
+        public static explicit operator RectangleF(RectangleD value)
+        {
+            return new RectangleF((float) value.Left, (float) value.Top, (float) (value.Width), (float) (value.Height));
         }
 
         #endregion
@@ -830,9 +797,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             // The objects are equivalent if their bounds are equivalent
             return m_Left == other.Left
-                && m_Right == other.Right
-                && m_Top == other.Top
-                && m_Bottom == other.Bottom;
+                   && m_Right == other.Right
+                   && m_Top == other.Top
+                   && m_Bottom == other.Bottom;
         }
 
         #endregion
@@ -841,17 +808,17 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
             return m_Left.ToString(format, formatProvider)
-                + culture.TextInfo.ListSeparator
-                + m_Top.ToString(format, formatProvider)
-                + culture.TextInfo.ListSeparator
-                + Width.ToString(format, formatProvider)
-                + culture.TextInfo.ListSeparator
-                + Height.ToString(format, formatProvider);
+                   + culture.TextInfo.ListSeparator
+                   + m_Top.ToString(format, formatProvider)
+                   + culture.TextInfo.ListSeparator
+                   + Width.ToString(format, formatProvider)
+                   + culture.TextInfo.ListSeparator
+                   + Height.ToString(format, formatProvider);
         }
 
-		#endregion
+        #endregion
 
         #region IXmlSerializable Members
 
@@ -863,22 +830,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString("Top",
-                        m_Top.ToString("G17", CultureInfo.InvariantCulture));
+                m_Top.ToString("G17", CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Bottom",
-                        m_Bottom.ToString("G17", CultureInfo.InvariantCulture));
+                m_Bottom.ToString("G17", CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Left",
-                        m_Left.ToString("G17", CultureInfo.InvariantCulture));
+                m_Left.ToString("G17", CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Right",
-                        m_Right.ToString("G17", CultureInfo.InvariantCulture));
+                m_Right.ToString("G17", CultureInfo.InvariantCulture));
         }
 
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
-            throw new InvalidOperationException("Use the RectangleD(XmlReader) constructor to create a new instance instead of calling ReadXml.");
+            throw new InvalidOperationException(
+                "Use the RectangleD(XmlReader) constructor to create a new instance instead of calling ReadXml.");
         }
 
         #endregion
-
 
         #region Unused Code (Commented Out)
 

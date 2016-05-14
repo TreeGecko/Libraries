@@ -27,7 +27,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
     /// 	<para>Instances of this structure are guaranteed to be thread-safe because it is
     ///     immutable (its properties can only be modified via constructors).</para>
     /// </remarks>
-    [TypeConverter("GeoFramework.Design.SpeedConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a")]
+    [TypeConverter(
+        "GeoFramework.Design.SpeedConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a"
+        )]
     public struct Speed : IFormattable, IComparable<Speed>, IEquatable<Speed>, IXmlSerializable
     {
         private double _Value;
@@ -83,19 +85,27 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </remarks>
         /// <summary>Represents a speed of zero.</summary>
         public static readonly Speed Empty = new Speed(0, SpeedUnit.MetersPerSecond);
+
         /// <summary>Represents a speed of zero.</summary>
         public static readonly Speed AtRest = new Speed(0, SpeedUnit.MetersPerSecond);
+
         /// <summary>Returns the rate of travel of light in a vacuum.</summary>
         public static readonly Speed SpeedOfLight = new Speed(299792458, SpeedUnit.MetersPerSecond);
+
         /// <summary>Represents the largest possible speed.</summary>
-        public static readonly Speed Maximum = new Speed(Double.MaxValue, SpeedUnit.KilometersPerSecond).ToLocalUnitType();
+        public static readonly Speed Maximum =
+            new Speed(Double.MaxValue, SpeedUnit.KilometersPerSecond).ToLocalUnitType();
+
         /// <summary>Represents the smallest possible speed.</summary>
-        public static readonly Speed Minimum = new Speed(Double.MinValue, SpeedUnit.KilometersPerSecond).ToLocalUnitType();
+        public static readonly Speed Minimum =
+            new Speed(Double.MinValue, SpeedUnit.KilometersPerSecond).ToLocalUnitType();
 
         /// <summary>Returns the rate of travel of sound waves at sea level.</summary>
         public static readonly Speed SpeedOfSoundAtSeaLevel = new Speed(340.29, SpeedUnit.MetersPerSecond);
+
         /// <summary>Represents an infinite speed.</summary>
         public static readonly Speed Infinity = new Speed(double.PositiveInfinity, SpeedUnit.MetersPerSecond);
+
         /// <summary>
         /// Represents an invalid or unspecified value.
         /// </summary>
@@ -186,7 +196,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </remarks>
         public Speed(string value)
             : this(value, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
         public Speed(string value, CultureInfo culture)
         {
@@ -202,9 +213,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             }
             try
             {
-
                 // Convert to uppercase and remove commas
-                value = value.ToUpper(CultureInfo.InvariantCulture).Replace(culture.NumberFormat.NumberGroupSeparator, "");
+                value = value.ToUpper(CultureInfo.InvariantCulture)
+                    .Replace(culture.NumberFormat.NumberGroupSeparator, "");
                 if (value == "INFINITY")
                 {
                     _Value = Speed.Infinity.Value;
@@ -320,7 +331,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             // Initialize all fields
             _Value = Double.NaN;
             _Units = 0;
-            
+
             // Deserialize the object from XML
             ReadXml(reader);
         }
@@ -328,7 +339,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #endregion
 
         #region Public Properties
-
 
         /// <summary>Returns the numeric portion of the speed measurement.</summary>
         /// <remarks>
@@ -338,10 +348,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </remarks>
         public double Value
         {
-            get
-            {
-                return _Value;
-            }
+            get { return _Value; }
         }
 
         /// <remarks>
@@ -363,19 +370,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Returns the units portion of the speed measurement.</summary>
         public SpeedUnit Units
         {
-            get
-            {
-                return _Units;
-            }
+            get { return _Units; }
         }
 
         /// <summary>Indicates if the measurement is zero.</summary>
         public bool IsEmpty
         {
-            get
-            {
-                return _Value == 0;
-            }
+            get { return _Value == 0; }
         }
 
         /// <summary>Indicates if the unit of measurement is a Metric unit type.</summary>
@@ -384,18 +385,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             get
             {
                 return _Units == SpeedUnit.KilometersPerHour
-                    || _Units == SpeedUnit.KilometersPerSecond
-                    || _Units == SpeedUnit.MetersPerSecond;
+                       || _Units == SpeedUnit.KilometersPerSecond
+                       || _Units == SpeedUnit.MetersPerSecond;
             }
         }
 
         /// <summary>Indicates if the measurement is infinite.</summary>
         public bool IsInfinity
         {
-            get
-            {
-                return double.IsInfinity(_Value);
-            }
+            get { return double.IsInfinity(_Value); }
         }
 
         /// <summary>
@@ -433,17 +431,17 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (Units)
             {
                 case SpeedUnit.StatuteMilesPerHour:
-                    return new Speed(Value * StatuteMPHPerFPS, SpeedUnit.FeetPerSecond);
+                    return new Speed(Value*StatuteMPHPerFPS, SpeedUnit.FeetPerSecond);
                 case SpeedUnit.KilometersPerHour:
-                    return new Speed(Value * KPHPerFPS, SpeedUnit.FeetPerSecond);
+                    return new Speed(Value*KPHPerFPS, SpeedUnit.FeetPerSecond);
                 case SpeedUnit.KilometersPerSecond:
-                    return new Speed(Value * KPSPerFPS, SpeedUnit.FeetPerSecond);
+                    return new Speed(Value*KPSPerFPS, SpeedUnit.FeetPerSecond);
                 case SpeedUnit.FeetPerSecond:
                     return this;
                 case SpeedUnit.MetersPerSecond:
-                    return new Speed(Value * MPSPerFPS, SpeedUnit.FeetPerSecond);
+                    return new Speed(Value*MPSPerFPS, SpeedUnit.FeetPerSecond);
                 case SpeedUnit.Knots:
-                    return new Speed(Value * KnotsPerFPS, SpeedUnit.FeetPerSecond);
+                    return new Speed(Value*KnotsPerFPS, SpeedUnit.FeetPerSecond);
                 default:
                     return Speed.Empty;
             }
@@ -456,17 +454,17 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (Units)
             {
                 case SpeedUnit.StatuteMilesPerHour:
-                    return new Speed(Value * StatuteMPHPerKPH, SpeedUnit.KilometersPerHour);
+                    return new Speed(Value*StatuteMPHPerKPH, SpeedUnit.KilometersPerHour);
                 case SpeedUnit.KilometersPerHour:
                     return this;
                 case SpeedUnit.FeetPerSecond:
-                    return new Speed(Value * FPSPerKPH, SpeedUnit.KilometersPerHour);
+                    return new Speed(Value*FPSPerKPH, SpeedUnit.KilometersPerHour);
                 case SpeedUnit.MetersPerSecond:
-                    return new Speed(Value * MPSPerKPH, SpeedUnit.KilometersPerHour);
+                    return new Speed(Value*MPSPerKPH, SpeedUnit.KilometersPerHour);
                 case SpeedUnit.Knots:
-                    return new Speed(Value * KnotsPerKPH, SpeedUnit.KilometersPerHour);
+                    return new Speed(Value*KnotsPerKPH, SpeedUnit.KilometersPerHour);
                 case SpeedUnit.KilometersPerSecond:
-                    return new Speed(Value * KPSPerKPH, SpeedUnit.KilometersPerHour);
+                    return new Speed(Value*KPSPerKPH, SpeedUnit.KilometersPerHour);
                 default:
                     return Speed.Empty;
             }
@@ -479,17 +477,17 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (Units)
             {
                 case SpeedUnit.StatuteMilesPerHour:
-                    return new Speed(Value * StatuteMPHPerKPS, SpeedUnit.KilometersPerSecond);
+                    return new Speed(Value*StatuteMPHPerKPS, SpeedUnit.KilometersPerSecond);
                 case SpeedUnit.KilometersPerHour:
-                    return new Speed(Value * KPHPerKPS, SpeedUnit.KilometersPerSecond);
+                    return new Speed(Value*KPHPerKPS, SpeedUnit.KilometersPerSecond);
                 case SpeedUnit.KilometersPerSecond:
                     return this;
                 case SpeedUnit.FeetPerSecond:
-                    return new Speed(Value * FPSPerKPS, SpeedUnit.KilometersPerSecond);
+                    return new Speed(Value*FPSPerKPS, SpeedUnit.KilometersPerSecond);
                 case SpeedUnit.MetersPerSecond:
-                    return new Speed(Value * MPSPerKPS, SpeedUnit.KilometersPerSecond);
+                    return new Speed(Value*MPSPerKPS, SpeedUnit.KilometersPerSecond);
                 case SpeedUnit.Knots:
-                    return new Speed(Value * KnotsPerKPS, SpeedUnit.KilometersPerSecond);
+                    return new Speed(Value*KnotsPerKPS, SpeedUnit.KilometersPerSecond);
                 default:
                     return Speed.Empty;
             }
@@ -502,15 +500,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (Units)
             {
                 case SpeedUnit.StatuteMilesPerHour:
-                    return new Speed(Value * StatuteMPHPerKnot, SpeedUnit.Knots);
+                    return new Speed(Value*StatuteMPHPerKnot, SpeedUnit.Knots);
                 case SpeedUnit.KilometersPerHour:
-                    return new Speed(Value * KPHPerKnot, SpeedUnit.Knots);
+                    return new Speed(Value*KPHPerKnot, SpeedUnit.Knots);
                 case SpeedUnit.KilometersPerSecond:
-                    return new Speed(Value * KPSPerKnot, SpeedUnit.Knots);
+                    return new Speed(Value*KPSPerKnot, SpeedUnit.Knots);
                 case SpeedUnit.FeetPerSecond:
-                    return new Speed(Value * FPSPerKnot, SpeedUnit.Knots);
+                    return new Speed(Value*FPSPerKnot, SpeedUnit.Knots);
                 case SpeedUnit.MetersPerSecond:
-                    return new Speed(Value * MPSPerKnot, SpeedUnit.Knots);
+                    return new Speed(Value*MPSPerKnot, SpeedUnit.Knots);
                 case SpeedUnit.Knots:
                     return this;
                 default:
@@ -525,17 +523,17 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (Units)
             {
                 case SpeedUnit.StatuteMilesPerHour:
-                    return new Speed(Value * StatuteMPHPerMPS, SpeedUnit.MetersPerSecond);
+                    return new Speed(Value*StatuteMPHPerMPS, SpeedUnit.MetersPerSecond);
                 case SpeedUnit.KilometersPerHour:
-                    return new Speed(Value * KPHPerMPS, SpeedUnit.MetersPerSecond);
+                    return new Speed(Value*KPHPerMPS, SpeedUnit.MetersPerSecond);
                 case SpeedUnit.KilometersPerSecond:
-                    return new Speed(Value * KPSPerMPS, SpeedUnit.MetersPerSecond);
+                    return new Speed(Value*KPSPerMPS, SpeedUnit.MetersPerSecond);
                 case SpeedUnit.FeetPerSecond:
-                    return new Speed(Value * FPSPerMPS, SpeedUnit.MetersPerSecond);
+                    return new Speed(Value*FPSPerMPS, SpeedUnit.MetersPerSecond);
                 case SpeedUnit.MetersPerSecond:
                     return this;
                 case SpeedUnit.Knots:
-                    return new Speed(Value * KnotsPerMPS, SpeedUnit.MetersPerSecond);
+                    return new Speed(Value*KnotsPerMPS, SpeedUnit.MetersPerSecond);
                 default:
                     return Speed.Empty;
             }
@@ -550,15 +548,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 case SpeedUnit.StatuteMilesPerHour:
                     return this;
                 case SpeedUnit.KilometersPerHour:
-                    return new Speed(Value * KPHPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
+                    return new Speed(Value*KPHPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
                 case SpeedUnit.KilometersPerSecond:
-                    return new Speed(Value * KPSPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
+                    return new Speed(Value*KPSPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
                 case SpeedUnit.FeetPerSecond:
-                    return new Speed(Value * FPSPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
+                    return new Speed(Value*FPSPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
                 case SpeedUnit.MetersPerSecond:
-                    return new Speed(Value * MPSPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
+                    return new Speed(Value*MPSPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
                 case SpeedUnit.Knots:
-                    return new Speed(Value * KnotsPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
+                    return new Speed(Value*KnotsPerStatuteMPH, SpeedUnit.StatuteMilesPerHour);
                 default:
                     return Speed.Empty;
             }
@@ -663,7 +661,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// the current speed for the specified length of time.</returns>
         public Distance ToDistance(TimeSpan time)
         {
-            return new Distance(ToMetersPerSecond().Value * time.TotalMilliseconds / 1000.0, DistanceUnit.Meters).ToLocalUnitType();
+            return
+                new Distance(ToMetersPerSecond().Value*time.TotalMilliseconds/1000.0, DistanceUnit.Meters)
+                    .ToLocalUnitType();
         }
 
         #endregion
@@ -678,7 +678,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public override bool Equals(object obj)
         {
             if (obj is Speed)
-                return Equals((Speed)obj);
+                return Equals((Speed) obj);
             return false;
         }
 
@@ -862,7 +862,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public static SpeedUnit ParseSpeedUnit(string value)
         {
-            return (SpeedUnit)Enum.Parse(typeof(SpeedUnit), value, true);
+            return (SpeedUnit) Enum.Parse(typeof(SpeedUnit), value, true);
         }
 
         /// <summary>Returns a random distance between 0 and 200 kilometers per hour.</summary>
@@ -880,7 +880,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </param>
         public static Speed Random(Random generator)
         {
-            return new Speed(generator.NextDouble() * 200, SpeedUnit.KilometersPerHour).ToLocalUnitType();
+            return new Speed(generator.NextDouble()*200, SpeedUnit.KilometersPerHour).ToLocalUnitType();
         }
 
         #endregion
@@ -959,22 +959,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public Speed Multiply(Speed value)
         {
-            return new Speed(_Value * value.ToUnitType(_Units).Value, _Units);
+            return new Speed(_Value*value.ToUnitType(_Units).Value, _Units);
         }
 
         public Speed Multiply(double value)
         {
-            return new Speed(_Value * value, Units);
+            return new Speed(_Value*value, Units);
         }
 
         public Speed Divide(Speed value)
         {
-            return new Speed(_Value / value.ToUnitType(_Units).Value, _Units);
+            return new Speed(_Value/value.ToUnitType(_Units).Value, _Units);
         }
 
         public Speed Divide(double value)
         {
-            return new Speed(Value / value, Units);
+            return new Speed(Value/value, Units);
         }
 
         /// <summary>Returns the current instance increased by one.</summary>
@@ -1067,7 +1067,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -1206,7 +1206,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             catch (Exception ex)
             {
                 throw new ArgumentException(Properties.Resources.Speed_InvalidFormat, "value", ex);
-            }	
+            }
         }
 
         #endregion
@@ -1230,7 +1230,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             if (!reader.IsStartElement("Units"))
                 reader.ReadToDescendant("Units");
 
-            _Units = (SpeedUnit)Enum.Parse(typeof(SpeedUnit), reader.ReadElementContentAsString(), false);
+            _Units = (SpeedUnit) Enum.Parse(typeof(SpeedUnit), reader.ReadElementContentAsString(), false);
             _Value = reader.ReadElementContentAsDouble();
         }
 
@@ -1251,17 +1251,21 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
     {
         /// <summary>The number of nautical miles travelled in one hour.</summary>
         Knots,
+
         /// <summary>The number of statute miles travelled in one hour, also known as MPH.</summary>
         StatuteMilesPerHour,
+
         /// <summary>The number of kilometers travelled in one hour, also known as KPH.</summary>
         KilometersPerHour,
+
         /// <summary>The number of kilometers travelled in one second, also known as 
         /// KM/S.</summary>
         KilometersPerSecond,
+
         /// <summary>The number of feet travelled in one second, also known as FT/S.</summary>
         FeetPerSecond,
+
         /// <summary>The number of meters travelled in one hour, also known as M/S.</summary>
         MetersPerSecond
     }
-
 }

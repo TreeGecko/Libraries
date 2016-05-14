@@ -7,10 +7,10 @@ namespace TreeGecko.Library.Common.Helpers
         public static string GetSettingValue(string _name)
         {
             return ConfigurationManager.AppSettings.Get(_name);
-		}
+        }
 
         public static string GetSettingValue(string _name, string _defaultValue)
-        {			
+        {
             string result = ConfigurationManager.AppSettings.Get(_name);
 
             if (result == null)
@@ -18,7 +18,7 @@ namespace TreeGecko.Library.Common.Helpers
                 return _defaultValue;
             }
 
-            return result;		
+            return result;
         }
 
         public static int GetIntValue(string _name, int _defaultValue)

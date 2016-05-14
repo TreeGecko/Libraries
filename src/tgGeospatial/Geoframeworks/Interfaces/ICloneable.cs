@@ -4,7 +4,7 @@
     /// Facilitates the creation of a deep copy of an object.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface ICloneable<T> 
+    public interface ICloneable<T>
     {
         /// <summary>
         /// Creates a deep copy of the object.

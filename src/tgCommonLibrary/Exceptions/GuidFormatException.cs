@@ -7,7 +7,6 @@ namespace TreeGecko.Library.Common.Exceptions
     /// </summary>
     public class GuidFormatException : ApplicationException
     {
-
         public GuidFormatException()
         {
         }
@@ -16,6 +15,5 @@ namespace TreeGecko.Library.Common.Exceptions
             : base(message)
         {
         }
-
     }
 }

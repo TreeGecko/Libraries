@@ -33,7 +33,6 @@ namespace TreeGecko.Library.Geospatial.Objects
             return string.Format("POINT ({0} {1})", X, Y);
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -70,8 +69,8 @@ namespace TreeGecko.Library.Geospatial.Objects
             {
                 try
                 {
-                    JObject point = (JObject)JsonConvert.DeserializeObject(_json);
-                    JArray coordinates = (JArray)point["coordinates"];
+                    JObject point = (JObject) JsonConvert.DeserializeObject(_json);
+                    JArray coordinates = (JArray) point["coordinates"];
 
                     double x = coordinates[0].Value<Double>();
                     double y = coordinates[1].Value<Double>();
@@ -110,7 +109,7 @@ namespace TreeGecko.Library.Geospatial.Objects
                     throw new Exception("Invalid Point definition");
                 }
             }
-            else  
+            else
             {
                 TraceFileHelper.Warning(string.Format("Not a point - {0}", wkt));
                 throw new Exception("Not a point");
@@ -121,29 +120,29 @@ namespace TreeGecko.Library.Geospatial.Objects
         {
             return GetOpenGISText();
         }
-		
-		public string ToString(string _format)
-		{
-			string lat = Y.ToString(_format);
-			string lon = X.ToString(_format);
-			
-			return string.Format("Latitude: {0}, Longitude: {1}", lat, lon);
-		}
 
-		public string ToString(string _stringFormat, string _numberFormat)
-		{
-			string lat = Y.ToString(_numberFormat);
-			string lon = X.ToString(_numberFormat);
-			
-			return string.Format(_stringFormat, lat, lon);
-		}
+        public string ToString(string _format)
+        {
+            string lat = Y.ToString(_format);
+            string lon = X.ToString(_format);
+
+            return string.Format("Latitude: {0}, Longitude: {1}", lat, lon);
+        }
+
+        public string ToString(string _stringFormat, string _numberFormat)
+        {
+            string lat = Y.ToString(_numberFormat);
+            string lon = X.ToString(_numberFormat);
+
+            return string.Format(_stringFormat, lat, lon);
+        }
 
         public TGSerializedObject GetTGSerializedObject()
         {
             TGSerializedObject tg = new TGSerializedObject
-                                          {
-                                              TGObjectType = TGObjectType
-                                          };
+            {
+                TGObjectType = TGObjectType
+            };
 
             tg.Add("X", X);
             tg.Add("Y", Y);
@@ -153,7 +152,7 @@ namespace TreeGecko.Library.Geospatial.Objects
 
         public void LoadFromTGSerializedObject(TGSerializedObject _tg)
         {
-            if (_tg!=null 
+            if (_tg != null
                 && _tg.TGObjectType == TGObjectType)
             {
                 X = _tg.GetDouble("X");
@@ -165,7 +164,6 @@ namespace TreeGecko.Library.Geospatial.Objects
         {
             get { return ReflectionHelper.GetTypeName(GetType()); }
         }
-
 
         public void FromGeoJson(string _geoJson)
         {

@@ -1,7 +1,7 @@
 namespace TreeGecko.Library.Common.Objects
 {
-	public class AppSetting : NamedObject
-	{
+    public class AppSetting : NamedObject
+    {
         public string Value { get; set; }
 
         public override TGSerializedObject GetTGSerializedObject()
@@ -16,7 +16,5 @@ namespace TreeGecko.Library.Common.Objects
             base.LoadFromTGSerializedObject(_tg);
             Value = _tg.GetString("Value");
         }
-
-	}
+    }
 }
-

@@ -7,19 +7,21 @@ using System.Xml.Serialization;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>
-	/// Represents a rectangular shape on Earth's surface.
-	/// </summary>
-	/// <remarks>
-	/// 	<para>This class is used to represent a square (or close to a square) shape on
-	///     Earth's surface. This class is typically used during mapping applications to zoom
-	///     into a particular area on Earth. This class looks nearly identical to the Rectangle
-	///     class in the .NET framework, except that it's bounding points are defined as
-	///     <strong>Position</strong> objects instead of <strong>Point</strong> objects.</para>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
-	///     immutable (it's properties can only be set via constructors).</para>
-	/// </remarks>
-    [TypeConverter("GeoFramework.Design.GeographicRectangleConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a")]
+    /// <summary>
+    /// Represents a rectangular shape on Earth's surface.
+    /// </summary>
+    /// <remarks>
+    /// 	<para>This class is used to represent a square (or close to a square) shape on
+    ///     Earth's surface. This class is typically used during mapping applications to zoom
+    ///     into a particular area on Earth. This class looks nearly identical to the Rectangle
+    ///     class in the .NET framework, except that it's bounding points are defined as
+    ///     <strong>Position</strong> objects instead of <strong>Point</strong> objects.</para>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
+    ///     immutable (it's properties can only be set via constructors).</para>
+    /// </remarks>
+    [TypeConverter(
+        "GeoFramework.Design.GeographicRectangleConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a"
+        )]
     public struct GeographicRectangle : IFormattable, IEquatable<GeographicRectangle>, IXmlSerializable
     {
         private Latitude m_Top;
@@ -31,39 +33,42 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region Fields
 
         /// <summary>Represents a GeographicRectangle having no size.</summary>
-        public static readonly GeographicRectangle Empty = new GeographicRectangle(Latitude.Empty, Longitude.Empty, Latitude.Empty, Longitude.Empty);
+        public static readonly GeographicRectangle Empty = new GeographicRectangle(Latitude.Empty, Longitude.Empty,
+            Latitude.Empty, Longitude.Empty);
+
         /// <summary>Represents a rectangle that encompasses all of Earth's surface.</summary>
-        public static readonly GeographicRectangle Maximum = new GeographicRectangle(Latitude.Maximum, Longitude.Minimum, Latitude.Minimum, Longitude.Maximum);
+        public static readonly GeographicRectangle Maximum = new GeographicRectangle(Latitude.Maximum, Longitude.Minimum,
+            Latitude.Minimum, Longitude.Maximum);
 
         #endregion
 
-		#region Constructors
+        #region Constructors
 
-		/// <summary>Creates a new instance using the specified location and size.</summary>
-		/// <returns>
-		/// A <strong>GeographicRectangle</strong> set to the specified location and
-		/// size.
-		/// </returns>
-		/// <remarks>
-		/// This constructor defines a rectangle which expands east and south of the
-		/// specified location.
-		/// </remarks>
-		/// <example>
-		///     This example creates a new <strong>GeographicRectangle</strong> starting at 39°N
-		///     105°W which is 2° wide and 5° tall. 
-		///     <code lang="VB" title="[New Example]">
-		/// Dim NorthwestCorner As New Position("39N 105W")
-		/// Dim RectangleSize As New GeographicSize(2, 5)
-		/// Dim Rectangle As New GeographicRectangle(NorthwestCorner, RectangleSize)
-		///     </code>
-		/// 	<code lang="CS" title="[New Example]">
-		/// Position NorthwestCorner = new Position("39N,105W");
-		/// GeographicSize RectangleSize = new GeographicSize(2, 5);
-		/// GeographicRectangle Rectangle = new GeographicRectangle(NorthwestCorner, RectangleSize);
-		///     </code>
-		/// </example>
-		public GeographicRectangle(Position location, GeographicSize size)
-		{
+        /// <summary>Creates a new instance using the specified location and size.</summary>
+        /// <returns>
+        /// A <strong>GeographicRectangle</strong> set to the specified location and
+        /// size.
+        /// </returns>
+        /// <remarks>
+        /// This constructor defines a rectangle which expands east and south of the
+        /// specified location.
+        /// </remarks>
+        /// <example>
+        ///     This example creates a new <strong>GeographicRectangle</strong> starting at 39°N
+        ///     105°W which is 2° wide and 5° tall. 
+        ///     <code lang="VB" title="[New Example]">
+        /// Dim NorthwestCorner As New Position("39N 105W")
+        /// Dim RectangleSize As New GeographicSize(2, 5)
+        /// Dim Rectangle As New GeographicRectangle(NorthwestCorner, RectangleSize)
+        ///     </code>
+        /// 	<code lang="CS" title="[New Example]">
+        /// Position NorthwestCorner = new Position("39N,105W");
+        /// GeographicSize RectangleSize = new GeographicSize(2, 5);
+        /// GeographicRectangle Rectangle = new GeographicRectangle(NorthwestCorner, RectangleSize);
+        ///     </code>
+        /// </example>
+        public GeographicRectangle(Position location, GeographicSize size)
+        {
             m_Left = location.Longitude;
             m_Right = location.TranslateTo(Azimuth.East, size.Width).Longitude;
             m_Top = location.Latitude;
@@ -72,35 +77,35 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             m_Center = Hypotenuse.Midpoint;
         }
 
-		/// <summary>
-		/// Creates a new instance using the specified location, width, and height.
-		/// </summary>
-		/// <remarks>
-		/// This constructor defines a rectangle which expands east and south of the
-		/// specified location.
-		/// </remarks>
-		/// <example>
-		///     This example creates a new <strong>GeographicRectangle</strong> starting at 39°N
-		///     105°W which is 2° wide and 5° tall. 
-		///     <code lang="VB" title="[New Example]">
-		/// Dim NorthwestCorner As New Position("39N 105W")
-		/// Dim RectangleWidth As Distance = Distance.FromKilometers(1)
+        /// <summary>
+        /// Creates a new instance using the specified location, width, and height.
+        /// </summary>
+        /// <remarks>
+        /// This constructor defines a rectangle which expands east and south of the
+        /// specified location.
+        /// </remarks>
+        /// <example>
+        ///     This example creates a new <strong>GeographicRectangle</strong> starting at 39°N
+        ///     105°W which is 2° wide and 5° tall. 
+        ///     <code lang="VB" title="[New Example]">
+        /// Dim NorthwestCorner As New Position("39N 105W")
+        /// Dim RectangleWidth As Distance = Distance.FromKilometers(1)
         /// Dim RectangleHeight As Distance = Distance.FromKilometers(1)
-		/// Dim Rectangle As New GeographicRectangle(NorthwestCorner, RectangleWidth, RectangleHeight)
-		///     </code>
-		/// 	<code lang="CS" title="[New Example]">
-		/// Position NorthwestCorner = new Position("39N 105W");
+        /// Dim Rectangle As New GeographicRectangle(NorthwestCorner, RectangleWidth, RectangleHeight)
+        ///     </code>
+        /// 	<code lang="CS" title="[New Example]">
+        /// Position NorthwestCorner = new Position("39N 105W");
         /// Distance RectangleWidth = Distance.FromKilometers(1);
         /// Distance RectangleHeight = Distance.FromKilometers(1);
-		/// GeographicRectangle Rectangle = new GeographicRectangle(NorthwestCorner, RectangleWidth, RectangleHeight);
-		///     </code>
-		/// </example>
-		/// <returns>
-		/// A <strong>GeographicRectangle</strong> set to the specified location and
-		/// size.
-		/// </returns>
-		public GeographicRectangle(Position location, Distance width, Distance height)
-		{
+        /// GeographicRectangle Rectangle = new GeographicRectangle(NorthwestCorner, RectangleWidth, RectangleHeight);
+        ///     </code>
+        /// </example>
+        /// <returns>
+        /// A <strong>GeographicRectangle</strong> set to the specified location and
+        /// size.
+        /// </returns>
+        public GeographicRectangle(Position location, Distance width, Distance height)
+        {
             m_Left = location.Longitude;
             m_Right = location.TranslateTo(Azimuth.East, width).Longitude;
             m_Top = location.Latitude;
@@ -110,33 +115,33 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             m_Center = Hypotenuse.Midpoint;
         }
 
-		/// <summary>
-		/// Creates a new instance using the specified northwest and southeast
-		/// coordinates.
-		/// </summary>
-		/// <remarks>
-		/// This constructor takes the specified parameters and calculates the width and
-		/// height of the rectangle. If the two points are backwards (meaning that the right-most
-		/// point is west of the left-most point), they are automatically swapped before creating
-		/// the rectangle.
-		/// </remarks>
-		/// <returns>A <strong>GeographicRectangle</strong> defined by the two endpoints.</returns>
-		/// <example>
-		///     This example creates a new <strong>GeographicRectangle</strong> starting at 39°N
-		///     105°W and ending at 37°N 100°W (2° wide and 5° tall). 
-		///     <code lang="VB" title="[New Example]">
-		/// Dim NorthwestCorner As New Position("39N 105W")
-		/// Dim SoutheastCorner As New Position("37N 100W")
-		/// Dim Rectangle As New GeographicRectangle(NorthwestCorner, SoutheastCorner)
-		///     </code>
-		/// 	<code lang="CS" title="[New Example]">
-		/// Position NorthwestCorner = new Position("39N 105W");
-		/// Position SoutheastCorner = new Position("37N 100W");
-		/// GeographicRectangle Rectangle = new GeographicRectangle(NorthwestCorner, SoutheastCorner);
-		///     </code>
-		/// </example>
-		public GeographicRectangle(Position northwest, Position southeast) 
-		{
+        /// <summary>
+        /// Creates a new instance using the specified northwest and southeast
+        /// coordinates.
+        /// </summary>
+        /// <remarks>
+        /// This constructor takes the specified parameters and calculates the width and
+        /// height of the rectangle. If the two points are backwards (meaning that the right-most
+        /// point is west of the left-most point), they are automatically swapped before creating
+        /// the rectangle.
+        /// </remarks>
+        /// <returns>A <strong>GeographicRectangle</strong> defined by the two endpoints.</returns>
+        /// <example>
+        ///     This example creates a new <strong>GeographicRectangle</strong> starting at 39°N
+        ///     105°W and ending at 37°N 100°W (2° wide and 5° tall). 
+        ///     <code lang="VB" title="[New Example]">
+        /// Dim NorthwestCorner As New Position("39N 105W")
+        /// Dim SoutheastCorner As New Position("37N 100W")
+        /// Dim Rectangle As New GeographicRectangle(NorthwestCorner, SoutheastCorner)
+        ///     </code>
+        /// 	<code lang="CS" title="[New Example]">
+        /// Position NorthwestCorner = new Position("39N 105W");
+        /// Position SoutheastCorner = new Position("37N 100W");
+        /// GeographicRectangle Rectangle = new GeographicRectangle(NorthwestCorner, SoutheastCorner);
+        ///     </code>
+        /// </example>
+        public GeographicRectangle(Position northwest, Position southeast)
+        {
             m_Left = northwest.Longitude;
             m_Right = southeast.Longitude;
             m_Top = northwest.Latitude;
@@ -146,50 +151,51 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             m_Center = Hypotenuse.Midpoint;
         }
 
-		/// <summary>Creates a new instance by converting the specified string.</summary>
-		/// <returns>
-		/// A <strong>GeographicRectangle</strong> matching the specified string
-		/// value.
-		/// </returns>
-		/// <remarks>
-		/// This constructor attempts to parse the specified string into a rectangle. The
-		/// current culture is used to interpret the string -- use the list separator of the
-		/// current culture (which may not necessarily be a comma). This constructor can accept any
-		/// output created via the <strong>ToString</strong> method.
-		/// </remarks>
-		/// <example>
-		///     This example creates a new rectangle at 39°N, 105° extending two degrees south and
-		///     five degrees east to 37°N, 100°W. 
-		///     <code lang="VB" title="[New Example]">
-		/// Dim Rectangle As New GeographicRectangle("39N,105W,37N,100W")
-		///     </code>
-		/// 	<code lang="CS" title="[New Example]">
-		/// GeographicRectangle Rectangle = new GeographicRectangle("39N,105W,37N,100W");
-		///     </code>
-		/// </example>
-        public GeographicRectangle(string value) 
+        /// <summary>Creates a new instance by converting the specified string.</summary>
+        /// <returns>
+        /// A <strong>GeographicRectangle</strong> matching the specified string
+        /// value.
+        /// </returns>
+        /// <remarks>
+        /// This constructor attempts to parse the specified string into a rectangle. The
+        /// current culture is used to interpret the string -- use the list separator of the
+        /// current culture (which may not necessarily be a comma). This constructor can accept any
+        /// output created via the <strong>ToString</strong> method.
+        /// </remarks>
+        /// <example>
+        ///     This example creates a new rectangle at 39°N, 105° extending two degrees south and
+        ///     five degrees east to 37°N, 100°W. 
+        ///     <code lang="VB" title="[New Example]">
+        /// Dim Rectangle As New GeographicRectangle("39N,105W,37N,100W")
+        ///     </code>
+        /// 	<code lang="CS" title="[New Example]">
+        /// GeographicRectangle Rectangle = new GeographicRectangle("39N,105W,37N,100W");
+        ///     </code>
+        /// </example>
+        public GeographicRectangle(string value)
             : this(value, CultureInfo.CurrentCulture)
-        {}
+        {
+        }
 
-		/// <summary>
-		/// Creates a new instance by converting the specified string in the given
-		/// culture.
-		/// </summary>
-		/// <returns>
-		/// This constructor attempts to parse the specified string into a rectangle. The
-		/// specified culture is used to interpret the string. This constructor can accept any
-		/// output created via the <strong>ToString</strong> method.
-		/// </returns>
-		/// <example>
-		///     This example creates a new rectangle at 39°N, 105° extending two degrees south and
-		///     five degrees east to 37°N, 100°W. 
-		///     <code lang="VB" title="[New Example]">
-		/// Dim Rectangle As New GeographicRectangle("39N,105W,37N,100W", CultureInfo.CurrentCulture)
-		///     </code>
-		/// 	<code lang="CS" title="[New Example]">
-		/// GeographicRectangle Rectangle = new GeographicRectangle("39N,105W,37N,100W", CultureInfo.CurrentCulture);
-		///     </code>
-		/// </example>
+        /// <summary>
+        /// Creates a new instance by converting the specified string in the given
+        /// culture.
+        /// </summary>
+        /// <returns>
+        /// This constructor attempts to parse the specified string into a rectangle. The
+        /// specified culture is used to interpret the string. This constructor can accept any
+        /// output created via the <strong>ToString</strong> method.
+        /// </returns>
+        /// <example>
+        ///     This example creates a new rectangle at 39°N, 105° extending two degrees south and
+        ///     five degrees east to 37°N, 100°W. 
+        ///     <code lang="VB" title="[New Example]">
+        /// Dim Rectangle As New GeographicRectangle("39N,105W,37N,100W", CultureInfo.CurrentCulture)
+        ///     </code>
+        /// 	<code lang="CS" title="[New Example]">
+        /// GeographicRectangle Rectangle = new GeographicRectangle("39N,105W,37N,100W", CultureInfo.CurrentCulture);
+        ///     </code>
+        /// </example>
         public GeographicRectangle(string value, CultureInfo culture)
         {
             // Default to zero if value is null
@@ -209,16 +215,16 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
 
-			// Split the string into words
-			string[] Values = value.Split(culture.TextInfo.ListSeparator.ToCharArray());
-			
+            // Split the string into words
+            string[] Values = value.Split(culture.TextInfo.ListSeparator.ToCharArray());
+
             // How many words are there?
-			switch(Values.Length)
-			{
-				case 4:
-					// Extract each item
-					try
-					{
+            switch (Values.Length)
+            {
+                case 4:
+                    // Extract each item
+                    try
+                    {
                         bool IsTopHandled = false;
                         bool IsLeftHandled = false;
                         bool IsRightHandled = false;
@@ -237,12 +243,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                             if (word.IndexOf("W", StringComparison.InvariantCultureIgnoreCase) != -1
                                 || word.IndexOf("E", StringComparison.InvariantCultureIgnoreCase) != -1)
 #else
-							if (word.IndexOf("W") != -1
-								|| word.IndexOf("E") != -1)
+                            if (word.IndexOf("W") != -1
+                                || word.IndexOf("E") != -1)
 #endif
                             {
                                 if (IsLeftHandled && IsRightHandled)
-                                    throw new FormatException("A GeographicRectangle object could not be converted from a string because more than two longitude values were encountered.  Only two are allowed.");
+                                    throw new FormatException(
+                                        "A GeographicRectangle object could not be converted from a string because more than two longitude values were encountered.  Only two are allowed.");
 
                                 // Longitude.  Is the left handled?
                                 if (IsLeftHandled)
@@ -262,12 +269,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                             else if (word.IndexOf("N", StringComparison.InvariantCultureIgnoreCase) != -1
                                 || word.IndexOf("S", StringComparison.InvariantCultureIgnoreCase) != -1)
 #else
-							else if (word.IndexOf("N") != -1
-								|| word.IndexOf("S") != -1)
+                            else if (word.IndexOf("N") != -1
+                                     || word.IndexOf("S") != -1)
 #endif
                             {
                                 if (IsTopHandled && IsBottomHandled)
-                                    throw new FormatException("A GeographicRectangle object could not be converted from a string because more than two latitude values were encountered.  Only two are allowed.");
+                                    throw new FormatException(
+                                        "A GeographicRectangle object could not be converted from a string because more than two latitude values were encountered.  Only two are allowed.");
 
                                 // Longitude.  Is the left handled?
                                 if (IsTopHandled)
@@ -285,7 +293,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                             }
                             else
                             {
-                                throw new FormatException("A GeographicRectangle object could not be created because a number could not be categorized as a latitude or longitude.  Add a N, S, E, or W letter to resolve the issue.");
+                                throw new FormatException(
+                                    "A GeographicRectangle object could not be created because a number could not be categorized as a latitude or longitude.  Add a N, S, E, or W letter to resolve the issue.");
                             }
                         }
 
@@ -298,68 +307,70 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                         m_Center = Position.Invalid;
                         m_Center = Hypotenuse.Midpoint;
                         break;
-					}
-					catch
-					{
-						throw;
-					}
-				default:
-					throw new FormatException("The specified value could not be parsed into a GeographicRectangle object because four delimited values are required (Top, Left, Bottom, Right).");
-			}
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                default:
+                    throw new FormatException(
+                        "The specified value could not be parsed into a GeographicRectangle object because four delimited values are required (Top, Left, Bottom, Right).");
+            }
         }
 
-		/// <summary>
-		/// Creates a new instance using the specified latitudes and longitudes.
-		/// </summary>
-		/// <example>
-		///     This example creates a new <strong>GeographicRectangle</strong> by specifying each
-		///     side individually. 
-		///     <code lang="VB" title="[New Example]">
-		/// Dim Left As New Longitude(-105)
-		/// Dim Top As New Latitude(39)
-		/// Dim Right As New Longitude(-100)
-		/// Dim Top As New Latitude(37)
-		/// Dim Rectangle As New GeographicRectangle(Left, Top, Right, Bottom)
-		///     </code>
-		/// 	<code lang="CS" title="[New Example]">
-		/// Longitude Left = new Longitude(-105);
-		/// Latitude Top = new Latitude(39);
-		/// Longitude Right = new Longitude(-100);
-		/// Latitude Top = new Latitude(37);
-		/// GeographicRectangle Rectangle = new GeographicRectangle(Left, Top, Right, Bottom);
-		///     </code>
-		/// </example>
-		/// <returns>A <strong>GeographicRectangle</strong> bound by the specified values.</returns>
-		/// <remarks>
-		/// If the left and right, or top and bottom values are backwards, they are
-		/// automatically swapped before creating the rectangle.
-		/// </remarks>
-		public GeographicRectangle(Longitude left, Latitude top, Longitude right, Latitude bottom) 
+        /// <summary>
+        /// Creates a new instance using the specified latitudes and longitudes.
+        /// </summary>
+        /// <example>
+        ///     This example creates a new <strong>GeographicRectangle</strong> by specifying each
+        ///     side individually. 
+        ///     <code lang="VB" title="[New Example]">
+        /// Dim Left As New Longitude(-105)
+        /// Dim Top As New Latitude(39)
+        /// Dim Right As New Longitude(-100)
+        /// Dim Top As New Latitude(37)
+        /// Dim Rectangle As New GeographicRectangle(Left, Top, Right, Bottom)
+        ///     </code>
+        /// 	<code lang="CS" title="[New Example]">
+        /// Longitude Left = new Longitude(-105);
+        /// Latitude Top = new Latitude(39);
+        /// Longitude Right = new Longitude(-100);
+        /// Latitude Top = new Latitude(37);
+        /// GeographicRectangle Rectangle = new GeographicRectangle(Left, Top, Right, Bottom);
+        ///     </code>
+        /// </example>
+        /// <returns>A <strong>GeographicRectangle</strong> bound by the specified values.</returns>
+        /// <remarks>
+        /// If the left and right, or top and bottom values are backwards, they are
+        /// automatically swapped before creating the rectangle.
+        /// </remarks>
+        public GeographicRectangle(Longitude left, Latitude top, Longitude right, Latitude bottom)
             : this(top, left, bottom, right)
-		{}
-		
-		/// <summary>Creates a new instance using the specified latitudes and longitudes.</summary>
-		/// <remarks>
-		/// If the left and right, or top and bottom values are backwards, they are
-		/// automatically swapped before creating the rectangle.
-		/// </remarks>
-		/// <returns>A <strong>GeographicRectangle</strong> bound by the specified values.</returns>
-		/// <example>
-		/// 	<code lang="VB" title="[New Example]">
-		/// Dim Left As New Longitude(-105)
-		/// Dim Top As New Latitude(39)
-		/// Dim Right As New Longitude(-100)
-		/// Dim Top As New Latitude(37)
-		/// Dim Rectangle As New GeographicRectangle(Left, Top, Right, Bottom)
-		///     </code>
-		/// 	<code lang="CS" title="[New Example]">
-		/// Latitude Top = new Latitude(39);
-		/// Longitude Left = new Longitude(-105);
-		/// Latitude Bottom = new Latitude(37);
-		/// Longitude Right = new Longitude(-100);
-		/// GeographicRectangle Rectangle = new GeographicRectangle(Top, Left, Bottom, Right);
-		///     </code>
-		/// </example>
+        {
+        }
+
+        /// <summary>Creates a new instance using the specified latitudes and longitudes.</summary>
+        /// <remarks>
+        /// If the left and right, or top and bottom values are backwards, they are
+        /// automatically swapped before creating the rectangle.
+        /// </remarks>
+        /// <returns>A <strong>GeographicRectangle</strong> bound by the specified values.</returns>
+        /// <example>
+        /// 	<code lang="VB" title="[New Example]">
+        /// Dim Left As New Longitude(-105)
+        /// Dim Top As New Latitude(39)
+        /// Dim Right As New Longitude(-100)
+        /// Dim Top As New Latitude(37)
+        /// Dim Rectangle As New GeographicRectangle(Left, Top, Right, Bottom)
+        ///     </code>
+        /// 	<code lang="CS" title="[New Example]">
+        /// Latitude Top = new Latitude(39);
+        /// Longitude Left = new Longitude(-105);
+        /// Latitude Bottom = new Latitude(37);
+        /// Longitude Right = new Longitude(-100);
+        /// GeographicRectangle Rectangle = new GeographicRectangle(Top, Left, Bottom, Right);
+        ///     </code>
+        /// </example>
         public GeographicRectangle(Latitude top, Longitude left, Latitude bottom, Longitude right)
         {
             m_Left = left;
@@ -381,6 +392,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             m_Center = Position.Invalid;
             m_Center = Hypotenuse.Midpoint;
         }
+
         /// <summary>
         /// Creates a new instance from a block of Geography Markup Language (GML).
         /// </summary>
@@ -398,7 +410,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             ReadXml(reader);
         }
 
-		#endregion
+        #endregion
 
         #region Public Properties
 
@@ -406,49 +418,34 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <value>A <see cref="Latitude"></see> object marking the southern-most latitude.</value>
         public Latitude Top
         {
-            get
-            {
-                return m_Top;
-            }
+            get { return m_Top; }
         }
 
         /// <summary>Returns the southern-most latitude of the rectangle.</summary>
         /// <value>A <see cref="Latitude"></see> object marking the southern-most latitude.</value>
         public Latitude Bottom
         {
-            get
-            {
-                return m_Bottom;
-            }
+            get { return m_Bottom; }
         }
 
         /// <summary>Returns the western-most side of the rectangle.</summary>
         /// <value>A <strong>Longitude</strong> indicating the left side of the rectangle.</value>
         public Longitude Left
         {
-            get
-            {
-                return m_Left;
-            }
+            get { return m_Left; }
         }
 
         /// <value>A <strong>Longitude</strong> indicating the right side of the rectangle.</value>
         /// <summary>Returns the eastern-most side of the rectangle.</summary>
         public Longitude Right
         {
-            get
-            {
-                return m_Right;
-            }
+            get { return m_Right; }
         }
 
         /// <summary>Returns the geographic center of the rectangle.</summary>
         public Position Center
         {
-            get
-            {
-                return m_Center;
-            }
+            get { return m_Center; }
         }
 
         /// <summary>Returns the aspect ratio of the rectangle.</summary>
@@ -460,10 +457,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </remarks>
         public float AspectRatio
         {
-            get
-            {
-                return Convert.ToSingle(WidthDegrees.DecimalDegrees / HeightDegrees.DecimalDegrees);
-            }
+            get { return Convert.ToSingle(WidthDegrees.DecimalDegrees/HeightDegrees.DecimalDegrees); }
         }
 
         /// <summary>Indicates if the rectangle has any value.</summary>
@@ -475,10 +469,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </value>
         public bool IsEmpty
         {
-            get
-            {
-                return m_Top.IsEmpty && m_Bottom.IsEmpty && m_Left.IsEmpty && m_Right.IsEmpty;
-            }
+            get { return m_Top.IsEmpty && m_Bottom.IsEmpty && m_Left.IsEmpty && m_Right.IsEmpty; }
         }
 
         /// <summary>
@@ -487,10 +478,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <remarks>The hypotenuse of a rectangle is a line connecting its northwest corner with its southeast corner.</remarks>
         public Segment Hypotenuse
         {
-            get
-            {
-                return new Segment(Northwest, Southeast);
-            }
+            get { return new Segment(Northwest, Southeast); }
         }
 
 
@@ -520,36 +508,24 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public Latitude HeightDegrees
         {
-            get
-            {
-                return m_Top.Subtract(m_Bottom);
-            }
+            get { return m_Top.Subtract(m_Bottom); }
         }
 
         public Longitude WidthDegrees
         {
-            get
-            {
-                return m_Right.Subtract(m_Left);
-            }
+            get { return m_Right.Subtract(m_Left); }
         }
 
         /// <summary>Returns the width and height of the rectangle.</summary>
         public GeographicSize Size
         {
-            get
-            {
-                return new GeographicSize(Width, Height);
-            }
+            get { return new GeographicSize(Width, Height); }
         }
 
         /// <summary>Returns the northwestern corner of the rectangle.</summary>
         public Position Northwest
         {
-            get
-            {
-                return new Position(m_Left, m_Top);
-            }
+            get { return new Position(m_Left, m_Top); }
         }
 
         /// <summary>
@@ -557,10 +533,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public Position NorthCenter
         {
-            get
-            {
-                return new Position(m_Center.Longitude, m_Top);
-            }
+            get { return new Position(m_Center.Longitude, m_Top); }
         }
 
         /// <summary>
@@ -568,10 +541,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public Position SouthCenter
         {
-            get
-            {
-                return new Position(m_Center.Longitude, m_Bottom);
-            }
+            get { return new Position(m_Center.Longitude, m_Bottom); }
         }
 
         /// <summary>
@@ -579,10 +549,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public Position WestCenter
         {
-            get
-            {
-                return new Position(m_Left, Center.Latitude);
-            }
+            get { return new Position(m_Left, Center.Latitude); }
         }
 
         /// <summary>
@@ -590,37 +557,25 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public Position EastCenter
         {
-            get
-            {
-                return new Position(m_Right, Center.Latitude);
-            }
+            get { return new Position(m_Right, Center.Latitude); }
         }
 
         /// <summary>Returns the northeastern corner of the rectangle.</summary>
         public Position Northeast
         {
-            get
-            {
-                return new Position(m_Right, m_Top);
-            }
+            get { return new Position(m_Right, m_Top); }
         }
 
         /// <summary>Returns the southwestern corner of the rectangle.</summary>
         public Position Southwest
         {
-            get
-            {
-                return new Position(m_Left, m_Bottom);
-            }
+            get { return new Position(m_Left, m_Bottom); }
         }
 
         /// <summary>Returns the southeastern corner of the rectangle.</summary>
         public Position Southeast
         {
-            get
-            {
-                return new Position(m_Right, m_Bottom);
-            }
+            get { return new Position(m_Right, m_Bottom); }
         }
 
         #endregion
@@ -706,7 +661,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Returns the points which form the rectangle.</summary>
         public Position[] ToArray()
         {
-            return new Position[] { Northwest, Northeast, Southeast, Southwest };
+            return new Position[] {Northwest, Northeast, Southeast, Southwest};
         }
 
         /// <summary>Indicates if the rectangle does not intersect the specified rectangle.</summary>
@@ -723,17 +678,17 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool IsEnclosing(GeographicRectangle rectangle)
         {
             return (rectangle.Left.DecimalDegrees >= m_Left.DecimalDegrees
-                && rectangle.Right.DecimalDegrees <= m_Right.DecimalDegrees
-                && rectangle.Top.DecimalDegrees <= m_Top.DecimalDegrees
-                && rectangle.Bottom.DecimalDegrees >= m_Bottom.DecimalDegrees);
+                    && rectangle.Right.DecimalDegrees <= m_Right.DecimalDegrees
+                    && rectangle.Top.DecimalDegrees <= m_Top.DecimalDegrees
+                    && rectangle.Bottom.DecimalDegrees >= m_Bottom.DecimalDegrees);
         }
 
         public bool IsEnclosing(Position position)
         {
             return ((position.Longitude.DecimalDegrees >= m_Left.DecimalDegrees)
-                && (position.Latitude.DecimalDegrees <= m_Top.DecimalDegrees)
-                && (position.Longitude.DecimalDegrees <= m_Right.DecimalDegrees)
-                && (position.Latitude.DecimalDegrees >= m_Bottom.DecimalDegrees));
+                    && (position.Latitude.DecimalDegrees <= m_Top.DecimalDegrees)
+                    && (position.Longitude.DecimalDegrees <= m_Right.DecimalDegrees)
+                    && (position.Latitude.DecimalDegrees >= m_Bottom.DecimalDegrees));
         }
 
         /// <summary>
@@ -795,8 +750,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             Distance HalfHeight = size.Height.Multiply(0.5);
 
             // Calculate new edges
-            Position NewNorthwest = Northwest.TranslateTo(Azimuth.West, HalfWidth).TranslateTo(Azimuth.North, HalfHeight);
-            Position NewSoutheast = Southeast.TranslateTo(Azimuth.East, HalfWidth).TranslateTo(Azimuth.South, HalfHeight);
+            Position NewNorthwest = Northwest.TranslateTo(Azimuth.West, HalfWidth)
+                .TranslateTo(Azimuth.North, HalfHeight);
+            Position NewSoutheast = Southeast.TranslateTo(Azimuth.East, HalfWidth)
+                .TranslateTo(Azimuth.South, HalfHeight);
 
             // Build a new GeographicRectangle expanded outward from the center
             return new GeographicRectangle(NewNorthwest, NewSoutheast);
@@ -909,7 +866,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
                 // Return the result
                 return new GeographicRectangle(TopSide, LeftSide, BottomSide, RightSide);
-
             }
             else if (rectangle.Right >= m_Left && rectangle.Right <= m_Right)
             {
@@ -967,7 +923,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
                 // Return the result
                 return new GeographicRectangle(TopSide, LeftSide, BottomSide, RightSide);
-
             }
             else
             {
@@ -991,10 +946,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             // Test that one or more sides are within.
             return
                 ((rectangle.Left >= m_Left && rectangle.Left <= m_Right)
-                || (rectangle.Right >= m_Left && rectangle.Right <= m_Right))
+                 || (rectangle.Right >= m_Left && rectangle.Right <= m_Right))
                 &&
                 ((rectangle.Top <= m_Top && rectangle.Top >= m_Bottom)
-                || (rectangle.Bottom <= m_Top && rectangle.Bottom >= m_Bottom));
+                 || (rectangle.Bottom <= m_Top && rectangle.Bottom >= m_Bottom));
 
             //{
             //    return true;
@@ -1021,7 +976,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //     *           |  rectangle |
             //     *           +------------+
             //     */
-
 
 
             //    // If the bottom or right border is beyond the edge, it's intersecting
@@ -1091,10 +1045,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool IsOverlapping(GeographicRectangle rectangle)
         {
             return !(rectangle.Top.DecimalDegrees < m_Bottom.DecimalDegrees
-                || rectangle.Bottom.DecimalDegrees > m_Top.DecimalDegrees
-                || rectangle.Left.DecimalDegrees > m_Right.DecimalDegrees
-                || rectangle.Right.DecimalDegrees < m_Left.DecimalDegrees);
-
+                     || rectangle.Bottom.DecimalDegrees > m_Top.DecimalDegrees
+                     || rectangle.Left.DecimalDegrees > m_Right.DecimalDegrees
+                     || rectangle.Right.DecimalDegrees < m_Left.DecimalDegrees);
         }
 
         /// <summary>
@@ -1105,9 +1058,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool IsOverlapping(Position position)
         {
             return !(position.Longitude.DecimalDegrees < m_Left.DecimalDegrees
-                || position.Longitude.DecimalDegrees > m_Right.DecimalDegrees
-                || position.Latitude.DecimalDegrees > m_Top.DecimalDegrees
-                || position.Latitude.DecimalDegrees < m_Bottom.DecimalDegrees);
+                     || position.Longitude.DecimalDegrees > m_Right.DecimalDegrees
+                     || position.Latitude.DecimalDegrees > m_Top.DecimalDegrees
+                     || position.Latitude.DecimalDegrees < m_Bottom.DecimalDegrees);
         }
 
         /// <summary>
@@ -1137,7 +1090,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public override bool Equals(object obj)
         {
             if (obj is GeographicRectangle)
-                return Equals((GeographicRectangle)obj);
+                return Equals((GeographicRectangle) obj);
             return false;
         }
 
@@ -1261,19 +1214,18 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             // The objects are equivalent if their bounds are equivalent
             return m_Left.DecimalDegrees.Equals(other.Left.DecimalDegrees)
-                && m_Right.DecimalDegrees.Equals(other.Right.DecimalDegrees)
-                && m_Top.DecimalDegrees.Equals(other.Top.DecimalDegrees)
-                && m_Bottom.DecimalDegrees.Equals(other.Bottom.DecimalDegrees);
+                   && m_Right.DecimalDegrees.Equals(other.Right.DecimalDegrees)
+                   && m_Top.DecimalDegrees.Equals(other.Top.DecimalDegrees)
+                   && m_Bottom.DecimalDegrees.Equals(other.Bottom.DecimalDegrees);
         }
 
         #endregion
 
         #region IFormattable Members
 
-
         public string ToString(string format, IFormatProvider formatProvider)
-		{
-            CultureInfo culture = (CultureInfo)formatProvider;
+        {
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -1282,9 +1234,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 format = "G";
 
             return m_Top.ToString(format, culture)
-                + culture.TextInfo.ListSeparator + " " + m_Left.ToString(format, culture)
-                + culture.TextInfo.ListSeparator + " " + m_Bottom.ToString(format, culture)
-                + culture.TextInfo.ListSeparator + " " + m_Right.ToString(format, culture);
+                   + culture.TextInfo.ListSeparator + " " + m_Left.ToString(format, culture)
+                   + culture.TextInfo.ListSeparator + " " + m_Bottom.ToString(format, culture)
+                   + culture.TextInfo.ListSeparator + " " + m_Right.ToString(format, culture);
         }
 
         #endregion

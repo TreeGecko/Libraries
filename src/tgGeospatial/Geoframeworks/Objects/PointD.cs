@@ -6,16 +6,16 @@ using System.Xml.Serialization;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>Represents a highly-precise pixel coordinate.</summary>
-	/// <remarks>
-	/// 	<para>This class behaves similar to the <strong>PointF</strong> structure in the
-	///     <strong>System.Drawing</strong> namespace, except that it supports double-precision
-	///     values and can be converted into a geographic coordinate. This structure is also
-	///     supported on the Compact Framework version of the <strong>GeoFramework</strong>,
-	///     whereas <strong>PointF</strong> is not.</para>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
-	///     immutable (its properties can only be changed via constructors).</para>
-	/// </remarks>
+    /// <summary>Represents a highly-precise pixel coordinate.</summary>
+    /// <remarks>
+    /// 	<para>This class behaves similar to the <strong>PointF</strong> structure in the
+    ///     <strong>System.Drawing</strong> namespace, except that it supports double-precision
+    ///     values and can be converted into a geographic coordinate. This structure is also
+    ///     supported on the Compact Framework version of the <strong>GeoFramework</strong>,
+    ///     whereas <strong>PointF</strong> is not.</para>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
+    ///     immutable (its properties can only be changed via constructors).</para>
+    /// </remarks>
     public struct PointD : IFormattable, IEquatable<PointD>, IXmlSerializable
     {
         private double _X;
@@ -25,6 +25,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         /// <summary>Returns a point with no value.</summary>
         public static readonly PointD Empty = new PointD(0, 0);
+
         /// <summary>Represents an invalid coordinate.</summary>
         public static readonly PointD Invalid = new PointD(double.NaN, double.NaN);
 
@@ -41,7 +42,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public PointD(string value)
             : this(value, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
         public PointD(string value, CultureInfo culture)
         {
@@ -66,70 +68,44 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region Public Properties
 
-
         /// <summary>Gets or sets the x-coordinate of this PointD.</summary>
         public double X
         {
-            get
-            {
-                return _X;
-            }
-            set
-            {
-                _X = value;
-            }
+            get { return _X; }
+            set { _X = value; }
         }
+
         /// <summary>
         /// For projected coordinates, this is the factor Lamda or the longitude parameter. 
         /// For readability only, the value is X.  
         /// </summary>
         public double Lam
         {
-            get
-            {
-                return _X;
-            }
-            set
-            {
-                _X = value;
-            }
+            get { return _X; }
+            set { _X = value; }
         }
 
         /// <summary>Gets or sets the x-coordinate of this PointD.</summary>
         public double Y
         {
-            get
-            {
-                return _Y;
-            }
-            set
-            {
-                _Y = value;
-            }
+            get { return _Y; }
+            set { _Y = value; }
         }
+
         /// <summary>
         /// For projected coordinates, this is the factor Phi or the latitude parameter. 
         /// For readability only, the value is Y.  
         /// </summary>
         public double Phi
         {
-            get
-            {
-                return _Y;
-            }
-            set
-            {
-                _Y = value;
-            }
+            get { return _Y; }
+            set { _Y = value; }
         }
 
         /// <summary>Returns whether the current instance has no value.</summary>
         public bool IsEmpty
         {
-            get
-            {
-                return (_X == 0 && _Y == 0);
-            }
+            get { return (_X == 0 && _Y == 0); }
         }
 
         /// <summary>Returns whether the current instance has an invalid value.</summary>
@@ -137,7 +113,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             get
             {
-                double fail = _X * _Y;
+                double fail = _X*_Y;
 
                 return (double.IsNaN(fail) || double.IsInfinity(fail));
             }
@@ -159,8 +135,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Calculates the distance to another pixel.</summary>
         public double DistanceTo(PointD value)
         {
-            return Math.Sqrt(Math.Abs(value.X - _X) * Math.Abs(value.X - _X)
-                + Math.Abs(value.Y - _Y) * Math.Abs(value.Y - _Y));
+            return Math.Sqrt(Math.Abs(value.X - _X)*Math.Abs(value.X - _X)
+                             + Math.Abs(value.Y - _Y)*Math.Abs(value.Y - _Y));
         }
 
         /// <summary>
@@ -226,7 +202,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             double AngleCos = Math.Cos(AngleRadians);
             double AngleSin = Math.Sin(AngleRadians);
             // Yes.  Rotate the point about 0,0
-            return new PointD(AngleCos * _X - AngleSin * _Y, AngleSin * _X + AngleCos * _Y);
+            return new PointD(AngleCos*_X - AngleSin*_Y, AngleSin*_X + AngleCos*_Y);
         }
 
         /// <summary>Returns the current instance rotated about the specified point.</summary>
@@ -251,7 +227,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public override bool Equals(object obj)
         {
             if (obj is PointD)
-                return Equals((PointD)obj);
+                return Equals((PointD) obj);
             return false;
         }
 
@@ -306,12 +282,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public static PointD operator *(PointD left, PointD right)
         {
-            return new PointD(left.X * right.X, left.Y * right.Y);
+            return new PointD(left.X*right.X, left.Y*right.Y);
         }
 
         public static PointD operator /(PointD left, PointD right)
         {
-            return new PointD(left.X / right.X, left.Y / right.Y);
+            return new PointD(left.X/right.X, left.Y/right.Y);
         }
 
         /// <summary>
@@ -368,22 +344,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// is typically used to scale a point from one coordinate system to another.</remarks>
         public PointD Multiply(PointD offset)
         {
-            return new PointD(_X * offset.X, _Y * offset.Y);
+            return new PointD(_X*offset.X, _Y*offset.Y);
         }
 
         public PointD Multiply(double offsetX, double offsetY)
         {
-            return new PointD(_X * offsetX, _Y * offsetY);
+            return new PointD(_X*offsetX, _Y*offsetY);
         }
 
         public PointD Divide(PointD offset)
         {
-            return new PointD(_X / offset.X, _Y / offset.Y);
+            return new PointD(_X/offset.X, _Y/offset.Y);
         }
 
         public PointD Divide(double offsetX, double offsetY)
         {
-            return new PointD(_X / offsetX, _Y / offsetY);
+            return new PointD(_X/offsetX, _Y/offsetY);
         }
 
         #endregion
@@ -407,7 +383,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool Equals(PointD value, int precision)
         {
             return ((Math.Round(_X, precision) == Math.Round(value.X, precision))
-                && (Math.Round(_Y, precision) == Math.Round(value.Y, precision)));
+                    && (Math.Round(_Y, precision) == Math.Round(value.Y, precision)));
         }
 
         #endregion
@@ -416,7 +392,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -425,8 +401,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 format = "G";
 
             return _X.ToString(format, formatProvider)
-                + culture.TextInfo.ListSeparator
-                + _Y.ToString(format, formatProvider);
+                   + culture.TextInfo.ListSeparator
+                   + _Y.ToString(format, formatProvider);
         }
 
         #endregion
@@ -441,9 +417,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString("X",
-                        _X.ToString("G17", CultureInfo.InvariantCulture));
+                _X.ToString("G17", CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Y",
-                        _Y.ToString("G", CultureInfo.InvariantCulture));
+                _Y.ToString("G", CultureInfo.InvariantCulture));
         }
 
         public void ReadXml(XmlReader reader)

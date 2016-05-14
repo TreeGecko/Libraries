@@ -5,11 +5,11 @@ using System.Reflection;
 
 namespace TreeGecko.Library.Common.Helpers
 {
-	/// <summary>
-	/// Summary description for ReflectionHelper.
-	/// </summary>
-	public class ReflectionHelper
-	{
+    /// <summary>
+    /// Summary description for ReflectionHelper.
+    /// </summary>
+    public class ReflectionHelper
+    {
         private static readonly HybridDictionary assemblies = new HybridDictionary();
 
         //Getclass but pass args to constructor
@@ -20,7 +20,7 @@ namespace TreeGecko.Library.Common.Helpers
         /// <param name="_className">Classname being requested</param>
         /// <param name="_constructorArgs">Object array of arguments to pass to constructor</param>
         /// <returns>New object for given class</returns>
-        public static object GetClass(string _assemblyName, string _className, 
+        public static object GetClass(string _assemblyName, string _className,
             object[] _constructorArgs)
         {
             Assembly assembly = GetAssembly(_assemblyName);
@@ -38,6 +38,7 @@ namespace TreeGecko.Library.Common.Helpers
             Assembly assembly = Assembly.GetExecutingAssembly();
             return assembly.GetType(_className, true, true);
         }
+
         public static Type getType(string _assemblyName, string _className)
         {
             Assembly assembly = GetAssembly(_assemblyName);
@@ -62,21 +63,21 @@ namespace TreeGecko.Library.Common.Helpers
         /// <param name="_className">Classname being requested</param>
         /// <returns>New object for given class</returns>
         public static object GetClass(string _assemblyName, string _className)
-		{
-			Assembly assembly = GetAssembly(_assemblyName);
-			Type type = assembly.GetType(_className, true, true);
+        {
+            Assembly assembly = GetAssembly(_assemblyName);
+            Type type = assembly.GetType(_className, true, true);
 
             return GetClass(type);
-		}
+        }
 
 
-		public static object GetClass(string _className, Assembly _assembly)
-		{
-			Type type = _assembly.GetType(_className, true, true);
+        public static object GetClass(string _className, Assembly _assembly)
+        {
+            Type type = _assembly.GetType(_className, true, true);
 
-			//create instance of transformer class, set runtime collection and execute
+            //create instance of transformer class, set runtime collection and execute
             return GetClass(type);
-		}
+        }
 
         /// <summary>
         /// Create new object of given type, no constructor arguments supplied
@@ -95,21 +96,21 @@ namespace TreeGecko.Library.Common.Helpers
         /// <param name="_assemblyName">Name to find</param>
         /// <returns>Assembly found</returns>
         public static Assembly GetAssembly(string _assemblyName)
-		{
-			Assembly assembly;
+        {
+            Assembly assembly;
 
-			if (assemblies.Contains(_assemblyName))
-			{
-				assembly = (Assembly) assemblies[_assemblyName];
-			}
-			else
-			{
-				assembly = Assembly.LoadFrom(_assemblyName);
-				assemblies.Add(_assemblyName, assembly);
-			}
+            if (assemblies.Contains(_assemblyName))
+            {
+                assembly = (Assembly) assemblies[_assemblyName];
+            }
+            else
+            {
+                assembly = Assembly.LoadFrom(_assemblyName);
+                assemblies.Add(_assemblyName, assembly);
+            }
 
-			return assembly;
-		}
+            return assembly;
+        }
 
         /// <summary>
         /// Call given Method of given Class in given Assembly 
@@ -119,25 +120,27 @@ namespace TreeGecko.Library.Common.Helpers
         /// <param name="_methodName">Method to invoke</param>
         /// <param name="_parameters">Parameters to pass to Method</param>
         /// <returns>string value from called Method</returns>
-		public static string InvokeFunction(string _assemblyName, string _className, 
+        public static string InvokeFunction(string _assemblyName, string _className,
             string _methodName, object[] _parameters)
-		{
-			try
-			{
-				Assembly assembly = GetAssembly(_assemblyName);
-				Type type = assembly.GetType(_className);
-				object o = Activator.CreateInstance(type);
+        {
+            try
+            {
+                Assembly assembly = GetAssembly(_assemblyName);
+                Type type = assembly.GetType(_className);
+                object o = Activator.CreateInstance(type);
 
-				MethodInfo method = type.GetMethod(_methodName); 
+                MethodInfo method = type.GetMethod(_methodName);
 
-				return (string) method.Invoke(o, BindingFlags.Public, null, _parameters, null);  
-			}
-			catch (Exception e)
-			{
-				TraceFileHelper.Error("Exception in invokeFunction : Assembly-" + _assemblyName + ", ClassName-" + _className + ", MethodName-" + _methodName + ", ParametersCount-" + _parameters.GetLength(0));
-				throw e;
-			}
-		}
+                return (string) method.Invoke(o, BindingFlags.Public, null, _parameters, null);
+            }
+            catch (Exception e)
+            {
+                TraceFileHelper.Error("Exception in invokeFunction : Assembly-" + _assemblyName + ", ClassName-" +
+                                      _className + ", MethodName-" + _methodName + ", ParametersCount-" +
+                                      _parameters.GetLength(0));
+                throw e;
+            }
+        }
 
         /// <summary>
         /// Create List<> of Properties of object of given Type
@@ -196,7 +199,7 @@ namespace TreeGecko.Library.Common.Helpers
         /// <param name="_current">Object to change</param>
         /// <param name="_propertyName">Property to change</param>
         /// <param name="_propertyValue">New property value</param>
-        public static void SetPropertyValue(ref object _current, string _propertyName, 
+        public static void SetPropertyValue(ref object _current, string _propertyName,
             string _propertyValue)
         {
             try
@@ -220,7 +223,8 @@ namespace TreeGecko.Library.Common.Helpers
                 throw e;
             }
         }
-        public static void SetPropertyValue(ref object _current, string _propertyName, 
+
+        public static void SetPropertyValue(ref object _current, string _propertyName,
             object _propertyValue)
         {
             try
@@ -253,7 +257,7 @@ namespace TreeGecko.Library.Common.Helpers
         /// <param name="_propertyName">Property to search</param>
         /// <param name="_defaultValue">Default value if property not found</param>
         /// <returns>String property value</returns>
-        public static string GetPropertyValue(object _current, string _propertyName, 
+        public static string GetPropertyValue(object _current, string _propertyName,
             string _defaultValue)
         {
             try
@@ -264,16 +268,16 @@ namespace TreeGecko.Library.Common.Helpers
 
                 if (property != null)
                 {
-                    string propertyValue = (string)property.GetValue(_current, BindingFlags.Public, null, null, null);
+                    string propertyValue = (string) property.GetValue(_current, BindingFlags.Public, null, null, null);
 
                     if (propertyValue == null)
                     {
                         return _defaultValue;
                     }
-                    
+
                     return propertyValue;
                 }
-                
+
                 return _defaultValue;
             }
             catch (Exception e)
@@ -290,28 +294,28 @@ namespace TreeGecko.Library.Common.Helpers
         /// <param name="_propertyName">Property to search</param>
         /// <returns>String property value</returns>
         public static string GetPropertyValue(object _current, string _propertyName)
-		{
-			try
-			{
-				Type type = _current.GetType();
+        {
+            try
+            {
+                Type type = _current.GetType();
 
-				PropertyInfo property = type.GetProperty(_propertyName);
-				
-				if (property!=null)
-				{
-					return Convert.ToString(property.GetValue(_current, BindingFlags.Public, null, null, null));
-				}
-				else
-				{
-					throw new Exception("Property does not exist - " + _propertyName);
-				}
-			}
-			catch (Exception e)
-			{
-				TraceFileHelper.Error("Exception in getPropertyValue : PropertyName-" + _propertyName);
-				throw e;
-			}
-		}
+                PropertyInfo property = type.GetProperty(_propertyName);
+
+                if (property != null)
+                {
+                    return Convert.ToString(property.GetValue(_current, BindingFlags.Public, null, null, null));
+                }
+                else
+                {
+                    throw new Exception("Property does not exist - " + _propertyName);
+                }
+            }
+            catch (Exception e)
+            {
+                TraceFileHelper.Error("Exception in getPropertyValue : PropertyName-" + _propertyName);
+                throw e;
+            }
+        }
 
         /// <summary>
         /// Call given method and return its returned value
@@ -320,11 +324,11 @@ namespace TreeGecko.Library.Common.Helpers
         /// <param name="_methodName">Method to call</param>
         /// <param name="_parameters">Parms to pass into method</param>
         /// <returns>Returned object from called Method</returns>
-		public static object GetMethodValue(object _current, string _methodName,
+        public static object GetMethodValue(object _current, string _methodName,
             object[] _parameters)
-		{
-			try
-			{
+        {
+            try
+            {
                 object obj = null;
 
                 if (_parameters == null)
@@ -340,14 +344,14 @@ namespace TreeGecko.Library.Common.Helpers
                     MethodInfo method = type.GetMethod(_methodName, types);
                     obj = method.Invoke(_current, _parameters);
                 }
-				return obj;
-			}
-			catch (Exception ex)
-			{
-				TraceFileHelper.Error("Exception : MethodName-" + _methodName);
-				throw ex;
-			}
-		}
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                TraceFileHelper.Error("Exception : MethodName-" + _methodName);
+                throw ex;
+            }
+        }
 
         private static Type[] GetTypes(object[] _parameters)
         {
@@ -361,7 +365,6 @@ namespace TreeGecko.Library.Common.Helpers
             }
 
             return types;
-
         }
 
         public static bool IsRelated(Type _itemType, Type _baseType)
@@ -383,6 +386,7 @@ namespace TreeGecko.Library.Common.Helpers
 
             return returnValue;
         }
+
         /// <summary>
         /// Return assembly version for currently running assembly
         /// </summary>
@@ -394,7 +398,7 @@ namespace TreeGecko.Library.Common.Helpers
             string[] parts = Version.Split('.');
 
             return string.Format("v{0}.{1}.{2} Build {3}",
-                                  parts[0], parts[1], parts[2], parts[3]);
+                parts[0], parts[1], parts[2], parts[3]);
         }
 
         /// <summary>
@@ -435,8 +439,8 @@ namespace TreeGecko.Library.Common.Helpers
             Version v = an.Version;
 
             string temp = string.Format("{0}.{1}",
-                                        v.Major,
-                                        v.Minor);
+                v.Major,
+                v.Minor);
 
             return Convert.ToDouble(temp);
         }

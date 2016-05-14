@@ -61,6 +61,5 @@ namespace TreeGecko.Library.Mongo.Helpers
 
             return default(T);
         }
-
     }
 }

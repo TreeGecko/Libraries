@@ -19,7 +19,7 @@ namespace TreeGecko.Library.Common.Objects
         /// <summary>
         /// 
         /// </summary>
-        public AttributeTypes? AttributeType { get; set; } 
+        public AttributeTypes? AttributeType { get; set; }
 
         /// <summary>
         /// 
@@ -31,7 +31,7 @@ namespace TreeGecko.Library.Common.Objects
 
             tg.Add("Name", Name);
             tg.Add("Value", Value);
-            tg.Add("AttributeType",  AttributeType);
+            tg.Add("AttributeType", AttributeType);
 
             return tg;
         }
@@ -44,7 +44,7 @@ namespace TreeGecko.Library.Common.Objects
         {
             Name = _tg.GetString("Name");
             Value = _tg.GetString("Value");
-            AttributeType = (AttributeTypes) _tg.GetNullableEnum("AttributeType", 
+            AttributeType = (AttributeTypes) _tg.GetNullableEnum("AttributeType",
                 typeof(AttributeTypes));
         }
 

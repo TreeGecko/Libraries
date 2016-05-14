@@ -481,7 +481,6 @@ namespace TreeGecko.Library.Common.Objects
             Properties.Add(_name, new TGSerializedProperty(_name, Convert.ToString(_value)));
         }
 
-
         /// <summary>
         /// 
         /// </summary>

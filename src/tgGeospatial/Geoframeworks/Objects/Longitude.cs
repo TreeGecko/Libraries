@@ -9,50 +9,53 @@ using TreeGecko.Library.Geospatial.Geoframeworks.Interfaces;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>
-	/// Represents a line of constant distance east or west from the Prime Meridian.
-	/// </summary>
-	/// <remarks>
-	/// 	<para>Longitudes measure a distance either East or West from the Prime Meridian, an
-	///     imaginary line which passes from the North Pole, through the
-	///     <see href="http://www.nmm.ac.uk/">Royal Observatory in Greenwich, England, and on
-	///     to the South Pole</see>. Longitudes can range from -180 to 180°, with the Prime
-	///     Meridian at 0°. Latitudes are commonly paired with Longitudes to mark a specific
-	///     location on Earth's surface.</para>
-	/// 	<para>Latitudes are expressed in either of two major formats. The first format uses
-	///     only positive numbers and the letter "E" or "W" to indicate the hemisphere (i.e.
-	///     "94°E" or "32°W"). The second format allows negative numbers an omits the single
-	///     character (i.e. 94 or -32).</para>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
-	///     immutable (its properties can only be changed via constructors).</para>
-	/// </remarks>
-	/// <seealso cref="Azimuth">Azimuth Class</seealso>
-	/// <seealso cref="Elevation">Elevation Class</seealso>
-	/// <seealso cref="Latitude">Latitude Class</seealso>
-	/// <seealso cref="Longitude">Longitude Class</seealso>
-	/// <example>
-	///     These examples create new instances of Longitude objects. 
-	///     <code lang="VB" description="Create an angle of 90°">
-	/// Dim MyLongitude As New Longitude(90)
-	///     </code>
-	/// 	<code lang="CS" description="Create an angle of 90°">
-	/// Longitude MyLongitude = new Longitude(90);
-	///     </code>
-	/// 	<code lang="C++" description="Create an angle of 90°">
-	/// Longitude MyLongitude = new Longitude(90);
-	///     </code>
-	/// 	<code lang="VB" description="Create an angle of 105°30'21.4">
-	/// Dim MyLongitude1 As New Longitude(105, 30, 21.4)
-	///     </code>
-	/// 	<code lang="CS" description="Create an angle of 105°30'21.4">
-	/// Longitude MyLongitude = new Longitude(105, 30, 21.4);
-	///     </code>
-	/// 	<code lang="C++" description="Create an angle of 105°30'21.4">
-	/// Longitude MyLongitude = new Longitude(105, 30, 21.4);
-	///     </code>
-	/// </example>
-    [TypeConverter("GeoFramework.Design.LongitudeConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a")]
-    public struct Longitude : IFormattable, IComparable<Longitude>, IEquatable<Longitude>, ICloneable<Longitude>, IXmlSerializable
+    /// <summary>
+    /// Represents a line of constant distance east or west from the Prime Meridian.
+    /// </summary>
+    /// <remarks>
+    /// 	<para>Longitudes measure a distance either East or West from the Prime Meridian, an
+    ///     imaginary line which passes from the North Pole, through the
+    ///     <see href="http://www.nmm.ac.uk/">Royal Observatory in Greenwich, England, and on
+    ///     to the South Pole</see>. Longitudes can range from -180 to 180°, with the Prime
+    ///     Meridian at 0°. Latitudes are commonly paired with Longitudes to mark a specific
+    ///     location on Earth's surface.</para>
+    /// 	<para>Latitudes are expressed in either of two major formats. The first format uses
+    ///     only positive numbers and the letter "E" or "W" to indicate the hemisphere (i.e.
+    ///     "94°E" or "32°W"). The second format allows negative numbers an omits the single
+    ///     character (i.e. 94 or -32).</para>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
+    ///     immutable (its properties can only be changed via constructors).</para>
+    /// </remarks>
+    /// <seealso cref="Azimuth">Azimuth Class</seealso>
+    /// <seealso cref="Elevation">Elevation Class</seealso>
+    /// <seealso cref="Latitude">Latitude Class</seealso>
+    /// <seealso cref="Longitude">Longitude Class</seealso>
+    /// <example>
+    ///     These examples create new instances of Longitude objects. 
+    ///     <code lang="VB" description="Create an angle of 90°">
+    /// Dim MyLongitude As New Longitude(90)
+    ///     </code>
+    /// 	<code lang="CS" description="Create an angle of 90°">
+    /// Longitude MyLongitude = new Longitude(90);
+    ///     </code>
+    /// 	<code lang="C++" description="Create an angle of 90°">
+    /// Longitude MyLongitude = new Longitude(90);
+    ///     </code>
+    /// 	<code lang="VB" description="Create an angle of 105°30'21.4">
+    /// Dim MyLongitude1 As New Longitude(105, 30, 21.4)
+    ///     </code>
+    /// 	<code lang="CS" description="Create an angle of 105°30'21.4">
+    /// Longitude MyLongitude = new Longitude(105, 30, 21.4);
+    ///     </code>
+    /// 	<code lang="C++" description="Create an angle of 105°30'21.4">
+    /// Longitude MyLongitude = new Longitude(105, 30, 21.4);
+    ///     </code>
+    /// </example>
+    [TypeConverter(
+        "GeoFramework.Design.LongitudeConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a"
+        )]
+    public struct Longitude : IFormattable, IComparable<Longitude>, IEquatable<Longitude>, ICloneable<Longitude>,
+        IXmlSerializable
     {
         private double _DecimalDegrees;
 
@@ -64,46 +67,51 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region Fields
 
- 		/// <summary>Represents a longitude of 0°.</summary>
-		/// <remarks>
-		/// 	<para>The Prime Meridian, located at 0°E (and 0°W), also known as the "Greenwich" Meridian was chosen as the
-		///  Prime Meridian of the World in 1884. Forty-one delegates from 25 nations met in
-		///  Washington, D.C. for the International Meridian Conference. By the end of the
-		///  conference, Greenwich had won the prize of Longitude 0° by a vote of 22 to 1
-		///  against (San Domingo), with 2 abstentions (France and Brazil).</para>
-		/// 	<para>The Prime Meridian is also significant in that it marks the location from
-		///  which all time zones are measured. Times displayed as "Zulu," "UTC," or "GMT" are
-		///  all talking about times adjusted to the Greenwich time zone.</para>
-		/// 	<para>Before the Prime Meridian, almost every town in the world kept its own local
-		///  time. There were no national or international conventions which set how time should
-		///  be measured, or when the day would begin and end, or even what length an hour might
-		///  be!</para>
-		/// </remarks>
-		public static readonly Longitude PrimeMeridian = new Longitude(0.0);
-		/// <summary>Represents a longitude 180°.</summary>
-		/// <remarks>
-		/// This value of 180°W (also 180°E) marks the longitude located on the opposite side of the Earth from the
-		/// Prime Meridian. It runs approximately through the
-		/// <a href="http://greenwichmeridian.com/date-line.htm">International Date Line</a>
-		/// (between Alaska and Russia).
-		/// </remarks>
-		public static readonly Longitude InternationalDateline = new Longitude(180.0);
-		/// <summary>Represents a longitude of 0°.</summary>
-		public static readonly Longitude Empty = new Longitude(0.0);
-		/// <summary>Represents the minimum possible longitude of -180°.</summary>
-		/// <remarks>
-		/// This member is provided for completeness and is equivalent to the
-		/// <see cref="PrimeMeridian">PrimeMeridian</see> shared field.
-		/// </remarks>
-		public static readonly Longitude Minimum = new Longitude(-180.0);
-		/// <summary>Represents the maximum possible longitude of 180°.</summary>
-		/// <remarks>
-		/// This value of 180°W (also 180°E) marks the longitude located on the opposite side of the Earth from the
-		/// Prime Meridian. It runs approximately through the
-		/// <a href="http://greenwichmeridian.com/date-line.htm">International Date Line</a>
-		/// (between Alaska and Russia).
-		/// </remarks>
-		public static readonly Longitude Maximum = new Longitude(180.0);
+        /// <summary>Represents a longitude of 0°.</summary>
+        /// <remarks>
+        /// 	<para>The Prime Meridian, located at 0°E (and 0°W), also known as the "Greenwich" Meridian was chosen as the
+        ///  Prime Meridian of the World in 1884. Forty-one delegates from 25 nations met in
+        ///  Washington, D.C. for the International Meridian Conference. By the end of the
+        ///  conference, Greenwich had won the prize of Longitude 0° by a vote of 22 to 1
+        ///  against (San Domingo), with 2 abstentions (France and Brazil).</para>
+        /// 	<para>The Prime Meridian is also significant in that it marks the location from
+        ///  which all time zones are measured. Times displayed as "Zulu," "UTC," or "GMT" are
+        ///  all talking about times adjusted to the Greenwich time zone.</para>
+        /// 	<para>Before the Prime Meridian, almost every town in the world kept its own local
+        ///  time. There were no national or international conventions which set how time should
+        ///  be measured, or when the day would begin and end, or even what length an hour might
+        ///  be!</para>
+        /// </remarks>
+        public static readonly Longitude PrimeMeridian = new Longitude(0.0);
+
+        /// <summary>Represents a longitude 180°.</summary>
+        /// <remarks>
+        /// This value of 180°W (also 180°E) marks the longitude located on the opposite side of the Earth from the
+        /// Prime Meridian. It runs approximately through the
+        /// <a href="http://greenwichmeridian.com/date-line.htm">International Date Line</a>
+        /// (between Alaska and Russia).
+        /// </remarks>
+        public static readonly Longitude InternationalDateline = new Longitude(180.0);
+
+        /// <summary>Represents a longitude of 0°.</summary>
+        public static readonly Longitude Empty = new Longitude(0.0);
+
+        /// <summary>Represents the minimum possible longitude of -180°.</summary>
+        /// <remarks>
+        /// This member is provided for completeness and is equivalent to the
+        /// <see cref="PrimeMeridian">PrimeMeridian</see> shared field.
+        /// </remarks>
+        public static readonly Longitude Minimum = new Longitude(-180.0);
+
+        /// <summary>Represents the maximum possible longitude of 180°.</summary>
+        /// <remarks>
+        /// This value of 180°W (also 180°E) marks the longitude located on the opposite side of the Earth from the
+        /// Prime Meridian. It runs approximately through the
+        /// <a href="http://greenwichmeridian.com/date-line.htm">International Date Line</a>
+        /// (between Alaska and Russia).
+        /// </remarks>
+        public static readonly Longitude Maximum = new Longitude(180.0);
+
         /// <summary>
         /// Represents an invalid or unspecified value.
         /// </summary>
@@ -316,7 +324,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <exception cref="FormatException" caption="FormatException">The specified text was not fully understood as an angular measurement.</exception>
         public Longitude(string value)
             : this(value, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
         /// <summary>Creates a new instance using the specified string-based measurement.</summary>
         /// <remarks>
@@ -416,7 +425,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             }
             else if (value.IndexOf('e') != -1
                 // Ignore the "E-002" type scientific notation
-                && value.IndexOf('e') != value.IndexOf("e-"))
+                     && value.IndexOf('e') != value.IndexOf("e-"))
             {
                 hemisphere = LongitudeHemisphere.East;
                 NewValue.Replace("e", "");
@@ -465,7 +474,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                             return;
                         }
                         // Look at the number of digits, this might be HHHMMSS format.
-                        else if (Values[0].Length == 7 && Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
+                        else if (Values[0].Length == 7 &&
+                                 Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
                         {
                             _DecimalDegrees = ToDecimalDegrees(
                                 int.Parse(Values[0].Substring(0, 3), culture),
@@ -474,7 +484,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                                 hemisphere);
                             break;
                         }
-                        else if (Values[0].Length == 8 && Values[0][0] == '-' && Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
+                        else if (Values[0].Length == 8 && Values[0][0] == '-' &&
+                                 Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
                         {
                             _DecimalDegrees = ToDecimalDegrees(
                                 int.Parse(Values[0].Substring(0, 4), culture),
@@ -505,7 +516,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                         break;
                     default: // Hours, minutes and seconds  (most likely)
                         // If this is a fractional value, remember that it is
-                        if (Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1 || Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1)
+                        if (Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1 ||
+                            Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1)
                         {
                             throw new ArgumentException(Properties.Resources.Longitude_OnlyRightmostIsDecimal, "value");
                         }
@@ -569,10 +581,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public double DecimalDegrees
         {
-            get
-            {
-                return _DecimalDegrees;
-            }
+            get { return _DecimalDegrees; }
         }
 
         /// <summary>Returns the minutes and seconds as a single numeric value.</summary>
@@ -605,7 +614,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             get
             {
-                return Math.Round((Math.Abs(_DecimalDegrees - Math.Truncate(_DecimalDegrees)) * 60.0), MaximumPrecisionDigits - 2);
+                return Math.Round((Math.Abs(_DecimalDegrees - Math.Truncate(_DecimalDegrees))*60.0),
+                    MaximumPrecisionDigits - 2);
             }
         }
 
@@ -637,10 +647,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public int Hours
         {
-            get
-            {
-                return (int)Math.Truncate(_DecimalDegrees);
-            }
+            get { return (int) Math.Truncate(_DecimalDegrees); }
         }
 
         /// <summary>Returns the integer minutes portion of an angular measurement.</summary>
@@ -671,7 +678,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             get
             {
                 // Calculations appear to support one less digit than the maximum allowed precision
-                return (int)(Math.Abs(Math.Truncate(Math.Round((_DecimalDegrees - Hours) * 60.0, MaximumPrecisionDigits - 1))));
+                return
+                    (int)
+                        (Math.Abs(Math.Truncate(Math.Round((_DecimalDegrees - Hours)*60.0, MaximumPrecisionDigits - 1))));
             }
         }
 
@@ -704,9 +713,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             get
             {
                 return Math.Round(
-                                (Math.Abs(_DecimalDegrees - Hours) * 60.0 - Minutes) * 60.0,
+                    (Math.Abs(_DecimalDegrees - Hours)*60.0 - Minutes)*60.0,
                     // This property appears to support one less digit than the maximum allowed
-                                MaximumPrecisionDigits - 4);
+                    MaximumPrecisionDigits - 4);
             }
         }
 
@@ -733,7 +742,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             get
             {
-                double LongitudeTemp = (DecimalDegrees + 180) - (int)Math.Truncate((DecimalDegrees + 180) / 360) * 360 - 180;
+                double LongitudeTemp = (DecimalDegrees + 180) - (int) Math.Truncate((DecimalDegrees + 180)/360)*360 -
+                                       180;
 
                 // Adjust for special zone numbers
                 if (DecimalDegrees >= 56.0 && DecimalDegrees < 64.0 && LongitudeTemp >= 3.0 && LongitudeTemp < 12.0)
@@ -760,8 +770,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                         return 37;
                     }
                 }
-                
-                return (int)Math.Truncate((LongitudeTemp + 180) / 6) + 1;
+
+                return (int) Math.Truncate((LongitudeTemp + 180)/6) + 1;
             }
         }
 
@@ -774,19 +784,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="Empty">Empty Field</seealso>
         public bool IsEmpty
         {
-            get
-            {
-                return (_DecimalDegrees == 0);
-            }
+            get { return (_DecimalDegrees == 0); }
         }
 
         /// <summary>Indicates if the current instance represents an infinite value.</summary>
         public bool IsInfinity
         {
-            get
-            {
-                return double.IsInfinity(_DecimalDegrees);
-            }
+            get { return double.IsInfinity(_DecimalDegrees); }
         }
 
         /// <summary>
@@ -893,7 +897,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public Radian ToRadians()
         {
-            return new Radian(_DecimalDegrees * Radian.RadiansPerDegree);
+            return new Radian(_DecimalDegrees*Radian.RadiansPerDegree);
         }
 
         /// <summary>
@@ -1041,7 +1045,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             // Interval must be > 0
             if (interval == 0)
                 throw new ArgumentOutOfRangeException("interval", interval, Properties.Resources.Angle_InvalidInterval);
-            
+
             // Get the amount in seconds
             double NewSeconds = Seconds;
             //double HalfInterval = interval * 0.5;
@@ -1055,7 +1059,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     // Yes.  Continue on
                     continue;
                 // Is the seconds value closer to the current or next interval?
-                if (NewSeconds < (value + NextInterval) * 0.5)
+                if (NewSeconds < (value + NextInterval)*0.5)
                     // Closer to the current interval, so adjust it
                     NewSeconds = value;
                 else
@@ -1084,10 +1088,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 return this;
             // If we're off the eastern edge (180E) wrap back around from the west 
             else if (_DecimalDegrees > 180)
-                return new Longitude(-180 + (_DecimalDegrees % 180));
+                return new Longitude(-180 + (_DecimalDegrees%180));
             // If we're off the western edge (180W) wrap back around from the east
             else if (_DecimalDegrees < -180)
-                return new Longitude(180 + (_DecimalDegrees % 180));
+                return new Longitude(180 + (_DecimalDegrees%180));
             // We're in bounds already, so just return the current instance
             else
                 return this;
@@ -1137,7 +1141,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             // Only compare the same type
             if (obj is Longitude)
-                return Equals((Longitude)obj);
+                return Equals((Longitude) obj);
             return false;
         }
 
@@ -1321,7 +1325,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Returns a random longitude based on the specified seed.</summary>
         public static Longitude Random(Random generator)
         {
-            return new Longitude((generator.NextDouble() * 180.0) - 90.0);
+            return new Longitude((generator.NextDouble()*180.0) - 90.0);
         }
 
         /// <summary>
@@ -1343,8 +1347,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <returns></returns>
         public static Longitude Random(Random generator, Longitude easternmost, Longitude westernmost)
         {
-            return new Longitude(((easternmost.DecimalDegrees - westernmost.DecimalDegrees) * generator.NextDouble())
-                                + westernmost.DecimalDegrees);
+            return new Longitude(((easternmost.DecimalDegrees - westernmost.DecimalDegrees)*generator.NextDouble())
+                                 + westernmost.DecimalDegrees);
         }
 
 
@@ -1377,8 +1381,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    ? -Math.Round(-hours + minutes / 60.0 + seconds / 3600.0, MaximumPrecisionDigits)
             //    : Math.Round(hours + minutes / 60.0 + seconds / 3600.0, MaximumPrecisionDigits);
             return hours < 0
-                ? -(-hours + minutes / 60.0 + seconds / 3600.0)
-                : (hours + minutes / 60.0 + seconds / 3600.0);
+                ? -(-hours + minutes/60.0 + seconds/3600.0)
+                : (hours + minutes/60.0 + seconds/3600.0);
         }
 
         /// <summary>Converts arbitrary hour and decimal minutes into decimal degrees.</summary>
@@ -1399,8 +1403,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    ? -Math.Round(-hours + decimalMinutes / 60.0, MaximumPrecisionDigits)
             //    : Math.Round(hours + decimalMinutes / 60.0, MaximumPrecisionDigits);
             return hours < 0
-                ? -(-hours + decimalMinutes / 60.0)
-                : (hours + decimalMinutes / 60.0);
+                ? -(-hours + decimalMinutes/60.0)
+                : (hours + decimalMinutes/60.0);
         }
 
         /// <summary>Converts an hour value into decimal degrees.</summary>
@@ -1438,9 +1442,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (hemisphere)
             {
                 case LongitudeHemisphere.West:
-                    return -Math.Abs(hours) - decimalMinutes / 60.0;
+                    return -Math.Abs(hours) - decimalMinutes/60.0;
                 case LongitudeHemisphere.East:
-                    return Math.Abs(hours) + decimalMinutes / 60.0;
+                    return Math.Abs(hours) + decimalMinutes/60.0;
                 default:
                     return ToDecimalDegrees(hours, decimalMinutes);
             }
@@ -1493,9 +1497,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (hemisphere)
             {
                 case LongitudeHemisphere.West:
-                    return -Math.Abs(hours) - minutes / 60.0 - seconds / 3600.0;
+                    return -Math.Abs(hours) - minutes/60.0 - seconds/3600.0;
                 case LongitudeHemisphere.East:
-                    return Math.Abs(hours) + minutes / 60.0 + seconds / 3600.0;
+                    return Math.Abs(hours) + minutes/60.0 + seconds/3600.0;
                 default:
                     return ToDecimalDegrees(hours, minutes, seconds);
             }
@@ -1589,22 +1593,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public static Longitude operator *(Longitude left, Longitude right)
         {
-            return new Longitude(left.DecimalDegrees * right.DecimalDegrees);
+            return new Longitude(left.DecimalDegrees*right.DecimalDegrees);
         }
 
         public static Longitude operator *(Longitude left, double right)
         {
-            return new Longitude(left.DecimalDegrees * right);
+            return new Longitude(left.DecimalDegrees*right);
         }
 
         public static Longitude operator /(Longitude left, Longitude right)
         {
-            return new Longitude(left.DecimalDegrees / right.DecimalDegrees);
+            return new Longitude(left.DecimalDegrees/right.DecimalDegrees);
         }
 
         public static Longitude operator /(Longitude left, double right)
         {
-            return new Longitude(left.DecimalDegrees / right);
+            return new Longitude(left.DecimalDegrees/right);
         }
 
         public static bool operator ==(Longitude left, Longitude right)
@@ -1807,12 +1811,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> to multiply with the current instance.</param>
         public Longitude Multiply(double value)
         {
-            return new Longitude(_DecimalDegrees * value);
+            return new Longitude(_DecimalDegrees*value);
         }
 
         public Longitude Multiply(Longitude value)
         {
-            return new Longitude(_DecimalDegrees * value.DecimalDegrees);
+            return new Longitude(_DecimalDegrees*value.DecimalDegrees);
         }
 
         /// <summary>Divides the current instance by the specified value.</summary>
@@ -1831,12 +1835,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> representing a denominator to divide by.</param>
         public Longitude Divide(double value)
         {
-            return new Longitude(_DecimalDegrees / value);
+            return new Longitude(_DecimalDegrees/value);
         }
 
         public Longitude Divide(Longitude value)
         {
-            return new Longitude(_DecimalDegrees / value.DecimalDegrees);
+            return new Longitude(_DecimalDegrees/value.DecimalDegrees);
         }
 
         /// <summary>Indicates if the current instance is smaller than the specified value.</summary>
@@ -2033,7 +2037,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region IEquatable<Longitude> Members
 
-
         /// <summary>
         /// Compares the current instance to another instance using the specified
         /// precision.
@@ -2095,13 +2098,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region IComparable<Longitude> Members
 
         public int CompareTo(Longitude other)
-		{
+        {
             return _DecimalDegrees.CompareTo(other.DecimalDegrees);
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region IFormattable Members
+        #region IFormattable Members
 
         /// <remarks>
         ///	 <para>This powerful method returns the current angular measurement in a specific
@@ -2172,7 +2175,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -2322,7 +2325,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             }
         }
 
-		#endregion
+        #endregion
 
         #region IXmlSerializable Members
 
@@ -2366,9 +2369,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
     {
         /// <summary>Missing longitude information.</summary>
         None = 0,
+
         /// <summary>The longitude is east of the Prime Meridian.</summary>
         East = 1,
+
         /// <summary>The longitude is west of the Prime Meridian.</summary>
         West = 2
-    }	
+    }
 }

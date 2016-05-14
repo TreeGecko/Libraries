@@ -2,7 +2,6 @@ using System.Diagnostics;
 
 namespace TreeGecko.Library.Common.Tracing
 {
-
     public class AbstractTraceListener : DefaultTraceListener
     {
         private string mListenerName = "ListenerName";
@@ -13,7 +12,9 @@ namespace TreeGecko.Library.Common.Tracing
         }
 
         public string ListenerName
-        { get { return mListenerName; } }
+        {
+            get { return mListenerName; }
+        }
 
         public override void WriteLine(string _text)
         {
@@ -24,6 +25,5 @@ namespace TreeGecko.Library.Common.Tracing
         {
             base.Write(_text);
         }
-
     }
 }

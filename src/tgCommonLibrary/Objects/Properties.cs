@@ -6,7 +6,7 @@ using TreeGecko.Library.Common.Interfaces;
 
 namespace TreeGecko.Library.Common.Objects
 {
-    public class Properties : List<Property>,  ITGSerializable
+    public class Properties : List<Property>, ITGSerializable
     {
         public Property FindProperty(string _name)
         {
@@ -46,11 +46,11 @@ namespace TreeGecko.Library.Common.Objects
                 {
                     prop = new Property
                     {
-                        Name = _name, 
-                        Value = _value, 
+                        Name = _name,
+                        Value = _value,
                         AttributeType = _attributeType
                     };
-                    
+
                     Add(prop);
                 }
             }

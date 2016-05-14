@@ -84,7 +84,6 @@ namespace TreeGecko.Library.Mongo.Managers
                 };
 
             Initialize(credentials);
-
         }
     }
 }

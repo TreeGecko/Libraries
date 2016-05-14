@@ -3,7 +3,6 @@ using TreeGecko.Library.Common.Objects;
 
 namespace TreeGecko.Library.Common.Helpers
 {
-    
     public static class JSONHelper
     {
         public static string GetJson(object _obj)
@@ -15,6 +14,5 @@ namespace TreeGecko.Library.Common.Helpers
         {
             return JsonConvert.DeserializeObject<T>(_json);
         }
-
     }
 }

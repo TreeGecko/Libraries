@@ -5,24 +5,24 @@ using System.Text.RegularExpressions;
 
 namespace TreeGecko.Library.Common.Helpers
 {
-
     public class EmailHelper
     {
         public static bool IsValidEmail(string _emailAddress)
         {
-            const string emailPattern = "^[A-Z0-9._%-]+@[A-Z0-9.-]+\\.(?:[A-Z]{2}|com|org|net|biz|info|name|aero|biz|info|jobs|museum|name)$";
+            const string emailPattern =
+                "^[A-Z0-9._%-]+@[A-Z0-9.-]+\\.(?:[A-Z]{2}|com|org|net|biz|info|name|aero|biz|info|jobs|museum|name)$";
 
             return Regex.IsMatch(_emailAddress, emailPattern, RegexOptions.IgnoreCase);
         }
+
         public static void SendMessage(MailMessage _mail)
         {
             try
             {
-
                 SmtpClient client = new SmtpClient();
                 client.Host = Config.GetSettingValue("SMTP_HOST");
 
-                
+
                 string userName = Config.GetSettingValue("SMTP_USER");
                 string password = Config.GetSettingValue("SMTP_PASSWORD");
                 string domain = Config.GetSettingValue("SMTP_DOMAIN");
@@ -32,17 +32,18 @@ namespace TreeGecko.Library.Common.Helpers
                 try
                 {
                     client.Send(_mail);
-                    string logMessage = String.Format("Email sent to {0} with subject {1}", _mail.To[0].User, _mail.Subject);
+                    string logMessage = String.Format("Email sent to {0} with subject {1}", _mail.To[0].User,
+                        _mail.Subject);
                     TraceFileHelper.Info(logMessage);
                 }
                 catch (Exception ex)
                 {
                     TraceFileHelper.Exception(ex.ToString());
 
-                    string logMessage = String.Format("Unable to send email to {0} with subject {1}", _mail.To[0].User, _mail.Subject);
+                    string logMessage = String.Format("Unable to send email to {0} with subject {1}", _mail.To[0].User,
+                        _mail.Subject);
                     TraceFileHelper.Info(logMessage);
                 }
-
             }
             catch (Exception ex)
             {
@@ -50,7 +51,7 @@ namespace TreeGecko.Library.Common.Helpers
             }
         }
 
-        public static void SendMessage(string _from, string _to, 
+        public static void SendMessage(string _from, string _to,
             string _subject, string _body)
         {
             try

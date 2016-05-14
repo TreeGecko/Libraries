@@ -48,10 +48,7 @@ namespace TreeGecko.Library.Common.Objects
 
         public string TGObjectType
         {
-            get
-            {
-                return ReflectionHelper.GetTypeName(GetType());
-            }
+            get { return ReflectionHelper.GetTypeName(GetType()); }
         }
 
         public override string ToString()

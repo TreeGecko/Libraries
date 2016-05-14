@@ -1,4 +1,4 @@
-﻿namespace TreeGecko.Library.Geospatial.Geoframeworks
+﻿namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
     internal static class Xml
     {
@@ -24,9 +24,9 @@
 
 #if Framework30
 
-        /// <summary>
-        /// Used to test the <see cref="IXmlSerializable.WriteXml"/> implementations of GeoFramework types.
-        /// </summary>
+    /// <summary>
+    /// Used to test the <see cref="IXmlSerializable.WriteXml"/> implementations of GeoFramework types.
+    /// </summary>
         internal static string Serialize<T>(T obj)
             where T: IXmlSerializable
         {

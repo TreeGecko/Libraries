@@ -1,5 +1,4 @@
-﻿using TreeGecko.Library.Common.Helpers;
-using TreeGecko.Library.Common.Objects;
+﻿using TreeGecko.Library.Common.Objects;
 using TreeGecko.Library.Geospatial.Helpers;
 using TreeGecko.Library.Geospatial.Interfaces;
 using TreeGecko.Library.Geospatial.Objects;
@@ -57,7 +56,7 @@ namespace TreeGecko.Library.Geospatial.Extensions
         {
             if (_geometry != null)
             {
-                _tgs.Properties.Add(_name, new TGSerializedProperty(_name, 
+                _tgs.Properties.Add(_name, new TGSerializedProperty(_name,
                     _geometry.ToGeoJson(), true));
             }
             else

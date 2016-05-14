@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using TreeGecko.Library.Common.Helpers;
-using TreeGecko.Library.Common.Interfaces;
 using TreeGecko.Library.Geospatial.Interfaces;
-using TreeGecko.Library.Geospatial.Objects;
 
-namespace TreeGecko.Library.Common.Objects
+namespace TreeGecko.Library.Geospatial.Objects
 {
     public class GeoLine : IGeoObject
     {
@@ -61,7 +59,7 @@ namespace TreeGecko.Library.Common.Objects
                     {
                         GeoPoint gp = new GeoPoint
                         {
-                            X = Convert.ToDouble(parts[0]), 
+                            X = Convert.ToDouble(parts[0]),
                             Y = Convert.ToDouble(parts[1])
                         };
 
@@ -73,7 +71,6 @@ namespace TreeGecko.Library.Common.Objects
                         throw new Exception("Invalid Line definition");
                     }
                 }
-
             }
             else
             {

@@ -7,20 +7,21 @@ using System.Xml.Serialization;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-
-	/// <summary>
-	/// Represents a unit of angular measurement used during trigonometric
-	/// equations.
-	/// </summary>
-	/// <remarks>
-	/// 	<para>A radian is a unit of measure of an angle formed by an arc whose length is
-	///     the same as the circle's radius, making a shape similar to a slice of pizza.
-	///     Radians are typically used during trigonometric calculations such as calculating
-	///     the distance between two points on Earth's curved surface.</para>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
-	///     immutable (its properties can only be changed during constructors).</para>
-	/// </remarks>
-    [TypeConverter("GeoFramework.Design.RadianConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a")]
+    /// <summary>
+    /// Represents a unit of angular measurement used during trigonometric
+    /// equations.
+    /// </summary>
+    /// <remarks>
+    /// 	<para>A radian is a unit of measure of an angle formed by an arc whose length is
+    ///     the same as the circle's radius, making a shape similar to a slice of pizza.
+    ///     Radians are typically used during trigonometric calculations such as calculating
+    ///     the distance between two points on Earth's curved surface.</para>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
+    ///     immutable (its properties can only be changed during constructors).</para>
+    /// </remarks>
+    [TypeConverter(
+        "GeoFramework.Design.RadianConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a"
+        )]
     public struct Radian : IFormattable, IEquatable<Radian>, IComparable<Radian>, IXmlSerializable
     {
         private double _Value;
@@ -29,15 +30,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         // Public?
 
-        public const double RadiansPerDegree = Math.PI / 180.0; 
-        public const double DegreesPerRadian = 180.0 / Math.PI; 
+        public const double RadiansPerDegree = Math.PI/180.0;
+        public const double DegreesPerRadian = 180.0/Math.PI;
 
         #endregion
 
         #region Fields
 
         /// <summary>Represents a radian with a value of zero.</summary>
-		public static readonly Radian Empty = new Radian(0.0);
+        public static readonly Radian Empty = new Radian(0.0);
 
         #endregion
 
@@ -56,12 +57,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public Radian(int value)
         {
-            _Value = (double)value;
+            _Value = (double) value;
         }
 
         public Radian(string value)
             : this(value, CultureInfo.CurrentCulture)
-        {}
+        {
+        }
 
         public Radian(string value, CultureInfo culture)
         {
@@ -97,10 +99,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </remarks>
         public double Value
         {
-            get
-            {
-                return _Value;
-            }
+            get { return _Value; }
         }
 
         #endregion
@@ -170,7 +169,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </remarks>
         public double ToDegrees()
         {
-            return _Value / RadiansPerDegree;
+            return _Value/RadiansPerDegree;
         }
 
         /// <summary>Converts the current instance into an <strong>Angle</strong> object.</summary>
@@ -219,7 +218,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             // Compare only with objects of the same type
             if (obj is Radian)
-                return Equals((Radian)obj);
+                return Equals((Radian) obj);
             return false;
         }
 
@@ -238,14 +237,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region Static Methods
 
-
         /// <summary>
         /// Converts the specified value in degrees into radians.
         /// </summary>
         /// <param name="value">A <strong>Double</strong> containing the value to convert.</param>
         public static Radian FromDegrees(double value)
         {
-            return new Radian(value * RadiansPerDegree);
+            return new Radian(value*RadiansPerDegree);
         }
 
         /// <summary>
@@ -254,7 +252,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">An <strong>Angle</strong> containing the value to convert.</param>
         public static Radian FromAngle(Angle value)
         {
-            return new Radian(value.DecimalDegrees * RadiansPerDegree);
+            return new Radian(value.DecimalDegrees*RadiansPerDegree);
         }
 
         /// <summary>Converts the specified value from radians to degrees.</summary>
@@ -265,7 +263,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </remarks>
         public static double ToDegrees(double radians)
         {
-            return radians / RadiansPerDegree;
+            return radians/RadiansPerDegree;
         }
 
         /// <summary>
@@ -291,57 +289,57 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #endregion
 
-		#region Operators
+        #region Operators
 
-		public static Radian operator +(Radian left, Radian right) 
-		{
-			return left.Add(right);
-		}	
+        public static Radian operator +(Radian left, Radian right)
+        {
+            return left.Add(right);
+        }
 
-		public static Radian operator -(Radian left, Radian right) 
-		{
-			return left.Subtract(right);
-		}
+        public static Radian operator -(Radian left, Radian right)
+        {
+            return left.Subtract(right);
+        }
 
-		public static Radian operator *(Radian left, Radian right) 
-		{
-			return left.Multiply(right);
-		}
+        public static Radian operator *(Radian left, Radian right)
+        {
+            return left.Multiply(right);
+        }
 
-		public static Radian operator /(Radian left, Radian right) 
-		{
-			return left.Divide(right);
-		}
+        public static Radian operator /(Radian left, Radian right)
+        {
+            return left.Divide(right);
+        }
 
-		public static bool operator <(Radian left, Radian right) 
-		{
-			return left.CompareTo(right) < 0;
-		}
+        public static bool operator <(Radian left, Radian right)
+        {
+            return left.CompareTo(right) < 0;
+        }
 
-		public static bool operator <=(Radian left, Radian right) 
-		{
-			return left.CompareTo(right) < 0 || left.Equals(right);
-		}
+        public static bool operator <=(Radian left, Radian right)
+        {
+            return left.CompareTo(right) < 0 || left.Equals(right);
+        }
 
-		public static bool operator ==(Radian left, Radian right) 
-		{
-			return left.Equals(right);
-		}
+        public static bool operator ==(Radian left, Radian right)
+        {
+            return left.Equals(right);
+        }
 
-		public static bool operator !=(Radian left, Radian right) 
-		{
-			return !(left == right);
-		}
+        public static bool operator !=(Radian left, Radian right)
+        {
+            return !(left == right);
+        }
 
-		public static bool operator >=(Radian left, Radian right) 
-		{
-			return left.CompareTo(right) > 0 || left.Equals(right);
-		}
-	
-		public static bool operator >(Radian left, Radian right) 
-		{
-			return left.CompareTo(right) > 0;
-		}
+        public static bool operator >=(Radian left, Radian right)
+        {
+            return left.CompareTo(right) > 0 || left.Equals(right);
+        }
+
+        public static bool operator >(Radian left, Radian right)
+        {
+            return left.CompareTo(right) > 0;
+        }
 
         public static Radian operator +(Radian left, double right)
         {
@@ -421,18 +419,18 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public Radian Multiply(double value)
         {
-            return new Radian(_Value * value);
+            return new Radian(_Value*value);
         }
 
         /// <summary>Returns the current value divided by the specified value.</summary>
         public Radian Divide(Radian value)
         {
-            return new Radian(Value / value.Value);
+            return new Radian(Value/value.Value);
         }
 
         public Radian Divide(double value)
         {
-            return new Radian(_Value / value);
+            return new Radian(_Value/value);
         }
 
         public Radian Increment()
@@ -486,46 +484,46 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             return _Value >= value;
         }
 
-		#endregion
+        #endregion
 
-		#region Conversions
-		
+        #region Conversions
+
         public static explicit operator double(Radian value)
-		{
-			return value.Value;
-		}
+        {
+            return value.Value;
+        }
 
-		public static explicit operator Radian(Longitude value) 
-		{
+        public static explicit operator Radian(Longitude value)
+        {
             return value.ToRadians();
-		}
+        }
 
-        public static explicit operator Radian(Latitude value) 
-		{
+        public static explicit operator Radian(Latitude value)
+        {
             return value.ToRadians();
-		}
-		
-        public static explicit operator Radian(Azimuth value) 
-		{
+        }
+
+        public static explicit operator Radian(Azimuth value)
+        {
             return value.ToRadians();
-		}
+        }
 
-		public static explicit operator Radian(Angle value) 
-		{
+        public static explicit operator Radian(Angle value)
+        {
             return value.ToRadians();
-		}
+        }
 
-		public static explicit operator Radian(double value) 
-		{
-			return new Radian(value);
-		}
+        public static explicit operator Radian(double value)
+        {
+            return new Radian(value);
+        }
 
-		public static explicit operator Radian(string value) 
-		{
-			return new Radian(value, CultureInfo.CurrentCulture);
-		}
+        public static explicit operator Radian(string value)
+        {
+            return new Radian(value, CultureInfo.CurrentCulture);
+        }
 
-		#endregion
+        #endregion
 
         #region IEquatable<Radian> Members
 
@@ -566,7 +564,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region IXmlSerializable Members
 
-       
         XmlSchema IXmlSerializable.GetSchema()
         {
             return null;

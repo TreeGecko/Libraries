@@ -3,18 +3,17 @@ using System.IO;
 
 namespace TreeGecko.Library.Common.Helpers
 {
-    
     public class DirectoryHelper
-	{
+    {
         /// <summary>
         /// Create path if not exists
         /// </summary>
         /// <param name="_path">Path to create</param>
-		public static void BuildFolderIfMissing(string _path)
-		{
-			if (!Directory.Exists(_path))
-				Directory.CreateDirectory(_path);
-		}
+        public static void BuildFolderIfMissing(string _path)
+        {
+            if (!Directory.Exists(_path))
+                Directory.CreateDirectory(_path);
+        }
 
         /// <summary>
         /// See if given path is writeable
@@ -39,7 +38,7 @@ namespace TreeGecko.Library.Common.Helpers
 
                 sw = new StreamWriter(file) {AutoFlush = true};
                 sw.WriteLine("test");
-                
+
                 //Close and delete the file
                 sw.Close();
                 File.Delete(file);
@@ -63,7 +62,8 @@ namespace TreeGecko.Library.Common.Helpers
         {
             FileCopy(_srcdir, _destdir, _recursive, null);
         }
-        public static void FileCopy(string _srcdir, string _destdir, bool _recursive, 
+
+        public static void FileCopy(string _srcdir, string _destdir, bool _recursive,
             string[] _ignoreExtension)
         {
             DirectoryInfo dir;
@@ -76,7 +76,7 @@ namespace TreeGecko.Library.Common.Helpers
             {
                 Directory.CreateDirectory(_destdir);
             }
-            
+
             dir = new DirectoryInfo(_srcdir);
 
             //if the source dir doesn't exist, throw
@@ -96,7 +96,7 @@ namespace TreeGecko.Library.Common.Helpers
                 {
                     foreach (string s in _ignoreExtension)
                     {
-                        if (s.Equals(file.Extension,StringComparison.OrdinalIgnoreCase))
+                        if (s.Equals(file.Extension, StringComparison.OrdinalIgnoreCase))
                         {
                             match = true;
                             continue;
@@ -138,7 +138,7 @@ namespace TreeGecko.Library.Common.Helpers
                 {
                     foreach (string s in _ignoreExtension)
                     {
-                        if (s.Equals(subdir.Extension,StringComparison.OrdinalIgnoreCase))
+                        if (s.Equals(subdir.Extension, StringComparison.OrdinalIgnoreCase))
                         {
                             match = true;
                             continue;
@@ -159,7 +159,6 @@ namespace TreeGecko.Library.Common.Helpers
                 {
                     TraceFileHelper.Verbose(String.Format("Skipping directory file ({0})", dir.FullName));
                 }
-                
             }
 
             //cleanup
@@ -167,6 +166,5 @@ namespace TreeGecko.Library.Common.Helpers
 
             dir = null;
         }
-
     }
 }

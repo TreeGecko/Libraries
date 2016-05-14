@@ -7,37 +7,37 @@ using TreeGecko.Library.Geospatial.Geoframeworks.Interfaces;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>
-	/// Represents a position on Earth marked by latitude, longitude, and altitude.
-	/// </summary>
-	/// <remarks>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
-	///     immutable (its properties can only be changed via constructors).</para>
-	/// </remarks>
+    /// <summary>
+    /// Represents a position on Earth marked by latitude, longitude, and altitude.
+    /// </summary>
+    /// <remarks>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
+    ///     immutable (its properties can only be changed via constructors).</para>
+    /// </remarks>
     public struct Position3D : IFormattable, IEquatable<Position3D>, ICloneable<Position3D>, IXmlSerializable
     {
         private Position _Position;
         private Distance _Altitude;
 
-		#region  Constructors 
-        
+        #region  Constructors 
+
         public Position3D(Distance altitude, Position location)
         {
             _Position = location;
             _Altitude = altitude;
         }
 
-		public Position3D(Distance altitude, Longitude longitude, Latitude latitude) 	
-		{
+        public Position3D(Distance altitude, Longitude longitude, Latitude latitude)
+        {
             _Position = new Position(longitude, latitude);
-			_Altitude = altitude;
-		}
+            _Altitude = altitude;
+        }
 
-		/// <overloads>Creates a new instance.</overloads>
-		public Position3D(Distance altitude, Latitude latitude, Longitude longitude)
-		{
+        /// <overloads>Creates a new instance.</overloads>
+        public Position3D(Distance altitude, Latitude latitude, Longitude longitude)
+        {
             _Position = new Position(latitude, longitude);
-		    _Altitude = altitude;			
+            _Altitude = altitude;
         }
 
         public Position3D(Longitude longitude, Latitude latitude, Distance altitude)
@@ -51,14 +51,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             _Position = new Position(latitude, longitude);
             _Altitude = altitude;
         }
-        
+
         /// <summary>
-		/// Creates a new instance by parsing latitude and longitude from a single string.
-		/// </summary>
-		/// <param name="value">A <strong>String</strong> containing both a latitude and longitude to parse.</param>
-		public Position3D(string altitude, string location) 
+        /// Creates a new instance by parsing latitude and longitude from a single string.
+        /// </summary>
+        /// <param name="value">A <strong>String</strong> containing both a latitude and longitude to parse.</param>
+        public Position3D(string altitude, string location)
             : this(altitude, location, CultureInfo.CurrentCulture)
-		{ }
+        {
+        }
 
         /// <summary>
         /// Creates a new instance by interpreting the specified latitude and longitude.
@@ -67,9 +68,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="longitude">A <strong>String</strong> describing a longitude in the current culture.</param>
         /// <remarks>Latitude and longitude values are parsed using the current local culture.  For better support
         /// of international cultures, add a CultureInfo parameter.</remarks>
-		public Position3D(string altitude, string latitude, string longitude) 
+        public Position3D(string altitude, string latitude, string longitude)
             : this(altitude, latitude, longitude, CultureInfo.CurrentCulture)
-		{ }
+        {
+        }
 
         /// <summary>
         /// Creates a new instance by interpreting the specified latitude and longitude.
@@ -116,7 +118,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             ReadXml(reader);
         }
 
-		#endregion
+        #endregion
 
         #region Public Properties
 
@@ -128,7 +130,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public Latitude Latitude
         {
-            get { return _Position.Latitude;  }
+            get { return _Position.Latitude; }
         }
 
         public Longitude Longitude
@@ -139,7 +141,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #endregion
 
         #region Public Methods
-        
+
         public CartesianPoint ToCartesianPoint()
         {
             return ToCartesianPoint(Ellipsoid.Default);
@@ -188,44 +190,42 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             return
                 new Position3D(this.Latitude.Add(position.Latitude.DecimalDegrees),
-                this.Longitude.Add(position.Longitude.DecimalDegrees),
-                this._Altitude.Add(position.Altitude));
+                    this.Longitude.Add(position.Longitude.DecimalDegrees),
+                    this._Altitude.Add(position.Altitude));
         }
+
         public Position3D Subtract(Position3D position)
         {
             return
                 new Position3D(this.Latitude.Subtract(position.Latitude.DecimalDegrees),
-                this.Longitude.Subtract(position.Longitude.DecimalDegrees),
-                this._Altitude.Subtract(position.Altitude));
+                    this.Longitude.Subtract(position.Longitude.DecimalDegrees),
+                    this._Altitude.Subtract(position.Altitude));
         }
+
         public Position3D Multiply(Position3D position)
         {
             return
                 new Position3D(this.Latitude.Multiply(position.Latitude.DecimalDegrees),
-                this.Longitude.Multiply(position.Longitude.DecimalDegrees),
-                this._Altitude.Multiply(position.Altitude));
+                    this.Longitude.Multiply(position.Longitude.DecimalDegrees),
+                    this._Altitude.Multiply(position.Altitude));
         }
+
         public Position3D Divide(Position3D position)
         {
             return
                 new Position3D(this.Latitude.Divide(position.Latitude.DecimalDegrees),
-                this.Longitude.Divide(position.Longitude.DecimalDegrees),
-                this._Altitude.Divide(position.Altitude));
+                    this.Longitude.Divide(position.Longitude.DecimalDegrees),
+                    this._Altitude.Divide(position.Altitude));
         }
 
         #endregion
-
-
 
         /// <summary>
         /// Returns whether the latitude, longitude and altitude are zero.
         /// </summary>
         public bool IsEmpty
         {
-            get
-            {
-                return _Altitude.IsEmpty && _Position.IsEmpty;
-            }
+            get { return _Altitude.IsEmpty && _Position.IsEmpty; }
         }
 
         #region Overrides
@@ -237,8 +237,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public override bool Equals(object obj)
         {
-            if(obj is Position3D)
-                return Equals((Position3D)obj);
+            if (obj is Position3D)
+                return Equals((Position3D) obj);
             return false;
         }
 
@@ -335,7 +335,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     // Now read up to 3 elements: X, and optionally Y or Z
                     for (int index = 0; index < 3; index++)
                     {
-
                         switch (reader.LocalName.ToLower(CultureInfo.InvariantCulture))
                         {
                             case "x":
@@ -377,8 +376,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool Equals(Position3D other)
         {
             return Latitude.Equals(other.Latitude)
-                && Longitude.Equals(other.Longitude)
-                && _Altitude.Equals(other.Altitude);
+                   && Longitude.Equals(other.Longitude)
+                   && _Altitude.Equals(other.Altitude);
         }
 
         /// <summary>
@@ -393,8 +392,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool Equals(Position3D other, int decimals)
         {
             return Latitude.Equals(other.Latitude, decimals)
-                && Longitude.Equals(other.Longitude, decimals)
-                && _Altitude.Equals(other.Altitude, decimals);
+                   && Longitude.Equals(other.Longitude, decimals)
+                   && _Altitude.Equals(other.Altitude, decimals);
         }
 
         #endregion
@@ -407,7 +406,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <returns></returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -417,8 +416,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             // Output as latitude and longitude
             return _Position.ToString(format, culture)
-                + culture.TextInfo.ListSeparator
-                + _Altitude.ToString(format, culture);
+                   + culture.TextInfo.ListSeparator
+                   + _Altitude.ToString(format, culture);
         }
 
         /// <summary>

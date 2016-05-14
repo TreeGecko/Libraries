@@ -9,16 +9,16 @@ using TreeGecko.Library.Geospatial.Properties;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>Represents a specific location on Earth's surface.</summary>
-	/// <remarks>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
-	///     immutable (its properties can only be changed via constructors).</para>
-	/// </remarks>
+    /// <summary>Represents a specific location on Earth's surface.</summary>
+    /// <remarks>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
+    ///     immutable (its properties can only be changed via constructors).</para>
+    /// </remarks>
     public struct Position : IFormattable, IEquatable<Position>, ICloneable<Position>, IXmlSerializable
     {
         private Latitude _Latitude;
         private Longitude _Longitude;
-                
+
         #region Constants
 
         // Accuracy is set to 1.0E-12, the smallest value allowed by a Latitude or Longitude
@@ -29,15 +29,20 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region Fields
 
         /// <summary>Represents the location at 0°, 0°.</summary>
-		public static readonly Position Empty = new Position(Latitude.Empty, Longitude.Empty);
-		/// <summary>Represents the smallest possible location of 90°S, 180°W.</summary>
-		public static readonly Position Minimum = new Position(Latitude.Minimum, Longitude.Minimum);
+        public static readonly Position Empty = new Position(Latitude.Empty, Longitude.Empty);
+
+        /// <summary>Represents the smallest possible location of 90°S, 180°W.</summary>
+        public static readonly Position Minimum = new Position(Latitude.Minimum, Longitude.Minimum);
+
         /// <summary>Represents the largest possible location of 90°N, 180°E.</summary>
         public static readonly Position Maximum = new Position(Latitude.Maximum, Longitude.Maximum);
+
         /// <summary>Represents the single point at the top of Earth: 90°N, 0°E.</summary>
         public static readonly Position NorthPole = new Position(Latitude.Maximum, Longitude.Empty);
+
         /// <summary>Represents the single point at the bottom of Earth: 90°S, 0°E.</summary>
         public static readonly Position SouthPole = new Position(Latitude.Minimum, Longitude.Empty);
+
         /// <summary>Represents an invalid or unspecified value.</summary>
         public static readonly Position Invalid = new Position(Latitude.Invalid, Longitude.Invalid);
 
@@ -50,11 +55,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         /// <param name="longitude"></param>
         /// <param name="latitude"></param>
-		public Position(Longitude longitude, Latitude latitude) 			
-		{
-			_Latitude = latitude;
-			_Longitude = longitude;
-		}
+        public Position(Longitude longitude, Latitude latitude)
+        {
+            _Latitude = latitude;
+            _Longitude = longitude;
+        }
 
         /// <summary>
         /// Creates a new instance from the specified latitude and longitude.
@@ -62,18 +67,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="longitude"></param>
         /// <param name="latitude"></param>
         public Position(Latitude latitude, Longitude longitude)
-		{			
-			_Latitude = latitude;
-			_Longitude = longitude;
+        {
+            _Latitude = latitude;
+            _Longitude = longitude;
         }
 
-		/// <summary>
-		/// Creates a new instance by parsing latitude and longitude from a single string.
-		/// </summary>
-		/// <param name="value">A <strong>String</strong> containing both a latitude and longitude to parse.</param>
-		public Position(string value) 
-			: this(value, CultureInfo.CurrentCulture)
-		{}
+        /// <summary>
+        /// Creates a new instance by parsing latitude and longitude from a single string.
+        /// </summary>
+        /// <param name="value">A <strong>String</strong> containing both a latitude and longitude to parse.</param>
+        public Position(string value)
+            : this(value, CultureInfo.CurrentCulture)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance by interpreting the specified latitude and longitude.
@@ -82,9 +88,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="longitude">A <strong>String</strong> describing a longitude in the current culture.</param>
         /// <remarks>Latitude and longitude values are parsed using the current local culture.  For better support
         /// of international cultures, add a CultureInfo parameter.</remarks>
-		public Position(string latitude, string longitude) 
-			: this(latitude, longitude, CultureInfo.CurrentCulture)
-		{}
+        public Position(string latitude, string longitude)
+            : this(latitude, longitude, CultureInfo.CurrentCulture)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance by interpreting the specified latitude and longitude.
@@ -96,8 +103,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// be parsed.</remarks>
         public Position(string latitude, string longitude, CultureInfo culture)
             : this(Latitude.Parse(latitude, culture),
-            Longitude.Parse(longitude, culture))
-        { }
+                Longitude.Parse(longitude, culture))
+        {
+        }
 
         /// <summary>
         /// Creates a new instance by converting the specified string using the specific culture.
@@ -122,7 +130,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             // Try to parse the value as latitude/longitude
             Position Result = ParseAsLatLong(value, culture);
-            if (!Result.IsInvalid) 
+            if (!Result.IsInvalid)
             {
                 _Latitude = Result.Latitude.Normalize();
                 _Longitude = Result.Longitude.Normalize();
@@ -138,8 +146,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="position"></param>
         public Position(Position position)
             : this(position.Latitude, position.Longitude)
-        {}
-        
+        {
+        }
+
         /// <summary>
         /// Creates a new position by deserializing the specified XML content.
         /// </summary>
@@ -154,7 +163,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             ReadXml(reader);
         }
 
-		#endregion
+        #endregion
 
         #region Public Properties
 
@@ -173,35 +182,25 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Indicates if the position has no value.</summary>
         public bool IsEmpty
         {
-            get
-            {
-                return _Latitude.IsEmpty && _Longitude.IsEmpty;
-            }
+            get { return _Latitude.IsEmpty && _Longitude.IsEmpty; }
         }
 
         /// <summary>Indicates if the position has an invalid or unspecified value.</summary>
         public bool IsInvalid
         {
-            get
-            {
-                return _Latitude.IsInvalid || _Longitude.IsInvalid;
-            }
+            get { return _Latitude.IsInvalid || _Longitude.IsInvalid; }
         }
 
         /// <summary>Indicates whether the position has been normalized and is within the 
         /// allowed bounds of -90° and 90° latitude and -180° and 180° longitude.</summary>
         public bool IsNormalized
         {
-            get
-            {
-                return _Latitude.IsNormalized && _Longitude.IsNormalized;
-            }
+            get { return _Latitude.IsNormalized && _Longitude.IsNormalized; }
         }
 
         #endregion
 
         #region Public Methods
-
 
         /// <overloads>Outputs the current instance as a formatted string.</overloads>
         /// <summary>
@@ -264,15 +263,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //	% intermediate calculation
             //	% (prime vertical radius of curvature)
             //	N = a ./ sqrt(1 - e^2 .* sin(lat).^2);
-            double N = a / Math.Sqrt(1.0 - Math.Pow(e, 2) * Math.Pow(Math.Sin(lat), 2));
+            double N = a/Math.Sqrt(1.0 - Math.Pow(e, 2)*Math.Pow(Math.Sin(lat), 2));
             //
             //	% results:
             //	x = (N+alt) .* cos(lat) .* cos(lon);
-            double x = (N + alt) * Math.Cos(lat) * Math.Cos(lon);
+            double x = (N + alt)*Math.Cos(lat)*Math.Cos(lon);
             //	y = (N+alt) .* cos(lat) .* sin(lon);
-            double y = (N + alt) * Math.Cos(lat) * Math.Sin(lon);
+            double y = (N + alt)*Math.Cos(lat)*Math.Sin(lon);
             //	z = ((1-e^2) .* N + alt) .* sin(lat);
-            double z = ((1.0 - Math.Pow(e, 2)) * N + alt) * Math.Sin(lat);
+            double z = ((1.0 - Math.Pow(e, 2))*N + alt)*Math.Sin(lat);
             //
             //	return
 
@@ -280,7 +279,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 new Distance(x, DistanceUnit.Meters),
                 new Distance(y, DistanceUnit.Meters),
                 new Distance(z, DistanceUnit.Meters));
-
         }
 
         public Position Normalize()
@@ -580,9 +578,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //end
 
             // Correct for errors at exact poles by adjusting 0.6mm
-            if (Math.Abs(Math.PI * 0.5 - Math.Abs(lat1)) < 1E-10)
+            if (Math.Abs(Math.PI*0.5 - Math.Abs(lat1)) < 1E-10)
             {
-                lat1 = Math.Sign(lat1) * (Math.PI * 0.5 - 1E-10);
+                lat1 = Math.Sign(lat1)*(Math.PI*0.5 - 1E-10);
             }
 
             //kidx = abs(pi/2-abs(lat2)) < 1e-10;
@@ -590,9 +588,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    lat2(kidx) = sign(lat2(kidx))*(pi/2-(1e-10));
             //end
 
-            if (Math.Abs(Math.PI * 0.5 - Math.Abs(lat2)) < 1E-10)
+            if (Math.Abs(Math.PI*0.5 - Math.Abs(lat2)) < 1E-10)
             {
-                lat2 = Math.Sign(lat2) * (Math.PI * 0.5 - 1E-10);
+                lat2 = Math.Sign(lat2)*(Math.PI*0.5 - 1E-10);
             }
 
 
@@ -602,19 +600,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             //U1 = atan((1-f)*tan(lat1));
 
-            double U1 = Math.Atan((1 - f) * Math.Tan(lat1));
+            double U1 = Math.Atan((1 - f)*Math.Tan(lat1));
 
             //U2 = atan((1-f)*tan(lat2));
 
-            double U2 = Math.Atan((1 - f) * Math.Tan(lat2));
+            double U2 = Math.Atan((1 - f)*Math.Tan(lat2));
 
             //lon1 = mod(lon1,2*pi);
 
-            lon1 = lon1 % (2 * Math.PI);
+            lon1 = lon1%(2*Math.PI);
 
             //lon2 = mod(lon2,2*pi);
 
-            lon2 = lon2 % (2 * Math.PI);
+            lon2 = lon2%(2*Math.PI);
 
             //L = abs(lon2-lon1);
 
@@ -627,7 +625,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             if (L > Math.PI)
             {
-                L = 2.0 * Math.PI - L;
+                L = 2.0*Math.PI - L;
             }
 
             //lambda = L;
@@ -670,7 +668,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             while (notdone)
             {
-
                 //    %disp(['lambda(21752) = ' num2str(lambda(21752),20)]);
                 //    itercount = itercount+1;
 
@@ -680,7 +677,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
                 if (itercount > 50)
                 {
-
                     //        if ~warninggiven
 
                     //if (!warninggiven)
@@ -702,7 +698,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     break;
 
                     //    end
-
                 }
 
                 //    lambdaold(notdone) = lambda(notdone);
@@ -713,15 +708,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 //        .^2+(cos(U1(notdone)).*sin(U2(notdone))-sin(U1(notdone)).*...
                 //        cos(U2(notdone)).*cos(lambda(notdone))).^2);
 
-                double sinsigma = Math.Sqrt(Math.Pow((Math.Cos(U2) * Math.Sin(lambda))
-                        , 2) + Math.Pow((Math.Cos(U1) * Math.Sin(U2) - Math.Sin(U1) *
-                        Math.Cos(U2) * Math.Cos(lambda)), 2));
+                double sinsigma = Math.Sqrt(Math.Pow((Math.Cos(U2)*Math.Sin(lambda))
+                    , 2) + Math.Pow((Math.Cos(U1)*Math.Sin(U2) - Math.Sin(U1)*
+                                     Math.Cos(U2)*Math.Cos(lambda)), 2));
 
                 //    cossigma(notdone) = sin(U1(notdone)).*sin(U2(notdone))+...
                 //        cos(U1(notdone)).*cos(U2(notdone)).*cos(lambda(notdone));
 
-                double cossigma = Math.Sin(U1) * Math.Sin(U2) +
-                    Math.Cos(U1) * Math.Cos(U2) * Math.Cos(lambda);
+                double cossigma = Math.Sin(U1)*Math.Sin(U2) +
+                                  Math.Cos(U1)*Math.Cos(U2)*Math.Cos(lambda);
 
                 //    % eliminate rare imaginary portions at limit of numerical precision:
                 //    sinsigma(notdone)=real(sinsigma(notdone));
@@ -737,30 +732,30 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 //    alpha(notdone) = asin(cos(U1(notdone)).*cos(U2(notdone)).*...
                 //        sin(lambda(notdone))./sin(sigma(notdone)));
 
-                alpha = Math.Asin(Math.Cos(U1) * Math.Cos(U2) *
-                    Math.Sin(lambda) / Math.Sin(sigma));
+                alpha = Math.Asin(Math.Cos(U1)*Math.Cos(U2)*
+                                  Math.Sin(lambda)/Math.Sin(sigma));
 
                 //    cos2sigmam(notdone) = cos(sigma(notdone))-2*sin(U1(notdone)).*...
                 //        sin(U2(notdone))./cos(alpha(notdone)).^2;
 
-                cos2sigmam = Math.Cos(sigma) - 2.0 * Math.Sin(U1) *
-                    Math.Sin(U2) / Math.Pow(Math.Cos(alpha), 2);
+                cos2sigmam = Math.Cos(sigma) - 2.0*Math.Sin(U1)*
+                             Math.Sin(U2)/Math.Pow(Math.Cos(alpha), 2);
 
                 //    C(notdone) = f/16*cos(alpha(notdone)).^2.*(4+f*(4-3*...
                 //        cos(alpha(notdone)).^2));
 
-                C = f / 16 * Math.Pow(Math.Cos(alpha), 2) * (4 + f * (4 - 3 *
-                    Math.Pow(Math.Cos(alpha), 2)));
+                C = f/16*Math.Pow(Math.Cos(alpha), 2)*(4 + f*(4 - 3*
+                                                              Math.Pow(Math.Cos(alpha), 2)));
 
                 //    lambda(notdone) = L(notdone)+(1-C(notdone)).*f.*sin(alpha(notdone))...
                 //        .*(sigma(notdone)+C(notdone).*sin(sigma(notdone)).*...
                 //        (cos2sigmam(notdone)+C(notdone).*cos(sigma(notdone)).*...
                 //        (-1+2.*cos2sigmam(notdone).^2)));
 
-                lambda = L + (1 - C) * f * Math.Sin(alpha)
-                            * (sigma + C * Math.Sin(sigma) *
-                            (cos2sigmam + C * Math.Cos(sigma) *
-                            (-1 + 2 * Math.Pow(cos2sigmam, 2))));
+                lambda = L + (1 - C)*f*Math.Sin(alpha)
+                         *(sigma + C*Math.Sin(sigma)*
+                           (cos2sigmam + C*Math.Cos(sigma)*
+                            (-1 + 2*Math.Pow(cos2sigmam, 2))));
 
                 //    %disp(['then, lambda(21752) = ' num2str(lambda(21752),20)]);
                 //    % correct for convergence failure in the case of essentially antipodal
@@ -772,7 +767,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
                 if (lambda > Math.PI)
                 {
-
                     //        if ~warninggiven
 
                     //if (!warninggiven)
@@ -795,7 +789,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     lambda = Math.PI;
 
                     //    end
-
                 }
 
                 //    notdone = abs(lambda-lambdaold) > 1e-12;
@@ -818,23 +811,27 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             //u2 = cos(alpha).^2.*(a^2-b^2)/b^2;
 
-            double u2 = Math.Pow(Math.Cos(goodalpha), 2) * (Math.Pow(a, 2) - Math.Pow(b, 2)) / Math.Pow(b, 2);
+            double u2 = Math.Pow(Math.Cos(goodalpha), 2)*(Math.Pow(a, 2) - Math.Pow(b, 2))/Math.Pow(b, 2);
 
             //A = 1+u2./16384.*(4096+u2.*(-768+u2.*(320-175.*u2)));
 
-            double A = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
+            double A = 1 + u2/16384*(4096 + u2*(-768 + u2*(320 - 175*u2)));
 
             //B = u2./1024.*(256+u2.*(-128+u2.*(74-47.*u2)));
 
-            double B = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+            double B = u2/1024*(256 + u2*(-128 + u2*(74 - 47*u2)));
 
             //deltasigma = B.*sin(sigma).*(cos2sigmam+B./4.*(cos(sigma).*(-1+2.*...
             //    cos2sigmam.^2)-B./6.*cos2sigmam.*(-3+4.*sin(sigma).^2).*(-3+4*...
             //    cos2sigmam.^2)));
 
-            double deltasigma = B * Math.Sin(goodsigma) * (goodcos2sigmam + B / 4 * (Math.Cos(goodsigma) * (-1 + 2 *
-                Math.Pow(goodcos2sigmam, 2)) - B / 6 * goodcos2sigmam * (-3 + 4 * Math.Pow(Math.Sin(goodsigma), 2)) * (-3 + 4 *
-                Math.Pow(goodcos2sigmam, 2))));
+            double deltasigma = B*Math.Sin(goodsigma)*(goodcos2sigmam + B/4*(Math.Cos(goodsigma)*(-1 + 2*
+                                                                                                  Math.Pow(
+                                                                                                      goodcos2sigmam, 2)) -
+                                                                             B/6*goodcos2sigmam*
+                                                                             (-3 + 4*Math.Pow(Math.Sin(goodsigma), 2))*
+                                                                             (-3 + 4*
+                                                                              Math.Pow(goodcos2sigmam, 2))));
 
             //varargout{1} = reshape(b.*A.*(sigma-deltasigma),keepsize);
 
@@ -858,7 +855,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             //    kidx=sign(sin(lon2-lon1)) .* sign(sin(lambda)) < 0;
 
-            bool kidx = Math.Sign(Math.Sin(lon2 - lon1)) * Math.Sign(Math.Sin(goodlambda)) < 0;
+            bool kidx = Math.Sign(Math.Sin(lon2 - lon1))*Math.Sign(Math.Sin(goodlambda)) < 0;
 
             //    lambda(kidx) = -lambda(kidx);
 
@@ -867,11 +864,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             //    numer = cos(U2).*sin(lambda);
 
-            double numer = Math.Cos(U2) * Math.Sin(goodlambda);
+            double numer = Math.Cos(U2)*Math.Sin(goodlambda);
 
             //    denom = cos(U1).*sin(U2)-sin(U1).*cos(U2).*cos(lambda);
 
-            double denom = Math.Cos(U1) * Math.Sin(U2) - Math.Sin(U1) * Math.Cos(U2) * Math.Cos(goodlambda);
+            double denom = Math.Cos(U1)*Math.Sin(U2) - Math.Sin(U1)*Math.Cos(U2)*Math.Cos(goodlambda);
 
             //    a12 = atan2(numer,denom);
 
@@ -884,7 +881,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    a12(kidx)=a12(kidx)+2*pi;
 
             if (kidx)
-                a12 = a12 + 2 * Math.PI;
+                a12 = a12 + 2*Math.PI;
 
             //    % from poles:
             //    a12(lat1tr <= -90) = 0;
@@ -923,7 +920,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //return
 
             #endregion
-
 
             #region Unused Code (Commented Out)
 
@@ -1008,6 +1004,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //			'' Forward Azimuth:  236 ° 35 ' 21.15 ''  
             //			'' Reverse Azimuth:  51 ° 59 ' 10.32 '' 
             //		   '' Datumal Distance:  819373.914 meters  
+
             #endregion
         }
 
@@ -1025,7 +1022,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 // Now calculate the distance
                 double TravelDistance = DistanceTo(destination).ToMeters().Value;
                 // Perform the calculation
-                return new Speed(TravelDistance / time.TotalSeconds, SpeedUnit.MetersPerSecond);
+                return new Speed(TravelDistance/time.TotalSeconds, SpeedUnit.MetersPerSecond);
             }
             catch
             {
@@ -1085,7 +1082,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             // Perform the calculation
             return TimeSpan.FromSeconds(DistanceTo(destination).ToMeters().Value
-                / speed.ToMetersPerSecond().Value);
+                                        /speed.ToMetersPerSecond().Value);
         }
 
         /// <overloads>Calculates the great circle distance between any two points on 
@@ -1168,7 +1165,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             // The ellipsoid cannot be null
             if (ellipsoid == null)
-                throw new ArgumentNullException("ellipsoid", "The Position.DistanceTo method requires a non-null ellipsoid parameter.");
+                throw new ArgumentNullException("ellipsoid",
+                    "The Position.DistanceTo method requires a non-null ellipsoid parameter.");
 
             //Dim AdjustedDestination As Position = destination.ToDatum(Datum)
             // USING THE FORMULA FROM: 
@@ -1185,29 +1183,29 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //$dlong = abs($long2 - $long1);
             double dlong = Math.Abs(long2 - long1);
             //$l = ($lat1 + $lat2) / 2;
-            double l = (lat1 + lat2) * 0.5;
+            double l = (lat1 + lat2)*0.5;
             //$a = 6378;
             double a = ellipsoid.EquatorialRadius.ToKilometers().Value;
             //$b = 6357;
             double b = ellipsoid.PolarRadius.ToKilometers().Value;
             //$e = sqrt(1 - ($b * $b)/($a * $a));
-            double e = Math.Sqrt(1 - (b * b) / (a * a));
+            double e = Math.Sqrt(1 - (b*b)/(a*a));
             //$r1 = ($a * (1 - ($e * $e))) / pow((1 - ($e * $e) * (sin($l) * sin($l))), 3/2);
-            double r1 = (a * (1 - (e * e))) / Math.Pow((1 - (e * e) * (Math.Sin(l) * Math.Sin(l))), 3 * 0.5);
+            double r1 = (a*(1 - (e*e)))/Math.Pow((1 - (e*e)*(Math.Sin(l)*Math.Sin(l))), 3*0.5);
             //$r2 = $a / sqrt(1 - ($e * $e) * (sin($l) * sin($l)));
-            double r2 = a / Math.Sqrt(1 - (e * e) * (Math.Sin(l) * Math.Sin(l)));
+            double r2 = a/Math.Sqrt(1 - (e*e)*(Math.Sin(l)*Math.Sin(l)));
             //$ravg = ($r1 * ($dlat / ($dlat + $dlong))) + ($r2 * ($dlong / ($dlat + $dlong)));
-            double ravg = (r1 * (dlat / (dlat + dlong))) + (r2 * (dlong / (dlat + dlong)));
+            double ravg = (r1*(dlat/(dlat + dlong))) + (r2*(dlong/(dlat + dlong)));
             //$sinlat = sin($dlat / 2);
-            double sinlat = Math.Sin(dlat * 0.5);
+            double sinlat = Math.Sin(dlat*0.5);
             //$sinlon = sin($dlong / 2);
-            double sinlon = Math.Sin(dlong * 0.5);
+            double sinlon = Math.Sin(dlong*0.5);
             //$a = pow($sinlat, 2) + cos($lat1) * cos($lat2) * pow($sinlon, 2);
-            a = Math.Pow(sinlat, 2) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(sinlon, 2);
+            a = Math.Pow(sinlat, 2) + Math.Cos(lat1)*Math.Cos(lat2)*Math.Pow(sinlon, 2);
             //$c = 2 * asin(min(1, sqrt($a)));
-            double c = 2 * Math.Asin(Math.Min(1, Math.Sqrt(a)));
+            double c = 2*Math.Asin(Math.Min(1, Math.Sqrt(a)));
             //$d = $ravg * $c; 
-            double d = ravg * c;
+            double d = ravg*c;
             // If it's NaN, return zero
             if (double.IsNaN(d))
             {
@@ -1505,9 +1503,9 @@ return
             //end
 
             // Correct for errors at exact poles by adjusting 0.6mm
-            if (Math.Abs(Math.PI * 0.5 - Math.Abs(lat1)) < 1E-10)
+            if (Math.Abs(Math.PI*0.5 - Math.Abs(lat1)) < 1E-10)
             {
-                lat1 = Math.Sign(lat1) * (Math.PI * 0.5 - 1E-10);
+                lat1 = Math.Sign(lat1)*(Math.PI*0.5 - 1E-10);
             }
 
             //kidx = abs(pi/2-abs(lat2)) < 1e-10;
@@ -1515,9 +1513,9 @@ return
             //    lat2(kidx) = sign(lat2(kidx))*(pi/2-(1e-10));
             //end
 
-            if (Math.Abs(Math.PI * 0.5 - Math.Abs(lat2)) < 1E-10)
+            if (Math.Abs(Math.PI*0.5 - Math.Abs(lat2)) < 1E-10)
             {
-                lat2 = Math.Sign(lat2) * (Math.PI * 0.5 - 1E-10);
+                lat2 = Math.Sign(lat2)*(Math.PI*0.5 - 1E-10);
             }
 
 
@@ -1527,19 +1525,19 @@ return
 
             //U1 = atan((1-f)*tan(lat1));
 
-            double U1 = Math.Atan((1 - f) * Math.Tan(lat1));
+            double U1 = Math.Atan((1 - f)*Math.Tan(lat1));
 
             //U2 = atan((1-f)*tan(lat2));
 
-            double U2 = Math.Atan((1 - f) * Math.Tan(lat2));
+            double U2 = Math.Atan((1 - f)*Math.Tan(lat2));
 
             //lon1 = mod(lon1,2*pi);
 
-            lon1 = lon1 % (2 * Math.PI);
+            lon1 = lon1%(2*Math.PI);
 
             //lon2 = mod(lon2,2*pi);
 
-            lon2 = lon2 % (2 * Math.PI);
+            lon2 = lon2%(2*Math.PI);
 
             //L = abs(lon2-lon1);
 
@@ -1552,7 +1550,7 @@ return
 
             if (L > Math.PI)
             {
-                L = 2.0 * Math.PI - L;
+                L = 2.0*Math.PI - L;
             }
 
             //lambda = L;
@@ -1595,7 +1593,6 @@ return
 
             while (notdone)
             {
-
                 //    %disp(['lambda(21752) = ' num2str(lambda(21752),20)]);
                 //    itercount = itercount+1;
 
@@ -1605,7 +1602,6 @@ return
 
                 if (itercount > 50)
                 {
-
                     //        if ~warninggiven
 
                     //if (!warninggiven)
@@ -1627,7 +1623,6 @@ return
                     break;
 
                     //    end
-
                 }
 
                 //    lambdaold(notdone) = lambda(notdone);
@@ -1638,15 +1633,15 @@ return
                 //        .^2+(cos(U1(notdone)).*sin(U2(notdone))-sin(U1(notdone)).*...
                 //        cos(U2(notdone)).*cos(lambda(notdone))).^2);
 
-                double sinsigma = Math.Sqrt(Math.Pow((Math.Cos(U2) * Math.Sin(lambda))
-                        , 2) + Math.Pow((Math.Cos(U1) * Math.Sin(U2) - Math.Sin(U1) *
-                        Math.Cos(U2) * Math.Cos(lambda)), 2));
+                double sinsigma = Math.Sqrt(Math.Pow((Math.Cos(U2)*Math.Sin(lambda))
+                    , 2) + Math.Pow((Math.Cos(U1)*Math.Sin(U2) - Math.Sin(U1)*
+                                     Math.Cos(U2)*Math.Cos(lambda)), 2));
 
                 //    cossigma(notdone) = sin(U1(notdone)).*sin(U2(notdone))+...
                 //        cos(U1(notdone)).*cos(U2(notdone)).*cos(lambda(notdone));
 
-                double cossigma = Math.Sin(U1) * Math.Sin(U2) +
-                    Math.Cos(U1) * Math.Cos(U2) * Math.Cos(lambda);
+                double cossigma = Math.Sin(U1)*Math.Sin(U2) +
+                                  Math.Cos(U1)*Math.Cos(U2)*Math.Cos(lambda);
 
                 //    % eliminate rare imaginary portions at limit of numerical precision:
                 //    sinsigma(notdone)=real(sinsigma(notdone));
@@ -1662,30 +1657,30 @@ return
                 //    alpha(notdone) = asin(cos(U1(notdone)).*cos(U2(notdone)).*...
                 //        sin(lambda(notdone))./sin(sigma(notdone)));
 
-                alpha = Math.Asin(Math.Cos(U1) * Math.Cos(U2) *
-                    Math.Sin(lambda) / Math.Sin(sigma));
+                alpha = Math.Asin(Math.Cos(U1)*Math.Cos(U2)*
+                                  Math.Sin(lambda)/Math.Sin(sigma));
 
                 //    cos2sigmam(notdone) = cos(sigma(notdone))-2*sin(U1(notdone)).*...
                 //        sin(U2(notdone))./cos(alpha(notdone)).^2;
 
-                cos2sigmam = Math.Cos(sigma) - 2.0 * Math.Sin(U1) *
-                    Math.Sin(U2) / Math.Pow(Math.Cos(alpha), 2);
+                cos2sigmam = Math.Cos(sigma) - 2.0*Math.Sin(U1)*
+                             Math.Sin(U2)/Math.Pow(Math.Cos(alpha), 2);
 
                 //    C(notdone) = f/16*cos(alpha(notdone)).^2.*(4+f*(4-3*...
                 //        cos(alpha(notdone)).^2));
 
-                C = f / 16 * Math.Pow(Math.Cos(alpha), 2) * (4 + f * (4 - 3 *
-                    Math.Pow(Math.Cos(alpha), 2)));
+                C = f/16*Math.Pow(Math.Cos(alpha), 2)*(4 + f*(4 - 3*
+                                                              Math.Pow(Math.Cos(alpha), 2)));
 
                 //    lambda(notdone) = L(notdone)+(1-C(notdone)).*f.*sin(alpha(notdone))...
                 //        .*(sigma(notdone)+C(notdone).*sin(sigma(notdone)).*...
                 //        (cos2sigmam(notdone)+C(notdone).*cos(sigma(notdone)).*...
                 //        (-1+2.*cos2sigmam(notdone).^2)));
 
-                lambda = L + (1 - C) * f * Math.Sin(alpha)
-                            * (sigma + C * Math.Sin(sigma) *
-                            (cos2sigmam + C * Math.Cos(sigma) *
-                            (-1 + 2 * Math.Pow(cos2sigmam, 2))));
+                lambda = L + (1 - C)*f*Math.Sin(alpha)
+                         *(sigma + C*Math.Sin(sigma)*
+                           (cos2sigmam + C*Math.Cos(sigma)*
+                            (-1 + 2*Math.Pow(cos2sigmam, 2))));
 
                 //    %disp(['then, lambda(21752) = ' num2str(lambda(21752),20)]);
                 //    % correct for convergence failure in the case of essentially antipodal
@@ -1697,7 +1692,6 @@ return
 
                 if (lambda > Math.PI)
                 {
-
                     //        if ~warninggiven
 
                     //if (!warninggiven)
@@ -1720,7 +1714,6 @@ return
                     lambda = Math.PI;
 
                     //    end
-
                 }
 
                 //    notdone = abs(lambda-lambdaold) > 1e-12;
@@ -1745,26 +1738,30 @@ return
 
             //u2 = cos(alpha).^2.*(a^2-b^2)/b^2;
 
-            double u2 = Math.Pow(Math.Cos(goodalpha), 2) * (Math.Pow(a, 2) - Math.Pow(b, 2)) / Math.Pow(b, 2);
+            double u2 = Math.Pow(Math.Cos(goodalpha), 2)*(Math.Pow(a, 2) - Math.Pow(b, 2))/Math.Pow(b, 2);
 
             //A = 1+u2./16384.*(4096+u2.*(-768+u2.*(320-175.*u2)));
 
-            double A = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)));
+            double A = 1 + u2/16384*(4096 + u2*(-768 + u2*(320 - 175*u2)));
 
             //B = u2./1024.*(256+u2.*(-128+u2.*(74-47.*u2)));
 
-            double B = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+            double B = u2/1024*(256 + u2*(-128 + u2*(74 - 47*u2)));
 
             //deltasigma = B.*sin(sigma).*(cos2sigmam+B./4.*(cos(sigma).*(-1+2.*...
             //    cos2sigmam.^2)-B./6.*cos2sigmam.*(-3+4.*sin(sigma).^2).*(-3+4*...
             //    cos2sigmam.^2)));
 
-            double deltasigma = B * Math.Sin(goodsigma) * (goodcos2sigmam + B / 4 * (Math.Cos(goodsigma) * (-1 + 2 *
-                Math.Pow(goodcos2sigmam, 2)) - B / 6 * goodcos2sigmam * (-3 + 4 * Math.Pow(Math.Sin(goodsigma), 2)) * (-3 + 4 *
-                Math.Pow(goodcos2sigmam, 2))));
+            double deltasigma = B*Math.Sin(goodsigma)*(goodcos2sigmam + B/4*(Math.Cos(goodsigma)*(-1 + 2*
+                                                                                                  Math.Pow(
+                                                                                                      goodcos2sigmam, 2)) -
+                                                                             B/6*goodcos2sigmam*
+                                                                             (-3 + 4*Math.Pow(Math.Sin(goodsigma), 2))*
+                                                                             (-3 + 4*
+                                                                              Math.Pow(goodcos2sigmam, 2))));
 
             //varargout{1} = reshape(b.*A.*(sigma-deltasigma),keepsize);
-            double s = b * A * (goodsigma - deltasigma);
+            double s = b*A*(goodsigma - deltasigma);
 
             // Return the Distance in meters
             return new Distance(s, DistanceUnit.Meters).ToLocalUnitType();
@@ -1805,7 +1802,6 @@ return
             //return
 
             #endregion
-
 
             #region Unused Code (Commented Out)
 
@@ -1869,7 +1865,7 @@ return
         /// <returns>A <strong>Distance</strong> measuring the remaining distance to travel.</returns>
         public Distance DistanceTo(Position destination, Speed speed, TimeSpan time)
         {
-            double TraveledDistance = speed.ToMetersPerSecond().Value * time.TotalSeconds;
+            double TraveledDistance = speed.ToMetersPerSecond().Value*time.TotalSeconds;
             // Get the total distance (without travelling)
             double TotalDistance = DistanceTo(destination).ToMeters().Value;
             // Return the distance travelled
@@ -1940,7 +1936,11 @@ return
 
             double w = lonrad2 - lonrad1;
             double v = latrad1 - latrad2;
-            double s = 2 * Math.Asin(Math.Sqrt((Math.Sin(v * 0.5) * Math.Sin(v * 0.5)) + (Math.Cos(latrad1) * Math.Cos(latrad2) * Math.Sin(w * 0.5) * Math.Sin(w * 0.5)))); // //distance between start points
+            double s = 2*
+                       Math.Asin(
+                           Math.Sqrt((Math.Sin(v*0.5)*Math.Sin(v*0.5)) +
+                                     (Math.Cos(latrad1)*Math.Cos(latrad2)*Math.Sin(w*0.5)*Math.Sin(w*0.5))));
+                // //distance between start points
 
             //  var w = lonrad2 - lonrad1; 
             //  var v = latrad1 - latrad2;
@@ -1949,11 +1949,12 @@ return
             double crs12 = 0;
             if (Math.Sin(lonrad1 - lonrad2) < 0)
             {
-                crs12 = Math.Acos((Math.Sin(latrad2) - Math.Sin(latrad1) * Math.Cos(s)) / (Math.Sin(s) * Math.Cos(latrad1)));
+                crs12 = Math.Acos((Math.Sin(latrad2) - Math.Sin(latrad1)*Math.Cos(s))/(Math.Sin(s)*Math.Cos(latrad1)));
             }
             else
             {
-                crs12 = 2 * Math.PI - Math.Acos((Math.Sin(latrad2) - Math.Sin(latrad1) * Math.Cos(s)) / (Math.Sin(s) * Math.Cos(latrad1)));
+                crs12 = 2*Math.PI -
+                        Math.Acos((Math.Sin(latrad2) - Math.Sin(latrad1)*Math.Cos(s))/(Math.Sin(s)*Math.Cos(latrad1)));
             }
 
             //// calculate course 1 to 2
@@ -1967,11 +1968,12 @@ return
             double crs21 = 0;
             if (Math.Sin(lonrad2 - lonrad1) < 0)
             {
-                crs21 = Math.Acos((Math.Sin(latrad1) - Math.Sin(latrad2) * Math.Cos(s)) / (Math.Sin(s) * Math.Cos(latrad2)));
+                crs21 = Math.Acos((Math.Sin(latrad1) - Math.Sin(latrad2)*Math.Cos(s))/(Math.Sin(s)*Math.Cos(latrad2)));
             }
             else
             {
-                crs21 = 2 * Math.PI - Math.Acos((Math.Sin(latrad1) - Math.Sin(latrad2) * Math.Cos(s)) / (Math.Sin(s) * Math.Cos(latrad2)));
+                crs21 = 2*Math.PI -
+                        Math.Acos((Math.Sin(latrad1) - Math.Sin(latrad2)*Math.Cos(s))/(Math.Sin(s)*Math.Cos(latrad2)));
             }
 
             //// calculate course 2 to 1
@@ -1982,13 +1984,13 @@ return
             //	  var crs21 = 2 * pi - Math.acos((Math.sin(latrad1) - Math.sin(latrad2) * Math.cos(s)) / (Math.sin(s) * Math.cos(latrad2)));
             //	}
 
-            double ang1 = (crs13 - crs12 + Math.PI) % (2 * Math.PI) - Math.PI;
-            double ang2 = (crs21 - crs23 + Math.PI) % (2 * Math.PI) - Math.PI;
+            double ang1 = (crs13 - crs12 + Math.PI)%(2*Math.PI) - Math.PI;
+            double ang2 = (crs21 - crs23 + Math.PI)%(2*Math.PI) - Math.PI;
 
             // var ang1 = mod(crs13 - crs12 + pi, 2 * pi) - pi;
             // var ang2 = mod(crs21 - crs23 + pi, 2 * pi) - pi;
 
-            if (Math.Sin(ang1) * Math.Sin(ang2) <= Math.Sqrt(tol))
+            if (Math.Sin(ang1)*Math.Sin(ang2) <= Math.Sqrt(tol))
             {
                 // NO EXCEPTION IS THROWN.  RETURN NULL
                 return Position.Empty;
@@ -1998,14 +2000,15 @@ return
             {
                 ang1 = Math.Abs(ang1);
                 ang2 = Math.Abs(ang2);
-                double ang3 = Math.Acos(Math.Sin(ang1) * Math.Sin(ang2) * Math.Cos(s) - Math.Cos(ang1) * Math.Cos(ang2));
-                double dst13 = Math.Asin(Math.Sin(ang2) * Math.Sin(s) / Math.Sin(ang3));
-                double latrad3 = Math.Asin(Math.Sin(latrad1) * Math.Cos(dst13) + Math.Cos(latrad1) * Math.Sin(dst13) * Math.Cos(crs13));
-                double lonrad3 = lonrad1 + Math.Asin(Math.Sin(crs13) * Math.Sin(dst13) / Math.Cos(latrad3));
-                lonrad3 = ((lonrad3 + Math.PI) % (2 * Math.PI)) - Math.PI;
+                double ang3 = Math.Acos(Math.Sin(ang1)*Math.Sin(ang2)*Math.Cos(s) - Math.Cos(ang1)*Math.Cos(ang2));
+                double dst13 = Math.Asin(Math.Sin(ang2)*Math.Sin(s)/Math.Sin(ang3));
+                double latrad3 =
+                    Math.Asin(Math.Sin(latrad1)*Math.Cos(dst13) + Math.Cos(latrad1)*Math.Sin(dst13)*Math.Cos(crs13));
+                double lonrad3 = lonrad1 + Math.Asin(Math.Sin(crs13)*Math.Sin(dst13)/Math.Cos(latrad3));
+                lonrad3 = ((lonrad3 + Math.PI)%(2*Math.PI)) - Math.PI;
 
-                Latitude NewLatitude = new Latitude(latrad3 * 180 / Math.PI);
-                Longitude NewLongitude = new Longitude(lonrad3 * 180 / Math.PI);
+                Latitude NewLatitude = new Latitude(latrad3*180/Math.PI);
+                Longitude NewLongitude = new Longitude(lonrad3*180/Math.PI);
                 // Return the new position
                 return new Position(NewLatitude, NewLongitude);
             }
@@ -2185,13 +2188,13 @@ return
             double long1 = _Longitude.ToRadians().Value;
 
             //final double azimuth  = this.azimuth;
-            double azimuth = bearing / 180.0 * Math.PI;
+            double azimuth = bearing/180.0*Math.PI;
 
             //final double distance = this.distance;
             double dist = distance.ToMeters().Value;
 
             //double TU  = fo*Math.sin(lat1) / Math.cos(lat1);
-            double TU = fo * Math.Sin(lat1) / Math.Cos(lat1);
+            double TU = fo*Math.Sin(lat1)/Math.Cos(lat1);
 
             //double SF  = Math.sin(azimuth);
             double SF = Math.Sin(azimuth);
@@ -2200,37 +2203,37 @@ return
             double CF = Math.Cos(azimuth);
 
             //double BAZ = (CF!=0) ? Math.atan2(TU,CF)*2.0 : 0;
-            double BAZ = (CF != 0) ? Math.Atan2(TU, CF) * 2.0 : 0;
+            double BAZ = (CF != 0) ? Math.Atan2(TU, CF)*2.0 : 0;
 
             //double CU  = 1/Math.sqrt(TU*TU + 1.0);
-            double CU = 1.0 / Math.Sqrt(TU * TU + 1.0);
+            double CU = 1.0/Math.Sqrt(TU*TU + 1.0);
 
             //double SU  = TU*CU;
-            double SU = TU * CU;
+            double SU = TU*CU;
 
             //double SA  = CU*SF;
-            double SA = CU * SF;
+            double SA = CU*SF;
 
             //double C2A = 1.0 - SA*SA;
-            double C2A = 1.0 - SA * SA;
+            double C2A = 1.0 - SA*SA;
 
             //double X   = Math.sqrt((1.0/fo/fo-1)*C2A+1.0) + 1.0;
-            double X = Math.Sqrt((1.0 / fo / fo - 1) * C2A + 1.0) + 1.0;
+            double X = Math.Sqrt((1.0/fo/fo - 1)*C2A + 1.0) + 1.0;
 
             //X   = (X-2.0)/X;
-            X = (X - 2.0) / X;
+            X = (X - 2.0)/X;
 
             //double C   = 1.0-X;
             double C = 1.0 - X;
 
             //C   = (X*X/4.0+1.0)/C;
-            C = (X * X / 4.0 + 1.0) / C;
+            C = (X*X/4.0 + 1.0)/C;
 
             //double D   = (0.375*X*X-1.0)*X;
-            double D = (0.375 * X * X - 1.0) * X;
+            double D = (0.375*X*X - 1.0)*X;
 
             //TU   = distance / fo / semiMajorAxis / C;
-            TU = dist / fo / semiMajorAxis / C;
+            TU = dist/fo/semiMajorAxis/C;
 
             //double Y   = TU;
             double Y = TU;
@@ -2249,49 +2252,48 @@ return
                 //    CZ = Math.cos(BAZ+Y);
                 CZ = Math.Cos(BAZ + Y);
                 //    E  = CZ*CZ*2.0-1.0;
-                E = CZ * CZ * 2.0 - 1.0;
+                E = CZ*CZ*2.0 - 1.0;
                 //    C  = Y;
                 C = Y;
                 //    X  = E*CY;
-                X = E * CY;
+                X = E*CY;
                 //    Y  = E+E-1.0;
                 Y = E + E - 1.0;
                 //    Y  = (((SY*SY*4.0-3.0)*Y*CZ*D/6.0+X)*D/4.0-CZ)*SY*D+TU;
-                Y = (((SY * SY * 4.0 - 3.0) * Y * CZ * D / 6.0 + X) * D / 4.0 - CZ) * SY * D + TU;
+                Y = (((SY*SY*4.0 - 3.0)*Y*CZ*D/6.0 + X)*D/4.0 - CZ)*SY*D + TU;
                 //} while (Math.abs(Y-C) > TOLERANCE_1);
                 Iterations++;
-
             } while (Iterations < 30 && Math.Abs(Y - C) > TargetAccuracy);
 
             //BAZ  = CU*CY*CF - SU*SY;
-            BAZ = CU * CY * CF - SU * SY;
+            BAZ = CU*CY*CF - SU*SY;
 
             //C    = fo*Math.sqrt(SA*SA+BAZ*BAZ);
-            C = fo * Math.Sqrt(SA * SA + BAZ * BAZ);
+            C = fo*Math.Sqrt(SA*SA + BAZ*BAZ);
 
             //D    = SU*CY + CU*SY*CF;
-            D = SU * CY + CU * SY * CF;
+            D = SU*CY + CU*SY*CF;
 
             //lat2 = Math.atan2(D,C);
             double lat2 = Math.Atan2(D, C);
 
             //C    = CU*CY-SU*SY*CF;
-            C = CU * CY - SU * SY * CF;
+            C = CU*CY - SU*SY*CF;
 
             //X    = Math.atan2(SY*SF,C);
-            X = Math.Atan2(SY * SF, C);
+            X = Math.Atan2(SY*SF, C);
 
             //C    = ((-3.0*C2A+4.0)*f+4.0)*C2A*f/16.0;
-            C = ((-3.0 * C2A + 4.0) * f + 4.0) * C2A * f / 16.0;
+            C = ((-3.0*C2A + 4.0)*f + 4.0)*C2A*f/16.0;
 
             //D    = ((E*CY*C+CZ)*SY*C+Y)*SA;
-            D = ((E * CY * C + CZ) * SY * C + Y) * SA;
+            D = ((E*CY*C + CZ)*SY*C + Y)*SA;
 
             //long2 = long1+X - (1.0-C)*D*f;
-            double long2 = long1 + X - (1.0 - C) * D * f;
+            double long2 = long1 + X - (1.0 - C)*D*f;
 
             //long2 = castToAngleRange(long2);
-            long2 = long2 - (2 * Math.PI) * Math.Floor(long2 / (2 * Math.PI) + 0.5);
+            long2 = long2 - (2*Math.PI)*Math.Floor(long2/(2*Math.PI) + 0.5);
 
             //destinationValid = true;
 
@@ -2309,7 +2311,7 @@ return
         public override bool Equals(object obj)
         {
             if (obj is Position)
-                return Equals((Position)obj);
+                return Equals((Position) obj);
 
             return false;
         }
@@ -2354,7 +2356,8 @@ return
         /// Returns a random location within the specified geographic rectangle.
         /// </summary>
         /// <returns></returns>
-        public static Position Random(Latitude southernmost, Longitude westernmost, Latitude northernmost, Longitude easternmost)
+        public static Position Random(Latitude southernmost, Longitude westernmost, Latitude northernmost,
+            Longitude easternmost)
         {
             return Random(new Random(), southernmost, westernmost, northernmost, easternmost);
         }
@@ -2364,10 +2367,11 @@ return
         /// </summary>
         /// <param name="generator">A <strong>Random</strong> object used t ogenerate random values.</param>
         /// <returns></returns>
-        public static Position Random(Random generator, Latitude southernmost, Longitude westernmost, Latitude northernmost, Longitude easternmost)
+        public static Position Random(Random generator, Latitude southernmost, Longitude westernmost,
+            Latitude northernmost, Longitude easternmost)
         {
             return new Position(Longitude.Random(generator, easternmost, westernmost),
-                                Latitude.Random(generator, northernmost, southernmost));
+                Latitude.Random(generator, northernmost, southernmost));
         }
 
         /// <overloads>Returns the direction of travel from one position to another.</overloads>
@@ -2432,7 +2436,8 @@ return
         /// <param name="firstBearing">An <strong>Angle</strong> specifying a direction from the first Position.</param>
         /// <param name="secondPosition">A <strong>Position</strong> specifying the second position, marking the start of a second line.</param>
         /// <param name="secondBearing">An <strong>Angle</strong> specifying a direction from the second Position.</param>
-        public static Position IntersectionOf(Position firstPosition, Angle firstBearing, Position secondPosition, Angle secondBearing)
+        public static Position IntersectionOf(Position firstPosition, Angle firstBearing, Position secondPosition,
+            Angle secondBearing)
         {
             try
             {
@@ -2577,7 +2582,8 @@ return
                     string Word = Values[index];
 
                     // Is this a latitude?
-                    if (Word.IndexOf("N") != -1 || Word.IndexOf("n") != -1 || Word.IndexOf("S") != -1 || Word.IndexOf("s") != -1)
+                    if (Word.IndexOf("N") != -1 || Word.IndexOf("n") != -1 || Word.IndexOf("S") != -1 ||
+                        Word.IndexOf("s") != -1)
                     {
                         // Do we already have a latitude?
                         if (IsLatitudeHandled)
@@ -2588,7 +2594,8 @@ return
                         IsLatitudeHandled = true;
                     }
                     // Is this a longitude?
-                    else if (Word.IndexOf("E") != -1 || Word.IndexOf("e") != -1 || Word.IndexOf("W") != -1 || Word.IndexOf("w") != -1)
+                    else if (Word.IndexOf("E") != -1 || Word.IndexOf("e") != -1 || Word.IndexOf("W") != -1 ||
+                             Word.IndexOf("w") != -1)
                     {
                         // Do we already have a longitude?
                         if (IsLongitudeHandled)
@@ -2712,7 +2719,8 @@ return
         /// <returns></returns>
         public Position Divide(Position position)
         {
-            return new Position(_Latitude.Divide(position.Latitude.DecimalDegrees), _Longitude.Divide(position.Longitude.DecimalDegrees));
+            return new Position(_Latitude.Divide(position.Latitude.DecimalDegrees),
+                _Longitude.Divide(position.Longitude.DecimalDegrees));
         }
 
         #endregion
@@ -2771,7 +2779,7 @@ return
         {
             // Compare latitude and longitude
             return (_Latitude.Equals(other.Latitude, decimals)
-                && _Longitude.Equals(other.Longitude, decimals));
+                    && _Longitude.Equals(other.Longitude, decimals));
         }
 
         #endregion
@@ -2784,7 +2792,7 @@ return
         /// <returns></returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -2793,9 +2801,9 @@ return
                 format = "G";
 
             // Output as latitude and longitude
-            return Latitude.ToString(format, culture) 
-                + culture.TextInfo.ListSeparator
-                + Longitude.ToString(format, culture);
+            return Latitude.ToString(format, culture)
+                   + culture.TextInfo.ListSeparator
+                   + Longitude.ToString(format, culture);
         }
 
         #endregion

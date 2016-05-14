@@ -4,7 +4,6 @@ using System.Xml.Serialization;
 
 namespace TreeGecko.Library.Common.Helpers
 {
-
     public class SerializationHelper
     {
         public static string SerializeObject<T>(T _input)
@@ -21,6 +20,7 @@ namespace TreeGecko.Library.Common.Helpers
 
             return System.Text.Encoding.ASCII.GetString(data);
         }
+
         public static string SerializeObject(Type _inputType, object _input)
         {
             XmlSerializer ser = new XmlSerializer(_inputType);
@@ -35,6 +35,7 @@ namespace TreeGecko.Library.Common.Helpers
 
             return System.Text.Encoding.ASCII.GetString(data);
         }
+
         public static object DeserializeObject(Type _outputType, string _xml)
         {
             XmlSerializer ser = new XmlSerializer(_outputType);
@@ -64,6 +65,7 @@ namespace TreeGecko.Library.Common.Helpers
 
             return output;
         }
+
         public static object DeserializeObject(Type _outputType, Stream _data)
         {
             XmlSerializer ser = new XmlSerializer(_outputType);
@@ -99,7 +101,7 @@ namespace TreeGecko.Library.Common.Helpers
 
                 ms = new MemoryStream(arr, false);
 
-                output = (T)ser.Deserialize(ms);
+                output = (T) ser.Deserialize(ms);
             }
             catch (Exception ex)
             {
@@ -115,6 +117,5 @@ namespace TreeGecko.Library.Common.Helpers
 
             return output;
         }
-
     }
 }

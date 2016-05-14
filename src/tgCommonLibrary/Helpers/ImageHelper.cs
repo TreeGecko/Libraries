@@ -50,7 +50,7 @@ namespace TreeGecko.Library.Common.Helpers
 
                             if (propValue.Length > 0)
                             {
-                                ExifOrientations orientation = (ExifOrientations)propValue[0];
+                                ExifOrientations orientation = (ExifOrientations) propValue[0];
 
                                 switch (orientation)
                                 {
@@ -80,7 +80,7 @@ namespace TreeGecko.Library.Common.Helpers
                     return image;
                 }
             }
-            
+
             return null;
         }
 
@@ -126,6 +126,5 @@ namespace TreeGecko.Library.Common.Helpers
 
             return GetBytes(image, ImageFormat.Jpeg);
         }
-
     }
 }

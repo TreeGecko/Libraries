@@ -9,118 +9,118 @@ using TreeGecko.Library.Geospatial.Properties;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>Represents an angular measurement around a circle.</summary>
-	/// <remarks>
-	/// 	<para>This class serves as the base class for angular measurement classes within
-	///     the framework, such as the <strong>Azimuth</strong>, <strong>Elevation</strong>,
-	///     <strong>Latitude</strong> and <strong>Longitude</strong> classes. An "angular
-	///     measurement" is a measurement around a circle. Typically, angular measurements are
-	///     between 0° and 360°.</para>
-	/// 	<para>Angles can be represented in two forms: decimal and sexagesimal. In decimal
-	///     form, angles are represented as a single number. In sexagesimal form, angles are
-	///     represented in three components: hours, minutes, and seconds, very much like a
-	///     clock.</para>
-	/// 	<para>Upon creating an <strong>Angle</strong> object, other properties such as
-	///     <strong>DecimalDegrees</strong>, <strong>DecimalMinutes</strong>,
-	///     <strong>Hours</strong>, <strong>Minutes</strong> and <strong>Seconds</strong> are
-	///     calculated automatically.</para>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because they are
-	///     immutable (properties can only be modified via constructors).</para>
-	/// </remarks>
-	/// <seealso cref="Azimuth">Azimuth Class</seealso>
-	/// <seealso cref="Elevation">Elevation Class</seealso>
-	/// <seealso cref="Latitude">Latitude Class</seealso>
-	/// <seealso cref="Longitude">Longitude Class</seealso>
-	/// <example>
-	///     These examples create new instances of Angle objects. 
-	///     <code lang="VB" description="Create an angle of 90°">
-	/// Dim MyAngle As New Angle(90)
-	///     </code>
-	/// 	<code lang="CS" description="Create an angle of 90°">
-	/// Angle MyAngle = new Angle(90);
-	///     </code>
-	/// 	<code lang="C++" description="Create an angle of 90°">
-	/// Angle MyAngle = new Angle(90);
-	///     </code>
-	/// 	<code lang="VB" description="Create an angle of 105°30'21.4">
-	/// Dim MyAngle1 As New Angle(105, 30, 21.4)
-	///     </code>
-	/// 	<code lang="CS" description="Create an angle of 105°30'21.4">
-	/// Angle MyAngle = new Angle(105, 30, 21.4);
-	///     </code>
-	/// 	<code lang="C++" description="Create an angle of 105°30'21.4">
-	/// Angle MyAngle = new Angle(105, 30, 21.4);
-	///     </code>
+    /// <summary>Represents an angular measurement around a circle.</summary>
+    /// <remarks>
+    /// 	<para>This class serves as the base class for angular measurement classes within
+    ///     the framework, such as the <strong>Azimuth</strong>, <strong>Elevation</strong>,
+    ///     <strong>Latitude</strong> and <strong>Longitude</strong> classes. An "angular
+    ///     measurement" is a measurement around a circle. Typically, angular measurements are
+    ///     between 0° and 360°.</para>
+    /// 	<para>Angles can be represented in two forms: decimal and sexagesimal. In decimal
+    ///     form, angles are represented as a single number. In sexagesimal form, angles are
+    ///     represented in three components: hours, minutes, and seconds, very much like a
+    ///     clock.</para>
+    /// 	<para>Upon creating an <strong>Angle</strong> object, other properties such as
+    ///     <strong>DecimalDegrees</strong>, <strong>DecimalMinutes</strong>,
+    ///     <strong>Hours</strong>, <strong>Minutes</strong> and <strong>Seconds</strong> are
+    ///     calculated automatically.</para>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because they are
+    ///     immutable (properties can only be modified via constructors).</para>
+    /// </remarks>
+    /// <seealso cref="Azimuth">Azimuth Class</seealso>
+    /// <seealso cref="Elevation">Elevation Class</seealso>
+    /// <seealso cref="Latitude">Latitude Class</seealso>
+    /// <seealso cref="Longitude">Longitude Class</seealso>
+    /// <example>
+    ///     These examples create new instances of Angle objects. 
+    ///     <code lang="VB" description="Create an angle of 90°">
+    /// Dim MyAngle As New Angle(90)
+    ///     </code>
+    /// 	<code lang="CS" description="Create an angle of 90°">
+    /// Angle MyAngle = new Angle(90);
+    ///     </code>
+    /// 	<code lang="C++" description="Create an angle of 90°">
+    /// Angle MyAngle = new Angle(90);
+    ///     </code>
+    /// 	<code lang="VB" description="Create an angle of 105°30'21.4">
+    /// Dim MyAngle1 As New Angle(105, 30, 21.4)
+    ///     </code>
+    /// 	<code lang="CS" description="Create an angle of 105°30'21.4">
+    /// Angle MyAngle = new Angle(105, 30, 21.4);
+    ///     </code>
+    /// 	<code lang="C++" description="Create an angle of 105°30'21.4">
+    /// Angle MyAngle = new Angle(105, 30, 21.4);
+    ///     </code>
     /// </example>
     public struct Angle : IFormattable, IComparable<Angle>, IEquatable<Angle>, ICloneable<Angle>, IXmlSerializable
-    {      
+    {
         private double m_DecimalDegrees;
 
         #region Constants
 
         private const int MaximumPrecisionDigits = 12;
-        private const double fromGon = 1.0 / .9;
+        private const double fromGon = 1.0/.9;
 
         #endregion
 
         #region Fields
 
         /// <summary>Represents the minimum value of an angle in one turn of a circle.</summary>
-		/// <remarks>
-		/// This member is typically used for looping through the entire range of possible
-		/// angles. It is possible to create angular values below this value, such as -720°.
-		/// </remarks>
-		/// <example>
-		///     This example creates an angle representing the minimum allowed value. 
-		///     <code lang="VB">
-		/// Dim MyAngle As Angle = Angle.Minimum
-		///     </code>
-		/// 	<code lang="CS">
-		/// Angle MyAngle = Angle.Minimum;
-		///     </code>
-		/// 	<code lang="C++">
-		/// Angle MyAngle = Angle.Minimum;
-		///     </code>
-		/// </example>
-		/// <value>An Angle with a value of -359.999999°.</value>
-		public static readonly Angle Minimum = new Angle(-359.99999999);
+        /// <remarks>
+        /// This member is typically used for looping through the entire range of possible
+        /// angles. It is possible to create angular values below this value, such as -720°.
+        /// </remarks>
+        /// <example>
+        ///     This example creates an angle representing the minimum allowed value. 
+        ///     <code lang="VB">
+        /// Dim MyAngle As Angle = Angle.Minimum
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Angle MyAngle = Angle.Minimum;
+        ///     </code>
+        /// 	<code lang="C++">
+        /// Angle MyAngle = Angle.Minimum;
+        ///     </code>
+        /// </example>
+        /// <value>An Angle with a value of -359.999999°.</value>
+        public static readonly Angle Minimum = new Angle(-359.99999999);
 
-		/// <summary>Represents an angle with no value.</summary>
-		/// <remarks>
-		/// This member is typically used to initialize an angle variable to zero. When an
-		/// angle has a value of zero, its <see cref="IsEmpty">IsEmpty</see> property returns
-		/// <strong>True</strong>.
-		/// </remarks>
-		/// <value>An Angle containing a value of zero (0°).</value>
-		/// <seealso cref="IsEmpty">IsEmpty Property</seealso>
-		public static readonly Angle Empty = new Angle(0.0);
+        /// <summary>Represents an angle with no value.</summary>
+        /// <remarks>
+        /// This member is typically used to initialize an angle variable to zero. When an
+        /// angle has a value of zero, its <see cref="IsEmpty">IsEmpty</see> property returns
+        /// <strong>True</strong>.
+        /// </remarks>
+        /// <value>An Angle containing a value of zero (0°).</value>
+        /// <seealso cref="IsEmpty">IsEmpty Property</seealso>
+        public static readonly Angle Empty = new Angle(0.0);
 
-		/// <summary>
-		/// Represents an angle with infinite value.
-		/// </summary>
-		/// <remarks>
-		/// In some cases, the result of an angular calculation may be infinity. This member
-		/// is used in such cases. The <see cref="DecimalDegrees">DecimalDegrees</see> property is
-		/// set to Double.PositiveInfinity.
-		/// </remarks>
-		public static readonly Angle Infinity = new Angle(double.PositiveInfinity);
+        /// <summary>
+        /// Represents an angle with infinite value.
+        /// </summary>
+        /// <remarks>
+        /// In some cases, the result of an angular calculation may be infinity. This member
+        /// is used in such cases. The <see cref="DecimalDegrees">DecimalDegrees</see> property is
+        /// set to Double.PositiveInfinity.
+        /// </remarks>
+        public static readonly Angle Infinity = new Angle(double.PositiveInfinity);
 
-		/// <summary>Represents the maximum value of an angle in one turn of a circle.</summary>
-		/// <remarks>
-		/// This member is typically used for looping through the entire range of possible
-		/// angles, or to test the range of a value. It is possible to create angular values below
-		/// this value, such as 720°.
-		/// </remarks>
-		/// <example>
-		///     This example creates an angle representing the maximum allowed value of 359.9999°. 
-		///     <code lang="VB">
-		/// Dim MyAngle As Angle = Angle.Maximum
-		///     </code>
-		/// 	<code lang="CS">
-		/// Angle MyAngle = Angle.Maximum;
-		///     </code>
-		/// </example>
-		public static readonly Angle Maximum = new Angle(359.99999999);
+        /// <summary>Represents the maximum value of an angle in one turn of a circle.</summary>
+        /// <remarks>
+        /// This member is typically used for looping through the entire range of possible
+        /// angles, or to test the range of a value. It is possible to create angular values below
+        /// this value, such as 720°.
+        /// </remarks>
+        /// <example>
+        ///     This example creates an angle representing the maximum allowed value of 359.9999°. 
+        ///     <code lang="VB">
+        /// Dim MyAngle As Angle = Angle.Maximum
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Angle MyAngle = Angle.Maximum;
+        ///     </code>
+        /// </example>
+        public static readonly Angle Maximum = new Angle(359.99999999);
 
         /// <summary>
         /// Represents an invalid or unspecified value.
@@ -218,7 +218,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <exception cref="FormatException" caption="FormatException">The specified text was not fully understood as an angular measurement.</exception>
         public Angle(string _value)
             : this(_value, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
         /// <remarks>
         /// This constructor parses the specified string into an <strong>Angle</strong>
@@ -277,7 +278,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                             m_DecimalDegrees = double.PositiveInfinity;
                             return;
                         }
-                        
+
                         // Is it empty?
                         if (String.Compare(values[0], Properties.Resources.Common_Empty, true, _culture) == 0)
                         {
@@ -286,7 +287,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                         }
 
                         // Look at the number of digits, this might be HHHMMSS format.
-                        if (values[0].Length == 7 && values[0].IndexOf(_culture.NumberFormat.NumberDecimalSeparator, StringComparison.CurrentCulture) == -1)
+                        if (values[0].Length == 7 &&
+                            values[0].IndexOf(_culture.NumberFormat.NumberDecimalSeparator,
+                                StringComparison.CurrentCulture) == -1)
                         {
                             m_DecimalDegrees = ToDecimalDegrees(
                                 int.Parse(values[0].Substring(0, 3), _culture),
@@ -294,9 +297,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                                 double.Parse(values[0].Substring(5, 2), _culture));
                             return;
                         }
-                        
-                        if (values[0].Length == 8 && values[0][0] == '-' 
-                            && values[0].IndexOf(_culture.NumberFormat.NumberDecimalSeparator, StringComparison.CurrentCulture) == -1)
+
+                        if (values[0].Length == 8 && values[0][0] == '-'
+                            &&
+                            values[0].IndexOf(_culture.NumberFormat.NumberDecimalSeparator,
+                                StringComparison.CurrentCulture) == -1)
                         {
                             m_DecimalDegrees = ToDecimalDegrees(
                                 int.Parse(values[0].Substring(0, 4), _culture),
@@ -313,7 +318,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                         {
                             throw new ArgumentException(Resources.Angle_OnlyRightmostIsDecimal, "_value");
                         }
-                        
+
                         // Set decimal degrees
                         m_DecimalDegrees = ToDecimalDegrees(
                             int.Parse(values[0], _culture),
@@ -321,11 +326,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                         return;
                     default: // Hours, minutes and seconds  (most likely)
                         // If this is a fractional value, remember that it is
-                        if (values[0].IndexOf(_culture.NumberFormat.NumberDecimalSeparator) != -1 || values[0].IndexOf(_culture.NumberFormat.NumberDecimalSeparator) != -1)
+                        if (values[0].IndexOf(_culture.NumberFormat.NumberDecimalSeparator) != -1 ||
+                            values[0].IndexOf(_culture.NumberFormat.NumberDecimalSeparator) != -1)
                         {
                             throw new ArgumentException(Resources.Angle_OnlyRightmostIsDecimal, "_value");
                         }
-                       
+
                         // Set decimal degrees
                         m_DecimalDegrees = ToDecimalDegrees(int.Parse(values[0], _culture),
                             int.Parse(values[1], _culture),
@@ -383,10 +389,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public double DecimalDegrees
         {
-            get
-            {
-                return m_DecimalDegrees;
-            }
+            get { return m_DecimalDegrees; }
         }
 
         /// <summary>Returns the minutes and seconds as a single numeric value.</summary>
@@ -421,7 +424,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             {
                 return Math.Round(
                     (Math.Abs(
-                        m_DecimalDegrees - Math.Truncate(m_DecimalDegrees)) * 60.0), MaximumPrecisionDigits - 2);
+                        m_DecimalDegrees - Math.Truncate(m_DecimalDegrees))*60.0), MaximumPrecisionDigits - 2);
             }
         }
 
@@ -452,10 +455,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public int Hours
         {
-            get
-            {
-				return Convert.ToInt32(Math.Truncate(m_DecimalDegrees));
-            }
+            get { return Convert.ToInt32(Math.Truncate(m_DecimalDegrees)); }
         }
 
         /// <summary>Returns the integer minutes portion of an angular measurement.</summary>
@@ -488,7 +488,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 return Convert.ToInt32(
                     Math.Abs(
                         Math.Truncate(Math.Round(
-                                (m_DecimalDegrees - Hours) * 60.0, MaximumPrecisionDigits - 1))));
+                            (m_DecimalDegrees - Hours)*60.0, MaximumPrecisionDigits - 1))));
             }
         }
 
@@ -520,9 +520,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             get
             {
                 return Math.Round(
-                                (Math.Abs(m_DecimalDegrees - Hours) * 60.0 - Minutes) * 60.0,
+                    (Math.Abs(m_DecimalDegrees - Hours)*60.0 - Minutes)*60.0,
                     // This property appears to support one less digit than the maximum allowed
-                                MaximumPrecisionDigits - 4);
+                    MaximumPrecisionDigits - 4);
             }
         }
 
@@ -534,19 +534,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="Empty">Empty Field</seealso>
         public bool IsEmpty
         {
-            get
-            {
-                return (m_DecimalDegrees == 0);
-            }
+            get { return (m_DecimalDegrees == 0); }
         }
 
         /// <summary>Indicates if the current instance represents an infinite value.</summary>
         public bool IsInfinity
         {
-            get
-            {
-                return double.IsInfinity(m_DecimalDegrees);
-            }
+            get { return double.IsInfinity(m_DecimalDegrees); }
         }
 
         /// <summary>Indicates whether the value is invalid or unspecified.</summary>
@@ -577,16 +571,16 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 return value;
         }
 
-		/// <summary>Returns the object with the smallest value.</summary>
-		/// <returns>The <strong>Angle</strong> containing the smallest value.</returns>
-		/// <param name="value">An <strong>Angle</strong> object to compare to the current instance.</param>
-		public Angle LesserOf(Angle value)
-		{
-			if(m_DecimalDegrees < value.DecimalDegrees)
-				return this;
-			else
-				return value;
-		}
+        /// <summary>Returns the object with the smallest value.</summary>
+        /// <returns>The <strong>Angle</strong> containing the smallest value.</returns>
+        /// <param name="value">An <strong>Angle</strong> object to compare to the current instance.</param>
+        public Angle LesserOf(Angle value)
+        {
+            if (m_DecimalDegrees < value.DecimalDegrees)
+                return this;
+            else
+                return value;
+        }
 
         /// <summary>Returns an angle opposite of the current instance.</summary>
         /// <returns>An <strong>Angle</strong> representing the mirrored value.</returns>
@@ -654,32 +648,32 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             {
                 _Value += 360.0;
             }
-            return new Angle(_Value % 360);
+            return new Angle(_Value%360);
         }
 
-		/// <summary>Converts the current instance into radians.</summary>
-		/// <returns>A <see cref="Radian">Radian</see> object.</returns>
-		/// <remarks>
-		/// 	<para>This function is typically used to convert an angular measurement into
-		///  radians before performing a trigonometric function.
-		/// 		</para>
-		/// </remarks>
-		/// <seealso cref="Radian">Radian Class</seealso>
-		/// <overloads>Converts an angular measurement into radians before further processing.</overloads>
-		/// <example>
-		///     This example converts a measurement of 90° into radians. 
-		///     <code lang="VB">
-		/// Dim MyAngle As New Angle(90)
-		/// Dim MyRadians As Radian = MyAngle.ToRadians()
-		///     </code>
-		/// 	<code lang="CS">
-		/// Angle MyAngle = new Angle(90);
-		/// Radian MyRadians = MyAngle.ToRadians();
-		///     </code>
-		/// </example>
-		public Radian ToRadians()
-		{
-			return Radian.FromDegrees(m_DecimalDegrees);
+        /// <summary>Converts the current instance into radians.</summary>
+        /// <returns>A <see cref="Radian">Radian</see> object.</returns>
+        /// <remarks>
+        /// 	<para>This function is typically used to convert an angular measurement into
+        ///  radians before performing a trigonometric function.
+        /// 		</para>
+        /// </remarks>
+        /// <seealso cref="Radian">Radian Class</seealso>
+        /// <overloads>Converts an angular measurement into radians before further processing.</overloads>
+        /// <example>
+        ///     This example converts a measurement of 90° into radians. 
+        ///     <code lang="VB">
+        /// Dim MyAngle As New Angle(90)
+        /// Dim MyRadians As Radian = MyAngle.ToRadians()
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Angle MyAngle = new Angle(90);
+        /// Radian MyRadians = MyAngle.ToRadians();
+        ///     </code>
+        /// </example>
+        public Radian ToRadians()
+        {
+            return Radian.FromDegrees(m_DecimalDegrees);
         }
 
         /// <summary>Outputs the angle as a string using the specified format.</summary>
@@ -779,7 +773,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     // Yes.  Continue on
                     continue;
                 // Is the seconds value closer to the current or next interval?
-                if (NewSeconds < (value + NextInterval) * 0.5)
+                if (NewSeconds < (value + NextInterval)*0.5)
                     // Closer to the current interval, so adjust it
                     NewSeconds = value;
                 else
@@ -812,24 +806,24 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             // Convert objects to an Angle as needed before comparison
             if (obj is Angle)
-                return Equals((Angle)obj);
+                return Equals((Angle) obj);
 
             // Nothing else will work, so False
             return false;
         }
 
         /// <summary>Returns a unique code for this instance.</summary>
-		/// <remarks>
-		/// Since the <strong>Angle</strong> class is immutable, this property may be used
-		/// safely with hash tables.
-		/// </remarks>
-		/// <returns>
-		/// An <strong>Integer</strong> representing a unique code for the current
-		/// instance.
-		/// </returns>
-		public override int GetHashCode()
-		{
-			return m_DecimalDegrees.GetHashCode();
+        /// <remarks>
+        /// Since the <strong>Angle</strong> class is immutable, this property may be used
+        /// safely with hash tables.
+        /// </remarks>
+        /// <returns>
+        /// An <strong>Integer</strong> representing a unique code for the current
+        /// instance.
+        /// </returns>
+        public override int GetHashCode()
+        {
+            return m_DecimalDegrees.GetHashCode();
         }
 
         /// <summary>Outputs the angle as a string using the default format.</summary>
@@ -875,52 +869,52 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         }
 
         /// <remarks>
-		/// 	<para>This function is typically used to convert an angular measurement into
-		///  radians before performing a trigonometric function.</para>
-		/// </remarks>
-		/// <returns>A <see cref="Radian"><strong>Radian</strong></see> object.</returns>
-		/// <summary>Converts an angular measurement into radians.</summary>
-		/// <example>
-		///     This example shows a quick way to convert an angle of 90° into radians. 
-		///     <code lang="VB">
-		/// Dim MyRadian As Radian = Angle.ToRadians(90)
-		///     </code>
-		/// 	<code lang="CS">
-		/// Radian MyRadian = Angle.ToRadians(90);
-		///     </code>
-		/// </example>
-		public static Radian ToRadians(Angle value)
-		{
+        /// 	<para>This function is typically used to convert an angular measurement into
+        ///  radians before performing a trigonometric function.</para>
+        /// </remarks>
+        /// <returns>A <see cref="Radian"><strong>Radian</strong></see> object.</returns>
+        /// <summary>Converts an angular measurement into radians.</summary>
+        /// <example>
+        ///     This example shows a quick way to convert an angle of 90° into radians. 
+        ///     <code lang="VB">
+        /// Dim MyRadian As Radian = Angle.ToRadians(90)
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Radian MyRadian = Angle.ToRadians(90);
+        ///     </code>
+        /// </example>
+        public static Radian ToRadians(Angle value)
+        {
             return value.ToRadians();
-		}
+        }
 
-		/// <summary>Converts a value in radians into an angular measurement.</summary>
-		/// <remarks>
-		/// 	This function is typically used in conjunction with the
-		/// 	<see cref="Angle.ToRadians">ToRadians</see>
-		/// 	method after a trigonometric function has completed. The converted value is stored in
-		/// 	the <see cref="DecimalDegrees">DecimalDegrees</see> property.
-		/// </remarks>
-		/// <seealso cref="Angle.ToRadians">ToRadians</seealso>
-		/// <seealso cref="Radian">Radian Class</seealso>
-		/// <example>
-		///     This example uses the <strong>FromRadians</strong> method to convert a value of one
-		///     radian into an <strong>Angle</strong> of 57°. 
-		///     <code lang="VB">
-		/// ' Create a new angle equal to one radian
-		/// Dim MyRadians As New Radian(1)
-		/// Dim MyAngle As Angle = Angle.FromRadians(MyRadians)
-		/// Debug.WriteLine(MyAngle.ToString())
-		/// ' Output: 57°
-		///     </code>
-		/// 	<code lang="CS">
-		/// // Create a new angle equal to one radian
-		/// Radian MyRadians = new Radian(1);
-		/// Angle MyAngle = Angle.FromRadians(MyRadians);
-		/// Console.WriteLine(MyAngle.ToString());
-		/// // Output: 57°
-		///     </code>
-		/// </example>
+        /// <summary>Converts a value in radians into an angular measurement.</summary>
+        /// <remarks>
+        /// 	This function is typically used in conjunction with the
+        /// 	<see cref="Angle.ToRadians">ToRadians</see>
+        /// 	method after a trigonometric function has completed. The converted value is stored in
+        /// 	the <see cref="DecimalDegrees">DecimalDegrees</see> property.
+        /// </remarks>
+        /// <seealso cref="Angle.ToRadians">ToRadians</seealso>
+        /// <seealso cref="Radian">Radian Class</seealso>
+        /// <example>
+        ///     This example uses the <strong>FromRadians</strong> method to convert a value of one
+        ///     radian into an <strong>Angle</strong> of 57°. 
+        ///     <code lang="VB">
+        /// ' Create a new angle equal to one radian
+        /// Dim MyRadians As New Radian(1)
+        /// Dim MyAngle As Angle = Angle.FromRadians(MyRadians)
+        /// Debug.WriteLine(MyAngle.ToString())
+        /// ' Output: 57°
+        ///     </code>
+        /// 	<code lang="CS">
+        /// // Create a new angle equal to one radian
+        /// Radian MyRadians = new Radian(1);
+        /// Angle MyAngle = Angle.FromRadians(MyRadians);
+        /// Console.WriteLine(MyAngle.ToString());
+        /// // Output: 57°
+        ///     </code>
+        /// </example>
         public static Angle FromRadians(Radian radians)
         {
             return radians.ToAngle();
@@ -939,15 +933,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public static Angle FromSexagesimal(double dms)
         {
             // Shift the decimal left 2 places and save it.
-            double dmsX100 = dms * 100;
+            double dmsX100 = dms*100;
             // Get the integral portion for the hours
-            int hours = (int)Math.Floor(dms);
+            int hours = (int) Math.Floor(dms);
             // Subtract the hours from the sexagesimal number, leaving just the fractional portion,
             // shift the decimal left 2 places and truncate for the minutes
-            int minutes = (int)Math.Floor(Math.Round((dms - (double)hours) * 100));
+            int minutes = (int) Math.Floor(Math.Round((dms - (double) hours)*100));
             // Subtract the integral portion of the shifted sexagesimal number for the shifted sexagesimal number,
             // leaving just the fractional portion, shift the decimal left 2 places and truncate for the seconds.
-            double seconds = ((dmsX100) - Math.Floor(dmsX100)) * 100;
+            double seconds = ((dmsX100) - Math.Floor(dmsX100))*100;
 
             // Create an Angle from the hours, minutes and seconds
             return new Angle(hours, Math.Abs(minutes), seconds);
@@ -987,22 +981,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </param>
         public static Angle Random(Random generator)
         {
-            return new Angle(generator.NextDouble() * 360.0);
+            return new Angle(generator.NextDouble()*360.0);
         }
 
         #endregion
 
         #region Conversions
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Angle.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Angle(double value)
-		{
-			return new Angle(value);
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Angle.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Angle(double value)
+        {
+            return new Angle(value);
+        }
 
         /// <summary>
         /// Converts a decimal degree measurement as a Single into an Angle.
@@ -1024,35 +1018,35 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             return value.ToAngle();
         }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Angle into an Double.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator double(Angle value)
-		{
-			return value.DecimalDegrees;
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Angle into an Double.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator double(Angle value)
+        {
+            return value.DecimalDegrees;
+        }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Angle into a Single.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator float(Angle value)
-		{
-			return Convert.ToSingle(value.DecimalDegrees);
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Angle into a Single.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator float(Angle value)
+        {
+            return Convert.ToSingle(value.DecimalDegrees);
+        }
 
-		/// <summary>
-		/// Converts a measurement in degrees as an Integer into an Angle.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Angle(int value)
-		{
-			return new Angle(value);
-		}
+        /// <summary>
+        /// Converts a measurement in degrees as an Integer into an Angle.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Angle(int value)
+        {
+            return new Angle(value);
+        }
 
         public static explicit operator Angle(Azimuth value)
         {
@@ -1075,28 +1069,28 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         }
 
 
-		/// <summary>
-		/// Converts a measurement in the form of a formatted String into an Angle.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Angle(string value)
-		{
-			return new Angle(value, CultureInfo.CurrentCulture);
-		}
+        /// <summary>
+        /// Converts a measurement in the form of a formatted String into an Angle.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Angle(string value)
+        {
+            return new Angle(value, CultureInfo.CurrentCulture);
+        }
 
-		/// <summary>
-		/// Converts an Angle into a String.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		/// <remarks>This operator calls the ToString() method using the current culture.</remarks>
-		public static explicit operator string(Angle value)
-		{
-			return value.ToString("g", CultureInfo.CurrentCulture);
-		}
+        /// <summary>
+        /// Converts an Angle into a String.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <remarks>This operator calls the ToString() method using the current culture.</remarks>
+        public static explicit operator string(Angle value)
+        {
+            return value.ToString("g", CultureInfo.CurrentCulture);
+        }
 
-		#endregion
+        #endregion
 
         #region Operators
 
@@ -1122,22 +1116,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public static Angle operator *(Angle left, Angle right)
         {
-            return new Angle(left.DecimalDegrees * right.DecimalDegrees);
+            return new Angle(left.DecimalDegrees*right.DecimalDegrees);
         }
 
         public static Angle operator *(Angle left, double right)
         {
-            return new Angle(left.DecimalDegrees * right);
+            return new Angle(left.DecimalDegrees*right);
         }
 
         public static Angle operator /(Angle left, Angle right)
         {
-            return new Angle(left.DecimalDegrees / right.DecimalDegrees);
+            return new Angle(left.DecimalDegrees/right.DecimalDegrees);
         }
 
         public static Angle operator /(Angle left, double right)
         {
-            return new Angle(left.DecimalDegrees / right);
+            return new Angle(left.DecimalDegrees/right);
         }
 
         public static bool operator ==(Angle left, Angle right)
@@ -1340,12 +1334,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> to multiply with the current instance.</param>
         public Angle Multiply(double value)
         {
-            return new Angle(m_DecimalDegrees * value);
+            return new Angle(m_DecimalDegrees*value);
         }
 
         public Angle Multiply(Angle value)
         {
-            return new Angle(m_DecimalDegrees * value.DecimalDegrees);
+            return new Angle(m_DecimalDegrees*value.DecimalDegrees);
         }
 
         /// <summary>Divides the current instance by the specified value.</summary>
@@ -1364,12 +1358,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> representing a denominator to divide by.</param>
         public Angle Divide(double value)
         {
-            return new Angle(m_DecimalDegrees / value);
+            return new Angle(m_DecimalDegrees/value);
         }
 
         public Angle Divide(Angle value)
         {
-            return new Angle(m_DecimalDegrees / value.DecimalDegrees);
+            return new Angle(m_DecimalDegrees/value.DecimalDegrees);
         }
 
         /// <summary>Indicates if the current instance is smaller than the specified value.</summary>
@@ -1451,56 +1445,56 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region Static methods
 
         /// <summary>Converts the specified string into an Angle object.</summary>
-		/// <returns>
-		/// 	A new <strong>Angle</strong> object populated with the specified 
-		/// 	values.
-		/// </returns>
-		/// <remarks>
-		/// 	<para>This method parses the specified string into an <strong>Angle</strong> object
-		///     using the current culture. This constructor can parse any strings created via the
-		///     <strong>ToString</strong> method.</para>
-		/// </remarks>
-		/// <seealso cref="ToString">ToString Method</seealso>
-		/// <example>
-		///     This example creates a new angular measurement using the <strong>Parse</strong>
-		///     method. 
-		///     <code lang="VB">
-		/// Dim NewAngle As Angle = Angle.Parse("123.45°")
-		///     </code>
-		/// 	<code lang="CS">
-		/// Angle NewAngle = Angle.Parse("123.45°");
-		///     </code>
-		/// </example>
-		/// <exception cref="ArgumentNullException" caption="ArgumentNullException">The Parse method requires a decimal or sexagesimal measurement.</exception>
-		/// <exception cref="FormatException" caption="FormatException">Only the right-most portion of a sexagesimal measurement can be a fractional value.</exception>
-		/// <exception cref="FormatException" caption="FormatException">Extra characters were encountered while parsing an angular measurement.  Only hours, minutes, and seconds are allowed.</exception>
-		/// <exception cref="FormatException" caption="FormatException">The specified text was not fully understood as an angular measurement.</exception>
-		public static Angle Parse(string value)
-		{
-			return new Angle(value, CultureInfo.CurrentCulture);
-		}
-		
-		/// <remarks>
-		/// 	<para>This powerful method is typically used to process data from a data store or a
-		///     value input by the user in any culture. This function can accept any format which
-		///     can be output by the ToString method.</para>
-		/// </remarks>
-		/// <returns>A new <strong>Angle</strong> object equivalent to the specified string.</returns>
-		/// <summary>
-		/// Converts the specified string into an <strong>Angle</strong> object using the
-		/// specified culture.
-		/// </summary>
-		/// <param name="value">
-		/// A <strong>String</strong> describing an angle in the form of decimal degrees or a
-		/// sexagesimal.
-		/// </param>
-		/// <param name="culture">
-		/// A <strong>CultureInfo</strong> object describing the numeric format to use during
-		/// conversion.
-		/// </param>
-		public static Angle Parse(string value, CultureInfo culture)
-		{
-			return new Angle(value, culture);
+        /// <returns>
+        /// 	A new <strong>Angle</strong> object populated with the specified 
+        /// 	values.
+        /// </returns>
+        /// <remarks>
+        /// 	<para>This method parses the specified string into an <strong>Angle</strong> object
+        ///     using the current culture. This constructor can parse any strings created via the
+        ///     <strong>ToString</strong> method.</para>
+        /// </remarks>
+        /// <seealso cref="ToString">ToString Method</seealso>
+        /// <example>
+        ///     This example creates a new angular measurement using the <strong>Parse</strong>
+        ///     method. 
+        ///     <code lang="VB">
+        /// Dim NewAngle As Angle = Angle.Parse("123.45°")
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Angle NewAngle = Angle.Parse("123.45°");
+        ///     </code>
+        /// </example>
+        /// <exception cref="ArgumentNullException" caption="ArgumentNullException">The Parse method requires a decimal or sexagesimal measurement.</exception>
+        /// <exception cref="FormatException" caption="FormatException">Only the right-most portion of a sexagesimal measurement can be a fractional value.</exception>
+        /// <exception cref="FormatException" caption="FormatException">Extra characters were encountered while parsing an angular measurement.  Only hours, minutes, and seconds are allowed.</exception>
+        /// <exception cref="FormatException" caption="FormatException">The specified text was not fully understood as an angular measurement.</exception>
+        public static Angle Parse(string value)
+        {
+            return new Angle(value, CultureInfo.CurrentCulture);
+        }
+
+        /// <remarks>
+        /// 	<para>This powerful method is typically used to process data from a data store or a
+        ///     value input by the user in any culture. This function can accept any format which
+        ///     can be output by the ToString method.</para>
+        /// </remarks>
+        /// <returns>A new <strong>Angle</strong> object equivalent to the specified string.</returns>
+        /// <summary>
+        /// Converts the specified string into an <strong>Angle</strong> object using the
+        /// specified culture.
+        /// </summary>
+        /// <param name="value">
+        /// A <strong>String</strong> describing an angle in the form of decimal degrees or a
+        /// sexagesimal.
+        /// </param>
+        /// <param name="culture">
+        /// A <strong>CultureInfo</strong> object describing the numeric format to use during
+        /// conversion.
+        /// </param>
+        public static Angle Parse(string value, CultureInfo culture)
+        {
+            return new Angle(value, culture);
         }
 
         /// <summary>Converts arbitrary hour, minute and seconds into decimal degrees.</summary>
@@ -1532,8 +1526,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    ? -Math.Round(-hours + minutes / 60.0 + seconds / 3600.0, MaximumPrecisionDigits)
             //    : Math.Round(hours + minutes / 60.0 + seconds / 3600.0, MaximumPrecisionDigits);
             return hours < 0
-                ? -(-hours + minutes / 60.0 + seconds / 3600.0)
-                : (hours + minutes / 60.0 + seconds / 3600.0);
+                ? -(-hours + minutes/60.0 + seconds/3600.0)
+                : (hours + minutes/60.0 + seconds/3600.0);
         }
 
         /// <summary>Converts arbitrary hour and decimal minutes into decimal degrees.</summary>
@@ -1554,8 +1548,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    ? -Math.Round(-hours + decimalMinutes / 60.0, MaximumPrecisionDigits)
             //    : Math.Round(hours + decimalMinutes / 60.0, MaximumPrecisionDigits);
             return hours < 0
-                ? -(-hours + decimalMinutes / 60.0)
-                : (hours + decimalMinutes / 60.0);
+                ? -(-hours + decimalMinutes/60.0)
+                : (hours + decimalMinutes/60.0);
         }
 
         /// <summary>Converts an hour value into decimal degrees.</summary>
@@ -1705,7 +1699,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         }
 
         #endregion
-        
+
         #region IFormattable Members
 
         /// <summary>Outputs the angle as a string using the specified format.</summary>
@@ -1736,7 +1730,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;

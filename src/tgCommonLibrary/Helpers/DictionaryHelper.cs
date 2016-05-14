@@ -4,12 +4,10 @@ using TreeGecko.Library.Common.Objects;
 
 namespace TreeGecko.Library.Common.Helpers
 {
-
     public static class DictionaryHelper
     {
-
         public static Dictionary<Guid, T> GetDictionary<T>(List<T> _values)
-            where T: AbstractTGObject
+            where T : AbstractTGObject
         {
             Dictionary<Guid, T> dictionary = new Dictionary<Guid, T>();
 

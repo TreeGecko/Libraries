@@ -18,7 +18,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
     {
         private Speed _Speed;
         private Azimuth _Bearing;
-        
+
         #region Fields
 
         /// <summary>Represents a velocity with no speed or direction.</summary>
@@ -36,7 +36,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             _Speed = speed;
             _Bearing = bearing;
         }
-        
+
         public Velocity(Speed speed, double bearingDegrees)
         {
             _Speed = speed;
@@ -54,13 +54,14 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             _Speed = new Speed(speed, speedUnits);
             _Bearing = new Azimuth(bearingDegrees);
         }
-        
+
         /// <summary>
         /// Creates a new instance by parsing speed and bearing from the specified strings.
         /// </summary>
-        public Velocity(string speed, string bearing) 
+        public Velocity(string speed, string bearing)
             : this(speed, bearing, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
         /// <summary>
         /// Creates a new instance by converting the specified strings using the specific culture.
@@ -102,19 +103,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public bool IsEmpty
         {
-            get
-            {
-                return _Speed.IsEmpty && _Bearing.IsEmpty;
-            }
+            get { return _Speed.IsEmpty && _Bearing.IsEmpty; }
         }
 
         /// <summary>Indicates whether the speed or bearing is invalid or unspecified.</summary>
         public bool IsInvalid
         {
-            get
-            {
-                return _Speed.IsInvalid || _Bearing.IsInvalid;
-            }
+            get { return _Speed.IsInvalid || _Bearing.IsInvalid; }
         }
 
         #endregion
@@ -142,8 +137,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public override bool Equals(object obj)
         {
-            if(obj is Velocity)
-                return Equals((Velocity)obj);
+            if (obj is Velocity)
+                return Equals((Velocity) obj);
             return false;
         }
 
@@ -166,7 +161,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool Equals(Velocity other)
         {
             return _Speed.Equals(other.Speed)
-                && _Bearing.Equals(other.Bearing);
+                   && _Bearing.Equals(other.Bearing);
         }
 
         /// <summary>
@@ -178,7 +173,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool Equals(Velocity other, int decimals)
         {
             return _Speed.Equals(other.Speed, decimals)
-                && _Bearing.Equals(other.Bearing, decimals);
+                   && _Bearing.Equals(other.Bearing, decimals);
         }
 
         #endregion
@@ -190,7 +185,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -200,8 +195,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             // Output as speed and bearing
             return _Speed.ToString(format, culture)
-                + " "
-                + _Bearing.ToString(format, culture);
+                   + " "
+                   + _Bearing.ToString(format, culture);
         }
 
         #endregion

@@ -32,7 +32,7 @@ namespace TreeGecko.Library.Common.Exporters
                 using (StreamWriter writer = new StreamWriter(fs))
                 {
                     if (_items != null
-                        && _items.Count>0)
+                        && _items.Count > 0)
                     {
                         if (IncludeHeaderRow)
                         {
@@ -133,5 +133,4 @@ namespace TreeGecko.Library.Common.Exporters
             return sb.ToString();
         }
     }
-
 }

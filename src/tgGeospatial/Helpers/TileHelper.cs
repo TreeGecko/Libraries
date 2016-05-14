@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace TreeGecko.Library.Common.Helpers
+namespace TreeGecko.Library.Geospatial.Helpers
 {
     /// <summary>
     /// 

@@ -53,14 +53,18 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// Returns a cartesian coordinate with empty values.
         /// </summary>
         public static readonly CartesianPoint Empty = new CartesianPoint(Distance.Empty, Distance.Empty, Distance.Empty);
+
         /// <summary>
         /// Returns a cartesian point with infinite values.
         /// </summary>
-        public static readonly CartesianPoint Infinity = new CartesianPoint(Distance.Infinity, Distance.Infinity, Distance.Infinity);
+        public static readonly CartesianPoint Infinity = new CartesianPoint(Distance.Infinity, Distance.Infinity,
+            Distance.Infinity);
+
         /// <summary>
         /// Represents an invalid or unspecified value.
         /// </summary>
-        public static readonly CartesianPoint Invalid = new CartesianPoint(Distance.Invalid, Distance.Invalid, Distance.Invalid);
+        public static readonly CartesianPoint Invalid = new CartesianPoint(Distance.Invalid, Distance.Invalid,
+            Distance.Invalid);
 
         #endregion
 
@@ -71,10 +75,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public Distance X
         {
-            get
-            {
-                return m_X;
-            }
+            get { return m_X; }
         }
 
         /// <summary>
@@ -82,10 +83,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public Distance Y
         {
-            get
-            {
-                return m_Y;
-            }
+            get { return m_Y; }
         }
 
         /// <summary>
@@ -93,10 +91,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public Distance Z
         {
-            get
-            {
-                return m_Z;
-            }
+            get { return m_Z; }
         }
 
         /// <summary>
@@ -104,10 +99,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public bool IsEmpty
         {
-            get
-            {
-                return m_X.IsEmpty && m_Y.IsEmpty && m_Z.IsEmpty;
-            }
+            get { return m_X.IsEmpty && m_Y.IsEmpty && m_Z.IsEmpty; }
         }
 
         /// <summary>
@@ -115,10 +107,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public bool IsInvalid
         {
-            get
-            {
-                return m_X.IsInvalid && m_Y.IsInvalid && m_Z.IsInvalid;
-            }
+            get { return m_X.IsInvalid && m_Y.IsInvalid && m_Z.IsInvalid; }
         }
 
         #endregion
@@ -219,11 +208,11 @@ return
             //% calculations:
             //b   = sqrt(a^2*(1-e^2));
 
-            double b = Math.Sqrt(Math.Pow(a, 2) * (1 - Math.Pow(e, 2)));
+            double b = Math.Sqrt(Math.Pow(a, 2)*(1 - Math.Pow(e, 2)));
 
             //ep  = sqrt((a^2-b^2)/b^2);
 
-            double ep = Math.Sqrt((Math.Pow(a, 2) - Math.Pow(b, 2)) / Math.Pow(b, 2));
+            double ep = Math.Sqrt((Math.Pow(a, 2) - Math.Pow(b, 2))/Math.Pow(b, 2));
 
             //p   = sqrt(x.^2+y.^2);
 
@@ -231,7 +220,7 @@ return
 
             //th  = atan2(a*z,b*p);
 
-            double th = Math.Atan2(a * z, b * p);
+            double th = Math.Atan2(a*z, b*p);
 
             //lon = atan2(y,x);
 
@@ -239,20 +228,21 @@ return
 
             //lat = atan2((z+ep^2.*b.*sin(th).^3),(p-e^2.*a.*cos(th).^3));
 
-            double lat = Math.Atan2((z + Math.Pow(ep, 2) * b * Math.Pow(Math.Sin(th), 3)), (p - Math.Pow(e, 2) * a * Math.Pow(Math.Cos(th), 3)));
+            double lat = Math.Atan2((z + Math.Pow(ep, 2)*b*Math.Pow(Math.Sin(th), 3)),
+                (p - Math.Pow(e, 2)*a*Math.Pow(Math.Cos(th), 3)));
 
             //N   = a./sqrt(1-e^2.*sin(lat).^2);
 
-            double N = a / Math.Sqrt(1 - Math.Pow(e, 2) * Math.Pow(Math.Sin(lat), 2));
+            double N = a/Math.Sqrt(1 - Math.Pow(e, 2)*Math.Pow(Math.Sin(lat), 2));
 
             //alt = p./cos(lat)-N;
 
-            double alt = p / Math.Cos(lat) - N;
+            double alt = p/Math.Cos(lat) - N;
 
             //% return lon in range [0,2*pi)
             //lon = mod(lon,2*pi);
 
-            lon = lon % (2 * Math.PI);
+            lon = lon%(2*Math.PI);
 
             //% correct for numerical instability in altitude near exact poles:
             //% (after this correction, error is about 2 millimeters, which is about
@@ -270,9 +260,9 @@ return
             //return
 
             return new Position3D(
-                    Distance.FromMeters(alt),
-                    Latitude.FromRadians(lat), 
-                    Longitude.FromRadians(lon));
+                Distance.FromMeters(alt),
+                Latitude.FromRadians(lat),
+                Longitude.FromRadians(lon));
 
             #endregion
         }
@@ -285,8 +275,8 @@ return
         public Distance DistanceTo(CartesianPoint _point)
         {
             return new Distance(
-                Math.Sqrt(Math.Pow(_point.X.Value - m_X.Value, 2) 
-                        + Math.Pow(_point.Y.Value - m_Y.Value, 2))
+                Math.Sqrt(Math.Pow(_point.X.Value - m_X.Value, 2)
+                          + Math.Pow(_point.Y.Value - m_Y.Value, 2))
                 , DistanceUnit.Meters).ToLocalUnitType();
         }
 
@@ -302,7 +292,7 @@ return
         public override bool Equals(object _obj)
         {
             if (_obj is CartesianPoint)
-                return Equals((CartesianPoint)_obj);
+                return Equals((CartesianPoint) _obj);
             return false;
         }
 
@@ -322,7 +312,7 @@ return
 
         public string ToString(string _format, IFormatProvider _formatProvider)
         {
-            CultureInfo culture = (CultureInfo)_formatProvider;
+            CultureInfo culture = (CultureInfo) _formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -331,8 +321,8 @@ return
                 _format = "G";
 
             return m_X.ToString(_format, culture) + culture.TextInfo.ListSeparator
-                + m_Y.ToString(_format, culture) + culture.TextInfo.ListSeparator
-                + m_Z.ToString(_format, culture);
+                   + m_Y.ToString(_format, culture) + culture.TextInfo.ListSeparator
+                   + m_Z.ToString(_format, culture);
         }
 
         #endregion
@@ -342,8 +332,8 @@ return
         public bool Equals(CartesianPoint _other)
         {
             return m_X.Equals(_other.X)
-                && m_Y.Equals(_other.Y)
-                && m_Z.Equals(_other.Z);
+                   && m_Y.Equals(_other.Y)
+                   && m_Z.Equals(_other.Z);
         }
 
         #endregion
@@ -392,9 +382,9 @@ return
             m_X = Distance.Empty;
             m_Y = Distance.Empty;
             m_Z = Distance.Empty;
-            
+
             // Move to the <gml:pos> or <gml:coord> element
-            if (!_reader.IsStartElement("pos", Xml.GmlXmlNamespace) 
+            if (!_reader.IsStartElement("pos", Xml.GmlXmlNamespace)
                 && !_reader.IsStartElement("coord", Xml.GmlXmlNamespace))
                 _reader.ReadStartElement();
 

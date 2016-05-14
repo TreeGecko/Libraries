@@ -72,6 +72,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// Field</seealso>
         /// <seealso cref="EarthsAverageRadius">EarthsAverageRadius Field</seealso>
         public static readonly Distance EarthsEquatorialRadiusWgs1984 = new Distance(6378137.0, DistanceUnit.Meters);
+
         /// <summary>
         /// Represents an infinite distance.
         /// </summary>
@@ -79,6 +80,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// the Layer class of GIS.NET uses Infinity to indicate that the layer is drawn no matter how far
         /// out the user zooms away from it.  </remarks>
         public static readonly Distance Infinity = new Distance(double.PositiveInfinity, DistanceUnit.Meters);
+
         /// <summary>
         /// Returns the distance from the center of the Earth to a pole according to the
         /// WGS1984 ellipsoid.
@@ -86,14 +88,21 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="EarthsEquatorialRadiusWgs1984">EarthsEquatorialRadiusWgs1984 Field</seealso>
         /// <seealso cref="EarthsAverageRadius">EarthsAverageRadius Field</seealso>
         public static readonly Distance EarthsPolarRadiusWgs1984 = new Distance(6356752.314245, DistanceUnit.Meters);
+
         /// <summary>Returns the average radius of the Earth.</summary>
         /// <seealso cref="EarthsEquatorialRadiusWgs1984">EarthsEquatorialRadiusWgs1984 Field</seealso>
         /// <seealso cref="EarthsPolarRadiusWgs1984">EarthsPolarRadiusWgs1984 Field</seealso>
         public static readonly Distance EarthsAverageRadius = new Distance(6378100, DistanceUnit.Meters);
+
         public static readonly Distance Empty = new Distance(0, DistanceUnit.Meters).ToLocalUnitType();
         public static readonly Distance SeaLevel = new Distance(0, DistanceUnit.Meters).ToLocalUnitType();
-        public static readonly Distance Maximum = new Distance(double.MaxValue, DistanceUnit.Kilometers).ToLocalUnitType();
-        public static readonly Distance Minimum = new Distance(double.MinValue, DistanceUnit.Kilometers).ToLocalUnitType();
+
+        public static readonly Distance Maximum =
+            new Distance(double.MaxValue, DistanceUnit.Kilometers).ToLocalUnitType();
+
+        public static readonly Distance Minimum =
+            new Distance(double.MinValue, DistanceUnit.Kilometers).ToLocalUnitType();
+
         /// <summary>
         /// Represents an invalid or unspecified value.
         /// </summary>
@@ -102,7 +111,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #endregion
 
         #region  Constructors
-        
+
         /// <summary>Creates a new instance using the specified value and unit type.</summary>
         /// <example>
         /// This example uses a constructor to create a new distance of 50km.
@@ -182,7 +191,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             try
             {
                 // Trim surrounding spaces and switch to uppercase
-                value = value.Trim().ToUpper(CultureInfo.InvariantCulture).Replace(culture.NumberFormat.NumberGroupSeparator, "");
+                value =
+                    value.Trim()
+                        .ToUpper(CultureInfo.InvariantCulture)
+                        .Replace(culture.NumberFormat.NumberGroupSeparator, "");
                 // Is it infinity?
                 if (value == "INFINITY")
                 {
@@ -208,14 +220,14 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 {
                     string subValue = value.Substring(Count, 1);
                     if ((subValue == "0") || (subValue == "1") || (subValue == "2") || (subValue == "3")
-                    || (subValue == "4") || (subValue == "5") || (subValue == "6") || (subValue == "7")
-                    || (subValue == "8") || (subValue == "9")
-                    || (subValue == culture.NumberFormat.NumberGroupSeparator)
-                    || (subValue == culture.NumberFormat.NumberDecimalSeparator))
+                        || (subValue == "4") || (subValue == "5") || (subValue == "6") || (subValue == "7")
+                        || (subValue == "8") || (subValue == "9")
+                        || (subValue == culture.NumberFormat.NumberGroupSeparator)
+                        || (subValue == culture.NumberFormat.NumberDecimalSeparator))
                         // Allow continuation
                         Count++;
                     else
-                        // Non-numeric character!
+                    // Non-numeric character!
                         break;
                 }
                 string Unit = value.Substring(Count).Trim();
@@ -239,22 +251,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     || (Unit == "METRE") || (Unit == "METER"))
                     _Units = DistanceUnit.Meters;
                 else if ((Unit == "CM") || (Unit == "CM.") || (Unit == "CENTIMETER")
-                    || (Unit == "CENTIMETERS") || (Unit == "CENTIMETRE") || (Unit == "CENTIMETRES"))
+                         || (Unit == "CENTIMETERS") || (Unit == "CENTIMETRE") || (Unit == "CENTIMETRES"))
                     _Units = DistanceUnit.Centimeters;
                 else if ((Unit == "KM") || (Unit == "KM.") || (Unit == "KILOMETRES")
-                    || (Unit == "KILOMETERS") || (Unit == "KILOMETRE") || (Unit == "KILOMETER"))
+                         || (Unit == "KILOMETERS") || (Unit == "KILOMETRE") || (Unit == "KILOMETER"))
                     _Units = DistanceUnit.Kilometers;
                 else if ((Unit == "MI") || (Unit == "MI.") || (Unit == "MILE")
-                    || (Unit == "MILES") || (Unit == "STATUTE MILES"))
+                         || (Unit == "MILES") || (Unit == "STATUTE MILES"))
                     _Units = DistanceUnit.StatuteMiles;
                 else if ((Unit == "NM") || (Unit == "NM.") || (Unit == "NAUTICAL MILE")
-                    || (Unit == "NAUTICAL MILES"))
+                         || (Unit == "NAUTICAL MILES"))
                     _Units = DistanceUnit.NauticalMiles;
                 else if ((Unit == "IN") || (Unit == "IN.") || (Unit == "\"") || (Unit == "INCHES")
-                    || (Unit == "INCH"))
+                         || (Unit == "INCH"))
                     _Units = DistanceUnit.Inches;
                 else if ((Unit == "FT") || (Unit == "FT.") || (Unit == "'") || (Unit == "FOOT")
-                    || (Unit == "FEET"))
+                         || (Unit == "FEET"))
                     _Units = DistanceUnit.Feet;
                 else
                 {
@@ -338,10 +350,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="Units">Units Property</seealso>
         public double Value
         {
-            get
-            {
-                return _Value;
-            }
+            get { return _Value; }
         }
 
         /// <summary>Describes the unit portion of a distance measurement.</summary>
@@ -410,10 +419,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="Value">Value Property</seealso>
         public DistanceUnit Units
         {
-            get
-            {
-                return _Units;
-            }
+            get { return _Units; }
         }
 
         /// <summary>
@@ -421,10 +427,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public bool IsInvalid
         {
-            get
-            {
-                return double.IsNaN(_Value);
-            }
+            get { return double.IsNaN(_Value); }
         }
 
         /// <summary>
@@ -432,10 +435,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public bool IsEmpty
         {
-            get
-            {
-                return _Value == 0;
-            }
+            get { return _Value == 0; }
         }
 
         /// <summary>
@@ -446,8 +446,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             get
             {
                 return _Units == DistanceUnit.Centimeters
-                    || _Units == DistanceUnit.Meters
-                    || _Units == DistanceUnit.Kilometers;
+                       || _Units == DistanceUnit.Meters
+                       || _Units == DistanceUnit.Kilometers;
             }
         }
 
@@ -456,14 +456,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public bool IsInfinity
         {
-            get
-            {
-                return double.IsInfinity(_Value);
-            }
+            get { return double.IsInfinity(_Value); }
         }
 
         #endregion
-      
 
         /// <summary>
         /// Returns the time required to travel the entire distance at the specified speed.
@@ -476,7 +472,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             double TravelDistance = ToMeters().Value;
             double TravelSpeed = speed.ToMetersPerSecond().Value;
             // Perform the calculation
-            return new TimeSpan((long)(TravelDistance / TravelSpeed * TimeSpan.TicksPerSecond));
+            return new TimeSpan((long) (TravelDistance/TravelSpeed*TimeSpan.TicksPerSecond));
         }
 
         /// <summary>
@@ -488,7 +484,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             double TravelDistance = ToMeters().Value;
             // Perform the calculation
-            return new Speed(TravelDistance / time.TotalSeconds, SpeedUnit.MetersPerSecond);
+            return new Speed(TravelDistance/time.TotalSeconds, SpeedUnit.MetersPerSecond);
         }
 
 
@@ -533,19 +529,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case DistanceUnit.Meters:
-                    return new Distance(_Value * FeetPerMeter, DistanceUnit.Feet);
+                    return new Distance(_Value*FeetPerMeter, DistanceUnit.Feet);
                 case DistanceUnit.Centimeters:
-                    return new Distance(_Value * FeetPerCentimeter, DistanceUnit.Feet);
+                    return new Distance(_Value*FeetPerCentimeter, DistanceUnit.Feet);
                 case DistanceUnit.Feet:
                     return this;
                 case DistanceUnit.Inches:
-                    return new Distance(_Value * FeetPerInch, DistanceUnit.Feet);
+                    return new Distance(_Value*FeetPerInch, DistanceUnit.Feet);
                 case DistanceUnit.Kilometers:
-                    return new Distance(_Value * FeetPerKilometer, DistanceUnit.Feet);
+                    return new Distance(_Value*FeetPerKilometer, DistanceUnit.Feet);
                 case DistanceUnit.StatuteMiles:
-                    return new Distance(_Value * FeetPerStatuteMile, DistanceUnit.Feet);
+                    return new Distance(_Value*FeetPerStatuteMile, DistanceUnit.Feet);
                 case DistanceUnit.NauticalMiles:
-                    return new Distance(_Value * FeetPerNauticalMile, DistanceUnit.Feet);
+                    return new Distance(_Value*FeetPerNauticalMile, DistanceUnit.Feet);
                 default:
                     return Distance.Empty;
             }
@@ -592,19 +588,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case DistanceUnit.Meters:
-                    return new Distance(_Value * InchesPerMeter, DistanceUnit.Inches);
+                    return new Distance(_Value*InchesPerMeter, DistanceUnit.Inches);
                 case DistanceUnit.Centimeters:
-                    return new Distance(_Value * InchesPerCentimeter, DistanceUnit.Inches);
+                    return new Distance(_Value*InchesPerCentimeter, DistanceUnit.Inches);
                 case DistanceUnit.Feet:
-                    return new Distance(_Value * InchesPerFoot, DistanceUnit.Inches);
+                    return new Distance(_Value*InchesPerFoot, DistanceUnit.Inches);
                 case DistanceUnit.Inches:
                     return this;
                 case DistanceUnit.Kilometers:
-                    return new Distance(_Value * InchesPerKilometer, DistanceUnit.Inches);
+                    return new Distance(_Value*InchesPerKilometer, DistanceUnit.Inches);
                 case DistanceUnit.StatuteMiles:
-                    return new Distance(_Value * InchesPerStatuteMile, DistanceUnit.Inches);
+                    return new Distance(_Value*InchesPerStatuteMile, DistanceUnit.Inches);
                 case DistanceUnit.NauticalMiles:
-                    return new Distance(_Value * InchesPerNauticalMile, DistanceUnit.Inches);
+                    return new Distance(_Value*InchesPerNauticalMile, DistanceUnit.Inches);
                 default:
                     return Distance.Empty;
             }
@@ -651,19 +647,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case DistanceUnit.Meters:
-                    return new Distance(_Value * KilometersPerMeter, DistanceUnit.Kilometers);
+                    return new Distance(_Value*KilometersPerMeter, DistanceUnit.Kilometers);
                 case DistanceUnit.Centimeters:
-                    return new Distance(_Value * KilometersPerCentimeter, DistanceUnit.Kilometers);
+                    return new Distance(_Value*KilometersPerCentimeter, DistanceUnit.Kilometers);
                 case DistanceUnit.Feet:
-                    return new Distance(_Value * KilometersPerFoot, DistanceUnit.Kilometers);
+                    return new Distance(_Value*KilometersPerFoot, DistanceUnit.Kilometers);
                 case DistanceUnit.Inches:
-                    return new Distance(_Value * KilometersPerInch, DistanceUnit.Kilometers);
+                    return new Distance(_Value*KilometersPerInch, DistanceUnit.Kilometers);
                 case DistanceUnit.Kilometers:
                     return this;
                 case DistanceUnit.StatuteMiles:
-                    return new Distance(_Value * KilometersPerStatuteMile, DistanceUnit.Kilometers);
+                    return new Distance(_Value*KilometersPerStatuteMile, DistanceUnit.Kilometers);
                 case DistanceUnit.NauticalMiles:
-                    return new Distance(_Value * KilometersPerNauticalMile, DistanceUnit.Kilometers);
+                    return new Distance(_Value*KilometersPerNauticalMile, DistanceUnit.Kilometers);
                 default:
                     return Distance.Empty;
             }
@@ -712,17 +708,17 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 case DistanceUnit.Meters:
                     return this;
                 case DistanceUnit.Centimeters:
-                    return new Distance(_Value * MetersPerCentimeter, DistanceUnit.Meters);
+                    return new Distance(_Value*MetersPerCentimeter, DistanceUnit.Meters);
                 case DistanceUnit.Feet:
-                    return new Distance(_Value * MetersPerFoot, DistanceUnit.Meters);
+                    return new Distance(_Value*MetersPerFoot, DistanceUnit.Meters);
                 case DistanceUnit.Inches:
-                    return new Distance(_Value * MetersPerInch, DistanceUnit.Meters);
+                    return new Distance(_Value*MetersPerInch, DistanceUnit.Meters);
                 case DistanceUnit.Kilometers:
-                    return new Distance(_Value * MetersPerKilometer, DistanceUnit.Meters);
+                    return new Distance(_Value*MetersPerKilometer, DistanceUnit.Meters);
                 case DistanceUnit.StatuteMiles:
-                    return new Distance(_Value * MetersPerStatuteMile, DistanceUnit.Meters);
+                    return new Distance(_Value*MetersPerStatuteMile, DistanceUnit.Meters);
                 case DistanceUnit.NauticalMiles:
-                    return new Distance(_Value * MetersPerNauticalMile, DistanceUnit.Meters);
+                    return new Distance(_Value*MetersPerNauticalMile, DistanceUnit.Meters);
                 default:
                     return Distance.Empty;
             }
@@ -771,17 +767,17 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 case DistanceUnit.Centimeters:
                     return this;
                 case DistanceUnit.Meters:
-                    return new Distance(_Value * CentimetersPerMeter, DistanceUnit.Centimeters);
+                    return new Distance(_Value*CentimetersPerMeter, DistanceUnit.Centimeters);
                 case DistanceUnit.Feet:
-                    return new Distance(_Value * CentimetersPerFoot, DistanceUnit.Centimeters);
+                    return new Distance(_Value*CentimetersPerFoot, DistanceUnit.Centimeters);
                 case DistanceUnit.Inches:
-                    return new Distance(_Value * CentimetersPerInch, DistanceUnit.Centimeters);
+                    return new Distance(_Value*CentimetersPerInch, DistanceUnit.Centimeters);
                 case DistanceUnit.Kilometers:
-                    return new Distance(_Value * CentimetersPerKilometer, DistanceUnit.Centimeters);
+                    return new Distance(_Value*CentimetersPerKilometer, DistanceUnit.Centimeters);
                 case DistanceUnit.StatuteMiles:
-                    return new Distance(_Value * CentimetersPerStatuteMile, DistanceUnit.Centimeters);
+                    return new Distance(_Value*CentimetersPerStatuteMile, DistanceUnit.Centimeters);
                 case DistanceUnit.NauticalMiles:
-                    return new Distance(_Value * CentimetersPerNauticalMile, DistanceUnit.Centimeters);
+                    return new Distance(_Value*CentimetersPerNauticalMile, DistanceUnit.Centimeters);
                 default:
                     return Distance.Empty;
             }
@@ -828,17 +824,17 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case DistanceUnit.Meters:
-                    return new Distance(_Value * NauticalMilesPerMeter, DistanceUnit.NauticalMiles);
+                    return new Distance(_Value*NauticalMilesPerMeter, DistanceUnit.NauticalMiles);
                 case DistanceUnit.Centimeters:
-                    return new Distance(_Value * NauticalMilesPerCentimeter, DistanceUnit.NauticalMiles);
+                    return new Distance(_Value*NauticalMilesPerCentimeter, DistanceUnit.NauticalMiles);
                 case DistanceUnit.Feet:
-                    return new Distance(_Value * NauticalMilesPerFoot, DistanceUnit.NauticalMiles);
+                    return new Distance(_Value*NauticalMilesPerFoot, DistanceUnit.NauticalMiles);
                 case DistanceUnit.Inches:
-                    return new Distance(_Value * NauticalMilesPerInch, DistanceUnit.NauticalMiles);
+                    return new Distance(_Value*NauticalMilesPerInch, DistanceUnit.NauticalMiles);
                 case DistanceUnit.Kilometers:
-                    return new Distance(_Value * NauticalMilesPerKilometer, DistanceUnit.NauticalMiles);
+                    return new Distance(_Value*NauticalMilesPerKilometer, DistanceUnit.NauticalMiles);
                 case DistanceUnit.StatuteMiles:
-                    return new Distance(_Value * NauticalMilesPerStatuteMile, DistanceUnit.NauticalMiles);
+                    return new Distance(_Value*NauticalMilesPerStatuteMile, DistanceUnit.NauticalMiles);
                 case DistanceUnit.NauticalMiles:
                     return this;
                 default:
@@ -887,19 +883,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case DistanceUnit.Meters:
-                    return new Distance(_Value * StatuteMilesPerMeter, DistanceUnit.StatuteMiles);
+                    return new Distance(_Value*StatuteMilesPerMeter, DistanceUnit.StatuteMiles);
                 case DistanceUnit.Centimeters:
-                    return new Distance(_Value * StatuteMilesPerCentimeter, DistanceUnit.StatuteMiles);
+                    return new Distance(_Value*StatuteMilesPerCentimeter, DistanceUnit.StatuteMiles);
                 case DistanceUnit.Feet:
-                    return new Distance(_Value * StatuteMilesPerFoot, DistanceUnit.StatuteMiles);
+                    return new Distance(_Value*StatuteMilesPerFoot, DistanceUnit.StatuteMiles);
                 case DistanceUnit.Inches:
-                    return new Distance(_Value * StatuteMilesPerInch, DistanceUnit.StatuteMiles);
+                    return new Distance(_Value*StatuteMilesPerInch, DistanceUnit.StatuteMiles);
                 case DistanceUnit.Kilometers:
-                    return new Distance(_Value * StatuteMilesPerKilometer, DistanceUnit.StatuteMiles);
+                    return new Distance(_Value*StatuteMilesPerKilometer, DistanceUnit.StatuteMiles);
                 case DistanceUnit.StatuteMiles:
                     return this;
                 case DistanceUnit.NauticalMiles:
-                    return new Distance(_Value * StatuteMilesPerNauticalMile, DistanceUnit.StatuteMiles);
+                    return new Distance(_Value*StatuteMilesPerNauticalMile, DistanceUnit.StatuteMiles);
                 default:
                     return Distance.Empty;
             }
@@ -1001,7 +997,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// the current speed for the specified length of time.</returns>
         public Speed ToSpeed(TimeSpan time)
         {
-            return new Speed(ToMeters().Value / (time.TotalMilliseconds / 1000.0), SpeedUnit.MetersPerSecond).ToLocalUnitType();
+            return
+                new Speed(ToMeters().Value/(time.TotalMilliseconds/1000.0), SpeedUnit.MetersPerSecond).ToLocalUnitType();
         }
 
         /// <summary>
@@ -1080,22 +1077,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public Distance Multiply(Distance value)
         {
-            return new Distance(_Value * value.ToUnitType(Units).Value, _Units);
+            return new Distance(_Value*value.ToUnitType(Units).Value, _Units);
         }
 
         public Distance Multiply(double value)
         {
-            return new Distance(_Value * value, _Units);
+            return new Distance(_Value*value, _Units);
         }
 
         public Distance Divide(Distance value)
         {
-            return new Distance(_Value / value.ToUnitType(Units).Value, _Units);
+            return new Distance(_Value/value.ToUnitType(Units).Value, _Units);
         }
 
         public Distance Divide(double value)
         {
-            return new Distance(_Value / value, _Units);
+            return new Distance(_Value/value, _Units);
         }
 
         public Distance Increment()
@@ -1130,7 +1127,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #endregion
 
-
         #region Overrides
 
         /// <summary>
@@ -1142,12 +1138,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             if (obj is Distance)
                 // If the type is the same, compare the values
-                return Equals((Distance)obj);
+                return Equals((Distance) obj);
             else
-                // Defer to the Object class
+            // Defer to the Object class
                 return base.Equals(obj);
         }
-
 
 
         public override int GetHashCode()
@@ -1200,7 +1195,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </param>
         public static Distance Random(Random generator)
         {
-            return new Distance(generator.NextDouble() * 1000, DistanceUnit.Meters).ToLocalUnitType();
+            return new Distance(generator.NextDouble()*1000, DistanceUnit.Meters).ToLocalUnitType();
         }
 
         /// <summary>
@@ -1210,7 +1205,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <returns></returns>
         public static Distance Random(Distance maximum)
         {
-            return new Distance(new Random(DateTime.Now.Millisecond).NextDouble() * maximum.Value, maximum.Units);
+            return new Distance(new Random(DateTime.Now.Millisecond).NextDouble()*maximum.Value, maximum.Units);
         }
 
         public static Distance FromCentimeters(double value)
@@ -1285,8 +1280,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public static DistanceUnit ParseDistanceUnit(string value)
         {
-            return (DistanceUnit)Enum.Parse(typeof(DistanceUnit), value, true);
-
+            return (DistanceUnit) Enum.Parse(typeof(DistanceUnit), value, true);
         }
 
 
@@ -1460,7 +1454,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool Equals(Distance other, int decimals)
         {
             return Math.Round(_Value, decimals) == Math.Round(other.ToUnitType(_Units).Value, decimals);
-        }        
+        }
 
         #endregion
 
@@ -1508,7 +1502,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -1700,7 +1694,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             if (!reader.IsStartElement("Units"))
                 reader.ReadToDescendant("Units");
 
-            _Units = (DistanceUnit)Enum.Parse(typeof(DistanceUnit), reader.ReadElementContentAsString(), true);
+            _Units = (DistanceUnit) Enum.Parse(typeof(DistanceUnit), reader.ReadElementContentAsString(), true);
             _Value = reader.ReadElementContentAsDouble();
         }
 
@@ -1721,19 +1715,23 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
     {
         /// <summary>Metric System. Kilometers (thousands of meters).</summary>
         Kilometers,
+
         /// <summary>Metric System. 1/1000th of a kilometer.</summary>
         Meters,
+
         /// <summary>Metric System. 1/100th of a meter.</summary>
         Centimeters,
+
         /// <summary>Nautical miles, also known as "sea miles".</summary>
         NauticalMiles,
+
         /// <summary>Imperial System. A statute mile, most often referred to just as "mile."</summary>
         StatuteMiles,
+
         /// <summary>Imperial System. Feet.</summary>
         Feet,
+
         /// <summary>Imperial System. Inches.</summary>
         Inches
     }
-
- 
 }

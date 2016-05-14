@@ -25,7 +25,6 @@ namespace TreeGecko.Library.Mongo.DAOs
 
         protected virtual void PostPersist(T _object)
         {
-            
         }
 
         public virtual bool UniqueName
@@ -47,13 +46,13 @@ namespace TreeGecko.Library.Mongo.DAOs
             if (HasParent)
             {
                 BuildNonuniqueIndex("ParentGuid", "PARENTGUID");
-                BuildNonuniqueIndex(new[] { "ParentGuid", "PersistedDateTime" }, "PARENT_PERSISTEDDATETIME");
+                BuildNonuniqueIndex(new[] {"ParentGuid", "PersistedDateTime"}, "PARENT_PERSISTEDDATETIME");
             }
             else
             {
                 BuildNonuniqueIndex("PersistedDateTime", "PERSISTEDDATETIME");
             }
-            if (typeof (T).GetInterfaces().Contains(typeof (INamedObject)))
+            if (typeof(T).GetInterfaces().Contains(typeof(INamedObject)))
             {
                 if (UniqueName)
                 {
@@ -93,10 +92,10 @@ namespace TreeGecko.Library.Mongo.DAOs
         }
 
         protected AbstractMongoDAO(IEnumerable<string> _servers,
-                                   int _port,
-                                   string _userName,
-                                   string _password,
-                                   string _database)
+            int _port,
+            string _userName,
+            string _password,
+            string _database)
         {
             if (_port <= 0)
             {
@@ -115,7 +114,7 @@ namespace TreeGecko.Library.Mongo.DAOs
             MongoClientSettings mcs = new MongoClientSettings
             {
                 Servers = serverAddresses,
-                Credentials = new[] { credential }
+                Credentials = new[] {credential}
             };
 
             m_MongoClient = new MongoClient(mcs);
@@ -138,20 +137,20 @@ namespace TreeGecko.Library.Mongo.DAOs
             BsonBinaryData id = new BsonBinaryData(_objectIdentifier.ToByteArray());
 
             BsonDocument doc = MongoCollection.FindOneById(id);
-            
+
             return BsonHelper.Get<T>(doc);
         }
 
         public List<T> GetByQuery(Guid _objectParentIdentifier)
         {
             List<T> objRet = new List<T>();
-            var query = new QueryDocument { { "ParentGuid", _objectParentIdentifier.ToString() } };
+            var query = new QueryDocument {{"ParentGuid", _objectParentIdentifier.ToString()}};
 
             foreach (BsonDocument doc in MongoCollection.Find(query))
             {
                 objRet.Add(BsonHelper.Get<T>(doc));
             }
-            
+
             return objRet;
         }
 
@@ -161,7 +160,11 @@ namespace TreeGecko.Library.Mongo.DAOs
 
             foreach (string objectVersionIdentifier in _objectVersionIdentifiers)
             {
-                var query = new QueryDocument { { "ParentGuid", _objectParentIdentifier.ToString() }, { "VersionGuid", objectVersionIdentifier } };
+                var query = new QueryDocument
+                {
+                    {"ParentGuid", _objectParentIdentifier.ToString()},
+                    {"VersionGuid", objectVersionIdentifier}
+                };
                 foreach (BsonDocument doc in MongoCollection.Find(query))
                 {
                     objRet.Add(BsonHelper.Get<T>(doc));
@@ -174,7 +177,11 @@ namespace TreeGecko.Library.Mongo.DAOs
         public List<T> GetByQuery(Guid _objectParentIdentifier, Guid _objectDeviceIdentifier)
         {
             List<T> objRet = new List<T>();
-            var query = new QueryDocument { { "ParentGuid", _objectParentIdentifier.ToString() }, { "DeviceGuid", _objectDeviceIdentifier.ToString() } };
+            var query = new QueryDocument
+            {
+                {"ParentGuid", _objectParentIdentifier.ToString()},
+                {"DeviceGuid", _objectDeviceIdentifier.ToString()}
+            };
 
             foreach (BsonDocument doc in MongoCollection.Find(query))
             {
@@ -184,13 +191,19 @@ namespace TreeGecko.Library.Mongo.DAOs
             return objRet;
         }
 
-        public List<T> GetByQuery(Guid _objectParentIdentifier, Guid _objectDeviceIdentifier, string[] _objectVersionIdentifiers)
+        public List<T> GetByQuery(Guid _objectParentIdentifier, Guid _objectDeviceIdentifier,
+            string[] _objectVersionIdentifiers)
         {
             List<T> objRet = new List<T>();
 
             foreach (string _objectVersionIdentifier in _objectVersionIdentifiers)
             {
-                var query = new QueryDocument { { "ParentGuid", _objectParentIdentifier.ToString() }, { "DeviceGuid", _objectDeviceIdentifier.ToString() }, { "VersionGuid", _objectVersionIdentifier } };
+                var query = new QueryDocument
+                {
+                    {"ParentGuid", _objectParentIdentifier.ToString()},
+                    {"DeviceGuid", _objectDeviceIdentifier.ToString()},
+                    {"VersionGuid", _objectVersionIdentifier}
+                };
                 foreach (BsonDocument doc in MongoCollection.Find(query))
                 {
                     objRet.Add(BsonHelper.Get<T>(doc));
@@ -206,7 +219,7 @@ namespace TreeGecko.Library.Mongo.DAOs
             //BsonBinaryData id = new BsonBinaryData(_objectIdentifier.ToByteArray());
 
             MongoCursor<BsonDocument> Cursor = MongoCollection.Find(_objectIdentifier);
-           
+
             return Cursor;
         }
 
@@ -215,7 +228,8 @@ namespace TreeGecko.Library.Mongo.DAOs
             //string _objectIdentifier.
             //BsonBinaryData id = new BsonBinaryData(_objectIdentifier.ToByteArray());
 
-            MongoCursor<BsonDocument> Cursor = MongoCollection.Find(_objectIdentifier).SetSortOrder(SortBy.Descending("PersistedDateTime"));
+            MongoCursor<BsonDocument> Cursor =
+                MongoCollection.Find(_objectIdentifier).SetSortOrder(SortBy.Descending("PersistedDateTime"));
 
             return Cursor;
         }
@@ -229,6 +243,7 @@ namespace TreeGecko.Library.Mongo.DAOs
 
             return result;
         }
+
         /// <summary>
         /// Modifies the version guid prior to saving.
         /// </summary>
@@ -298,7 +313,7 @@ namespace TreeGecko.Library.Mongo.DAOs
         {
             MongoCursor cursor = MongoCollection.Find(_query);
             return GetList(cursor);
-        }  
+        }
 
         /// <summary>
         /// 
@@ -436,7 +451,7 @@ namespace TreeGecko.Library.Mongo.DAOs
         protected void BuildUniqueSparceIndex(string _column, string _indexName)
         {
             MongoIndexHelper.BuildUniqueIndex(MongoCollection,
-                new [] {_column},
+                new[] {_column},
                 GetIndexName(_indexName),
                 true);
         }
@@ -659,7 +674,7 @@ namespace TreeGecko.Library.Mongo.DAOs
         /// <returns></returns>
         public List<T> GetSorted(string _columnName, string _columnValue, string _sortColumn)
         {
-            IMongoQuery query = GetQuery(_columnName, _columnValue);     
+            IMongoQuery query = GetQuery(_columnName, _columnValue);
             MongoCursor cursor = MongoCollection.Find(query).SetSortOrder(SortBy.Ascending(_sortColumn));
             return GetList(cursor);
         }
@@ -672,15 +687,16 @@ namespace TreeGecko.Library.Mongo.DAOs
                 && _parentGuid != null)
             {
                 query = Query.And(Query.EQ("ParentGuid", new BsonString(_parentGuid.Value.ToString())),
-                                  Query.GT("PersistedDateTime", new BsonString(_startDateTime.ToString("u"))));
+                    Query.GT("PersistedDateTime", new BsonString(_startDateTime.ToString("u"))));
             }
             else
             {
                 query = Query.GT("PersistedDateTime", new BsonString(_startDateTime.ToString("u")));
             }
 
-            
-            MongoCursor cursor = MongoCollection.Find(query).SetSortOrder(SortBy.Ascending("PersistedDateTime")).SetLimit(_rows);
+
+            MongoCursor cursor =
+                MongoCollection.Find(query).SetSortOrder(SortBy.Ascending("PersistedDateTime")).SetLimit(_rows);
             return GetList(cursor);
         }
     }

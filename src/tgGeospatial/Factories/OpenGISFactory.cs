@@ -1,10 +1,9 @@
 ﻿using System;
-using TreeGecko.Library.Common.Interfaces;
 using TreeGecko.Library.Common.Objects;
 using TreeGecko.Library.Geospatial.Interfaces;
 using TreeGecko.Library.Geospatial.Objects;
 
-namespace TreeGecko.Library.Common.Factories
+namespace TreeGecko.Library.Geospatial.Factories
 {
     public static class OpenGISFactory
     {

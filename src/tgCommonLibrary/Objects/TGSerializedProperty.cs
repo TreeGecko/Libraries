@@ -8,7 +8,7 @@ namespace TreeGecko.Library.Common.Objects
         {
             string[] parts = _serialized.Split(":".ToCharArray());
 
-            if (parts.Length ==2)
+            if (parts.Length == 2)
             {
                 PropertyName = StringHelper.GetStringFromBase64(parts[0]);
                 SerializedValue = StringHelper.GetStringFromBase64(parts[1]);
@@ -28,8 +28,8 @@ namespace TreeGecko.Library.Common.Objects
 
         public override string ToString()
         {
-            return string.Format("{0}:{1}",  StringHelper.GetBase64(PropertyName), StringHelper.GetBase64(SerializedValue)); 
+            return string.Format("{0}:{1}", StringHelper.GetBase64(PropertyName),
+                StringHelper.GetBase64(SerializedValue));
         }
-
     }
 }

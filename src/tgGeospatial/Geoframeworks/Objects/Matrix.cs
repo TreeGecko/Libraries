@@ -45,7 +45,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public Matrix()
             : this(1, 0, 0, 1, 0, 0)
-        { }
+        {
+        }
 
         /// <summary>
         /// Creates a matrix with the indicated elements
@@ -65,7 +66,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             this._m22 = m22;
             this._dy = dy;
 
-            this._elements = new float[] { m11, m12, m21, m22, dx, dy };
+            this._elements = new float[] {m11, m12, m21, m22, dx, dy};
         }
 
         #endregion
@@ -121,35 +122,36 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             if (det != 0)
             {
                 // And her's why! div by zero...
-                double oodet = 1.0 / det;
+                double oodet = 1.0/det;
 
                 // Use doubles for intermediate calcs. Precision goes way up 
-                double m11 = this._m22 * oodet;
-                double m12 = -this._m12 * oodet;
+                double m11 = this._m22*oodet;
+                double m12 = -this._m12*oodet;
 
-                double m21 = -this._m21 * oodet;
-                double m22 = this._m11 * oodet;
+                double m21 = -this._m21*oodet;
+                double m22 = this._m11*oodet;
 
-                double dx = -(this._dx * m11 + this._dy * m21);
-                double dy = -(this._dx * m12 + this._dy * m22);
-                
+                double dx = -(this._dx*m11 + this._dy*m21);
+                double dy = -(this._dx*m12 + this._dy*m22);
+
                 //double dx = (this._dy * m21) - (this._dx * m11);
                 //double dy = (this._dx * m12) - (this._dy * m22);
-                
-                this._m11 = (float)m11;
-                this._m12 = (float)m12;
-                this._m21 = (float)m21;
-                this._m22 = (float)m22;
 
-                this._dx = (float)dx;
-                this._dy = (float)dy;
+                this._m11 = (float) m11;
+                this._m12 = (float) m12;
+                this._m21 = (float) m21;
+                this._m22 = (float) m22;
 
-                this._elements = new float[] { this._m11, this._m12, this._m21, this._m22, this._dx, this._dy };
+                this._dx = (float) dx;
+                this._dy = (float) dy;
+
+                this._elements = new float[] {this._m11, this._m12, this._m21, this._m22, this._dx, this._dy};
             }
             else
             {
                 // We should just throw "Parameter not valid", like GDI does.
-                throw new ArgumentException("The matrix cannot be inverted (Neo would fall on his head). Use IsInvertable to check whether or not a matrix can be inverted.");
+                throw new ArgumentException(
+                    "The matrix cannot be inverted (Neo would fall on his head). Use IsInvertable to check whether or not a matrix can be inverted.");
             }
         }
 
@@ -163,7 +165,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </remarks>
         private float Determinant()
         {
-            return (this._m11 * this._m22) - (this._m12 * this._m21);
+            return (this._m11*this._m22) - (this._m12*this._m21);
         }
 
         /// <summary>
@@ -178,7 +180,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             this._dx = 0;
             this._dy = 0;
 
-            this._elements = new float[] { this._m11, this._m12, this._m21, this._m22, this._dx, this._dy };
+            this._elements = new float[] {this._m11, this._m12, this._m21, this._m22, this._dx, this._dy};
         }
 
         /// <summary>
@@ -216,25 +218,25 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             }
 
             // Use doubles for intermediate calcs. Precision goes way up.
-            double m11 = (a._m11 * b._m11) + (a._m12 * b._m21);
-            double m12 = (a._m11 * b._m12) + (a._m12 * b._m22);
+            double m11 = (a._m11*b._m11) + (a._m12*b._m21);
+            double m12 = (a._m11*b._m12) + (a._m12*b._m22);
 
-            double m21 = (a._m21 * b._m11) + (a._m22 * b._m21);
-            double m22 = (a._m21 * b._m12) + (a._m22 * b._m22);
+            double m21 = (a._m21*b._m11) + (a._m22*b._m21);
+            double m22 = (a._m21*b._m12) + (a._m22*b._m22);
 
-            double dx = (a._dx * b._m11) + (a._dy * b._m21) + b._dx;
-            double dy = (a._dx * b._m12) + (a._dy * b._m22) + b._dy;
+            double dx = (a._dx*b._m11) + (a._dy*b._m21) + b._dx;
+            double dy = (a._dx*b._m12) + (a._dy*b._m22) + b._dy;
 
             // Push calc'd values to this matrix
-            this._m11 = (float)m11;
-            this._m12 = (float)m12;
-            this._m21 = (float)m21;
-            this._m22 = (float)m22;
+            this._m11 = (float) m11;
+            this._m12 = (float) m12;
+            this._m21 = (float) m21;
+            this._m22 = (float) m22;
 
-            this._dx = (float)dx;
-            this._dy = (float)dy;
+            this._dx = (float) dx;
+            this._dy = (float) dy;
 
-            this._elements = new float[] { this._m11, this._m12, this._m21, this._m22, this._dx, this._dy };
+            this._elements = new float[] {this._m11, this._m12, this._m21, this._m22, this._dx, this._dy};
         }
 
         /// <summary>
@@ -319,10 +321,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="matrixOrder"> The order in which to carry out the operation. </param>
         public void Rotate(float angle, MatrixOrder matrixOrder)
         {
-            double a = angle * Radian.RadiansPerDegree;
+            double a = angle*Radian.RadiansPerDegree;
             this.Multiply(new Matrix(
-                (float)Math.Cos(a), (float)Math.Sin(a),
-                -(float)Math.Sin(a), (float)Math.Cos(a),
+                (float) Math.Cos(a), (float) Math.Sin(a),
+                -(float) Math.Sin(a), (float) Math.Cos(a),
                 0, 0),
                 matrixOrder);
         }
@@ -387,10 +389,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             TransformPoints(points);
             return RectangleFHelper.ComputeBoundingBox(points);
         }
-        
+
         public Rectangle TransformRectangleCF(RectangleF rectangle)
         {
-            return Rectangle.Round(TransformRectangle(rectangle)); ;
+            return Rectangle.Round(TransformRectangle(rectangle));
+            ;
         }
 
         /// <summary>
@@ -429,22 +432,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         private PointF TransformPoint(PointF point)
         {
-            double x = (point.X * this._m11 + point.Y * this._m21);
-            double y = (point.X * this._m12 + point.Y * this._m22);
+            double x = (point.X*this._m11 + point.Y*this._m21);
+            double y = (point.X*this._m12 + point.Y*this._m22);
 
-            point.X = (float)x + this._dx;
-            point.Y = (float)y + this._dy;
+            point.X = (float) x + this._dx;
+            point.Y = (float) y + this._dy;
 
             return point;
         }
 
         private PointF TransformVector(PointF point)
         {
-            double x = (point.X * this._m11 + point.Y * this._m21);
-            double y = (point.X * this._m12 + point.Y * this._m22);
+            double x = (point.X*this._m11 + point.Y*this._m21);
+            double y = (point.X*this._m12 + point.Y*this._m22);
 
-            point.X = (float)x;
-            point.Y = (float)y;
+            point.X = (float) x;
+            point.Y = (float) y;
 
             return point;
         }
@@ -453,11 +456,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             Point result = new Point();
 
-            double x = (point.X * this._m11 + point.Y * this._m21);
-            double y = (point.X * this._m12 + point.Y * this._m22);
+            double x = (point.X*this._m11 + point.Y*this._m21);
+            double y = (point.X*this._m12 + point.Y*this._m22);
 
-            result.X = (int)Math.Round(x + this._dx);
-            result.Y = (int)Math.Round(y + this._dy);
+            result.X = (int) Math.Round(x + this._dx);
+            result.Y = (int) Math.Round(y + this._dy);
 
             return result;
         }
@@ -466,29 +469,29 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             Point result = new Point();
 
-            double x = (point.X * this._m11 + point.Y * this._m21);
-            double y = (point.X * this._m12 + point.Y * this._m22);
+            double x = (point.X*this._m11 + point.Y*this._m21);
+            double y = (point.X*this._m12 + point.Y*this._m22);
 
-            result.X = (int)Math.Round(x);
-            result.Y = (int)Math.Round(y);
+            result.X = (int) Math.Round(x);
+            result.Y = (int) Math.Round(y);
 
             return result;
         }
 
         private void Normalize()
         {
-            float mta = _m11 * _m11 + _m12 * _m12;
+            float mta = _m11*_m11 + _m12*_m12;
             if (mta != 1 && mta != 0)
             {
-                float na = 1.0f / (float)Math.Sqrt(mta);
+                float na = 1.0f/(float) Math.Sqrt(mta);
                 this._m11 *= na;
                 this._m12 *= na;
             }
 
-            float mtb = _m21 * _m21 + _m22 * _m22;
+            float mtb = _m21*_m21 + _m22*_m22;
             if (mtb != 1 && mtb != 0)
             {
-                float nb = 1.0f / (float)Math.Sqrt(mtb);
+                float nb = 1.0f/(float) Math.Sqrt(mtb);
                 this._m11 *= nb;
                 this._m12 *= nb;
             }
@@ -507,16 +510,16 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public override int GetHashCode()
         {
             return _m11.GetHashCode() ^ _m12.GetHashCode()
-                ^ _m21.GetHashCode() ^ _m22.GetHashCode()
-                ^ _dx.GetHashCode() ^ _dy.GetHashCode();
+                   ^ _m21.GetHashCode() ^ _m22.GetHashCode()
+                   ^ _dx.GetHashCode() ^ _dy.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
-            if(object.ReferenceEquals(obj, null))
+            if (object.ReferenceEquals(obj, null))
                 return false;
             if (obj is Matrix)
-                return Equals((Matrix)obj);
+                return Equals((Matrix) obj);
             return false;
         }
 
@@ -551,7 +554,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region IDisposable Members
 
         public void Dispose()
-        { 
+        {
             // This is here solely for compatibility with the Matrix class on the desktop.
         }
 
@@ -573,4 +576,3 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #endregion
     }
 }
-

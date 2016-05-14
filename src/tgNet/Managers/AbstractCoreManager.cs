@@ -38,8 +38,6 @@ namespace TreeGecko.Library.Net.Managers
             return false;
         }
 
-
-
         /// <summary>
         /// 
         /// </summary>

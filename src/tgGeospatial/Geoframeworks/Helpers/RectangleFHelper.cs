@@ -9,7 +9,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
     /// </summary>
     public static class RectangleFHelper
     {
-
         /// <summary>
         /// Returns the point at the center of the specified rectangle.
         /// </summary>
@@ -17,7 +16,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         /// <returns></returns>
         public static PointF Center(RectangleF _rectangle)
         {
-            return new PointF((_rectangle.Width*.5f) + _rectangle.X, 
+            return new PointF((_rectangle.Width*.5f) + _rectangle.X,
                 (_rectangle.Height*.5f) + _rectangle.Y);
         }
 
@@ -29,15 +28,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         /// <returns></returns>
         public static RectangleF ToAspectRatio(RectangleF _rectangle, float _aspectRatio)
         {
-            float projectedAspect = (_rectangle.Width / _rectangle.Height);
+            float projectedAspect = (_rectangle.Width/_rectangle.Height);
 
             if (_aspectRatio > projectedAspect)
             {
-                _rectangle.Inflate((_aspectRatio * _rectangle.Height - _rectangle.Width) * .5f, 0);
+                _rectangle.Inflate((_aspectRatio*_rectangle.Height - _rectangle.Width)*.5f, 0);
             }
             else if (_aspectRatio < projectedAspect)
             {
-                _rectangle.Inflate(0, (_rectangle.Width / _aspectRatio - _rectangle.Height) * .5f);
+                _rectangle.Inflate(0, (_rectangle.Width/_aspectRatio - _rectangle.Height)*.5f);
             }
             return _rectangle;
         }
@@ -50,15 +49,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         /// <returns></returns>
         public static RectangleF ToAspectRatioB(RectangleF _rectangle, float _aspectRatio)
         {
-            float projectedAspect = (_rectangle.Width / _rectangle.Height);
+            float projectedAspect = (_rectangle.Width/_rectangle.Height);
 
             if (_aspectRatio > projectedAspect)
             {
-                _rectangle.Inflate(0, (_rectangle.Width / _aspectRatio - _rectangle.Height) * .5f);
+                _rectangle.Inflate(0, (_rectangle.Width/_aspectRatio - _rectangle.Height)*.5f);
             }
             else if (_aspectRatio < projectedAspect)
             {
-                _rectangle.Inflate((_aspectRatio * _rectangle.Height - _rectangle.Width) * .5f, 0);
+                _rectangle.Inflate((_aspectRatio*_rectangle.Height - _rectangle.Width)*.5f, 0);
             }
             return _rectangle;
         }
@@ -71,11 +70,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         public static PointF[] Corners(RectangleF _rectangle)
         {
             return new[]
-            { 
-                new PointF(_rectangle.Left, _rectangle.Top), 
-                new PointF(_rectangle.Right, _rectangle.Top), 
+            {
+                new PointF(_rectangle.Left, _rectangle.Top),
+                new PointF(_rectangle.Right, _rectangle.Top),
                 new PointF(_rectangle.Right, _rectangle.Bottom),
-                new PointF(_rectangle.Left, _rectangle.Bottom) 
+                new PointF(_rectangle.Left, _rectangle.Bottom)
             };
         }
 
@@ -124,7 +123,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         /// <returns></returns>
         public static float Hypotenuse(RectangleF _rectangle)
         {
-            return (float)Math.Sqrt(Math.Pow(_rectangle.Width, 2) + Math.Pow(_rectangle.Height, 2));
+            return (float) Math.Sqrt(Math.Pow(_rectangle.Width, 2) + Math.Pow(_rectangle.Height, 2));
         }
 
         /// <summary>
@@ -148,7 +147,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         /// <returns></returns>
         public static bool IsNaN(RectangleF _rectangle)
         {
-            return double.IsNaN(_rectangle.X * _rectangle.Y * _rectangle.Right * _rectangle.Bottom);
+            return double.IsNaN(_rectangle.X*_rectangle.Y*_rectangle.Right*_rectangle.Bottom);
         }
 
         /// <summary>
@@ -159,7 +158,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         /// <returns>The minimum bounding rectangle (MBR) of the rotated rectangle</returns>
         public static RectangleF Rotate(RectangleF _rectangle, Angle _angle)
         {
-            return RotateAt(_rectangle, (float)_angle.DecimalDegrees, Center(_rectangle));
+            return RotateAt(_rectangle, (float) _angle.DecimalDegrees, Center(_rectangle));
         }
 
         /// <summary>
@@ -182,7 +181,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         /// <returns>The minimum bounding rectangle (MBR) of the rotated rectangle</returns>
         public static RectangleF RotateAt(RectangleF _rectangle, Angle _angle, PointF _center)
         {
-            return RotateAt(_rectangle, (float)_angle.DecimalDegrees, _center);
+            return RotateAt(_rectangle, (float) _angle.DecimalDegrees, _center);
         }
 
         /// <summary>
@@ -196,11 +195,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         {
             // The graphics transform method only accepts arrays :P
             PointF[] points =
-            { 
-                new PointF(_rectangle.Left, _rectangle.Top), 
-                new PointF(_rectangle.Right, _rectangle.Top), 
+            {
+                new PointF(_rectangle.Left, _rectangle.Top),
+                new PointF(_rectangle.Right, _rectangle.Top),
                 new PointF(_rectangle.Right, _rectangle.Bottom),
-                new PointF(_rectangle.Left, _rectangle.Bottom) 
+                new PointF(_rectangle.Left, _rectangle.Bottom)
             };
 
             Matrix rotationMatrix = new Matrix();
@@ -221,7 +220,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         /// <returns>The rectangle resulting from the rotation of the upperleft and lower rightt corners of the input rectangle</returns>
         public static PointF RotatePointF(PointF _point, Angle _angle, PointF _center)
         {
-            return RotatePointF(_point, (float)_angle.DecimalDegrees, _center);
+            return RotatePointF(_point, (float) _angle.DecimalDegrees, _center);
         }
 
         /// <summary>
@@ -234,9 +233,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
         public static PointF RotatePointF(PointF _point, float _angle, PointF _center)
         {
             // The graphics transform method only accepts arrays :P
-            PointF[] points = new PointF[1] 
-            { 
-                _point, 
+            PointF[] points = new PointF[1]
+            {
+                _point,
             };
 
             Matrix rotationMatrix = new Matrix();
@@ -259,14 +258,14 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Helpers
                     _points[0].Y == _points[1].Y &&
                     _points[0].X != _points[2].X &&
                     _points[0].Y != _points[2].Y
-                ) ||
+                    ) ||
                 (
                     _points[0].X == _points[1].X &&
                     _points[0].Y == _points[3].Y &&
                     _points[0].X != _points[2].X &&
                     _points[0].Y != _points[2].Y
-                )
-            );
+                    )
+                );
         }
     }
 }

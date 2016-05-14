@@ -45,10 +45,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
     /// <strong>Elevation</strong> object (which measures a vertical direction), to create a
     /// three-dimensional direction towards an object in space, such as a GPS satellite.
     /// </remarks>
-    public struct Azimuth : IFormattable, IComparable<Azimuth>, IEquatable<Azimuth>, IEquatable<Direction>, ICloneable<Azimuth>, IXmlSerializable
+    public struct Azimuth : IFormattable, IComparable<Azimuth>, IEquatable<Azimuth>, IEquatable<Direction>,
+        ICloneable<Azimuth>, IXmlSerializable
     {
         private double _DecimalDegrees;
-        
+
         #region Constants
 
         /// <summary>
@@ -163,7 +164,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <exception cref="FormatException" caption="FormatException">The specified text was not fully understood as an angular measurement.</exception>
         public Azimuth(string value)
             : this(value, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
         /// <summary>
         /// Creates a new instance by converting the specified string using the specified
@@ -328,7 +330,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                             return;
                         }
                         // Look at the number of digits, this might be HHHMMSS format.
-                        else if (Values[0].Length == 7 && Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
+                        else if (Values[0].Length == 7 &&
+                                 Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
                         {
                             _DecimalDegrees = ToDecimalDegrees(
                                 int.Parse(Values[0].Substring(0, 3), culture),
@@ -336,7 +339,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                                 double.Parse(Values[0].Substring(5, 2), culture));
                             return;
                         }
-                        else if (Values[0].Length == 8 && Values[0][0] == '-' && Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
+                        else if (Values[0].Length == 8 && Values[0][0] == '-' &&
+                                 Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
                         {
                             _DecimalDegrees = ToDecimalDegrees(
                                 int.Parse(Values[0].Substring(0, 4), culture),
@@ -362,7 +366,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                         return;
                     default: // Hours, minutes and seconds  (most likely)
                         // If this is a fractional value, remember that it is
-                        if (Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1 || Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1)
+                        if (Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1 ||
+                            Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1)
                         {
                             throw new ArgumentException(Properties.Resources.Angle_OnlyRightmostIsDecimal, "value");
                         }
@@ -417,6 +422,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         /// <value>An Azimuth with a value of -359.999999°.</value>
         public static readonly Azimuth Minimum = new Azimuth(-359.99999999);
+
         /// <summary>Represents an angle with no value.</summary>
         /// <remarks>
         /// This member is typically used to initialize an angle variable to zero. When an
@@ -426,6 +432,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <value>An Azimuth containing a value of zero (0°).</value>
         /// <seealso cref="IsEmpty">IsEmpty Property</seealso>
         public static readonly Azimuth Empty = new Azimuth(0.0);
+
         /// <summary>
         /// Represents an angle with infinite value.
         /// </summary>
@@ -435,6 +442,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// set to Double.PositiveInfinity.
         /// </remarks>
         public static readonly Azimuth Infinity = new Azimuth(double.PositiveInfinity);
+
         /// <summary>Represents the maximum value of an angle in one turn of a circle.</summary>
         /// <remarks>
         /// This member is typically used for looping through the entire range of possible
@@ -463,6 +471,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth North = new Azimuth(0.0);
+
         /// <summary>Represents a direction of travel of 22.5°, between north and northeast.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -473,6 +482,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth NorthNortheast = new Azimuth(22.5);
+
         /// <summary>Represents a direction of travel of 45°.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -483,6 +493,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth Northeast = new Azimuth(45.0);
+
         /// <summary>Represents a direction of travel of 67.5°.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -493,6 +504,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth EastNortheast = new Azimuth(67.5);
+
         /// <summary>Represents a direction of travel of 90°.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -503,6 +515,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth East = new Azimuth(90.0);
+
         /// <summary>Represents a direction of travel of 112.5°, between east and southeast.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -513,6 +526,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth EastSoutheast = new Azimuth(112.5);
+
         /// <summary>Represents a direction of travel of 135°.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -523,6 +537,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth Southeast = new Azimuth(135.0);
+
         /// <summary>Represents a direction of travel of 157.5°, between south and southeast.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -533,6 +548,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth SouthSoutheast = new Azimuth(157.5);
+
         /// <summary>Represents a direction of travel of 180°.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -543,6 +559,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth South = new Azimuth(180.0);
+
         /// <summary>Represents a direction of travel of 202.5°, between south and southwest.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -553,6 +570,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth SouthSouthwest = new Azimuth(202.5);
+
         /// <summary>Represents a direction of travel of 225°.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -563,6 +581,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth Southwest = new Azimuth(225.0);
+
         /// <summary>Represents a direction of travel of 247.5°, between west and southwest.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -573,6 +592,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth WestSouthwest = new Azimuth(247.5);
+
         /// <summary>Represents a direction of travel of 270°.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -583,6 +603,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth West = new Azimuth(270.0);
+
         /// <summary>Represents a direction of travel of 292.5°, between west and northwest.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -593,6 +614,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth WestNorthwest = new Azimuth(292.5);
+
         /// <summary>Represents a direction of travel of 315°.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -603,6 +625,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth Northwest = new Azimuth(315.0);
+
         /// <summary>Represents a direction of travel of 337.5°, between north and northwest.</summary>
         /// <example>
         /// 	<code lang="VB">
@@ -613,6 +636,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         ///     </code>
         /// </example>
         public static readonly Azimuth NorthNorthwest = new Azimuth(337.5);
+
         /// <summary>
         /// Represents an invalid or unspecified value.
         /// </summary>
@@ -621,7 +645,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #endregion
 
         #region Public Properties
-
 
         /// <summary>Returns the value of the angle as decimal degrees.</summary>
         /// <value>A <strong>Double</strong> value.</value>
@@ -650,10 +673,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public double DecimalDegrees
         {
-            get
-            {
-                return _DecimalDegrees;
-            }
+            get { return _DecimalDegrees; }
         }
 
         /// <summary>Returns the minutes and seconds as a single numeric value.</summary>
@@ -688,7 +708,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             {
                 return Math.Round(
                     (Math.Abs(
-                        _DecimalDegrees - Math.Truncate(_DecimalDegrees)) * 60.0), MaximumPrecisionDigits - 2);
+                        _DecimalDegrees - Math.Truncate(_DecimalDegrees))*60.0), MaximumPrecisionDigits - 2);
             }
         }
 
@@ -720,10 +740,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public int Hours
         {
-            get
-            {
-				return Convert.ToInt32(Math.Truncate(_DecimalDegrees));
-            }
+            get { return Convert.ToInt32(Math.Truncate(_DecimalDegrees)); }
         }
 
         /// <summary>Returns the integer minutes portion of an angular measurement.</summary>
@@ -756,7 +773,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 return Convert.ToInt32(
                     Math.Abs(
                         Math.Truncate(Math.Round(
-                                (_DecimalDegrees - Hours) * 60.0, MaximumPrecisionDigits - 1))));
+                            (_DecimalDegrees - Hours)*60.0, MaximumPrecisionDigits - 1))));
             }
         }
 
@@ -789,9 +806,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             get
             {
                 return Math.Round(
-                                (Math.Abs(_DecimalDegrees - Hours) * 60.0 - Minutes) * 60.0,
+                    (Math.Abs(_DecimalDegrees - Hours)*60.0 - Minutes)*60.0,
                     // This property appears to support one less digit than the maximum allowed
-                                MaximumPrecisionDigits - 4);
+                    MaximumPrecisionDigits - 4);
             }
         }
 
@@ -820,7 +837,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             get
             {
-                if ((DecimalDegrees >= (360 - 11.25) & DecimalDegrees < 360) || (DecimalDegrees >= 0 & DecimalDegrees <= (0 + 11.25))) // North
+                if ((DecimalDegrees >= (360 - 11.25) & DecimalDegrees < 360) ||
+                    (DecimalDegrees >= 0 & DecimalDegrees <= (0 + 11.25))) // North
                     return Direction.North;
                 else if (DecimalDegrees >= (22.5 - 11.25) & DecimalDegrees < (22.5 + 11.25)) // North-Northeast
                     return Direction.NorthNortheast;
@@ -864,19 +882,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="Empty">Empty Field</seealso>
         public bool IsEmpty
         {
-            get
-            {
-                return (_DecimalDegrees == 0);
-            }
+            get { return (_DecimalDegrees == 0); }
         }
 
         /// <summary>Indicates if the current instance represents an infinite value.</summary>
         public bool IsInfinity
         {
-            get
-            {
-                return double.IsInfinity(_DecimalDegrees);
-            }
+            get { return double.IsInfinity(_DecimalDegrees); }
         }
 
         /// <summary>
@@ -935,7 +947,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             {
                 _Value += 360.0;
             }
-            return new Azimuth(_Value % 360);
+            return new Azimuth(_Value%360);
         }
 
         /// <summary>
@@ -961,7 +973,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             {
                 // No, the value crosses the 0/360 line.
                 return (_DecimalDegrees >= 0 && _DecimalDegrees <= end.DecimalDegrees)
-                          || (_DecimalDegrees <= 360 && _DecimalDegrees >= start.DecimalDegrees);
+                       || (_DecimalDegrees <= 360 && _DecimalDegrees >= start.DecimalDegrees);
             }
         }
 
@@ -1031,7 +1043,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     // Yes.  Continue on
                     continue;
                 // Is the seconds value closer to the current or next interval?
-                if (NewSeconds < (value + NextInterval) * 0.5)
+                if (NewSeconds < (value + NextInterval)*0.5)
                     // Closer to the current interval, so adjust it
                     NewSeconds = value;
                 else
@@ -1213,7 +1225,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             // Convert objects to an Azimuth as needed before comparison
             if (obj is Azimuth)
-                return Equals((Azimuth)obj);
+                return Equals((Azimuth) obj);
 
             // Compare degree value
             return _DecimalDegrees.Equals(obj);
@@ -1339,7 +1351,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </param>
         public static Azimuth Random(Random generator)
         {
-            return new Azimuth(generator.NextDouble() * 360.0);
+            return new Azimuth(generator.NextDouble()*360.0);
         }
 
         /// <summary>Converts arbitrary hour, minute and seconds into decimal degrees.</summary>
@@ -1368,8 +1380,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public static double ToDecimalDegrees(int hours, int minutes, double seconds)
         {
             return hours < 0
-                ? -(-hours + minutes / 60.0 + seconds / 3600.0)
-                : (hours + minutes / 60.0 + seconds / 3600.0);
+                ? -(-hours + minutes/60.0 + seconds/3600.0)
+                : (hours + minutes/60.0 + seconds/3600.0);
         }
 
         /// <summary>Converts arbitrary hour and decimal minutes into decimal degrees.</summary>
@@ -1390,8 +1402,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    ? -Math.Round(-hours + decimalMinutes / 60.0, MaximumPrecisionDigits)
             //    : Math.Round(hours + decimalMinutes / 60.0, MaximumPrecisionDigits);
             return hours < 0
-                ? -(-hours + decimalMinutes / 60.0)
-                : (hours + decimalMinutes / 60.0);
+                ? -(-hours + decimalMinutes/60.0)
+                : (hours + decimalMinutes/60.0);
         }
 
         /// <summary>Converts an hour value into decimal degrees.</summary>
@@ -1546,27 +1558,27 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #endregion
 
-		#region Conversions
+        #region Conversions
 
-		/// <summary>
-		/// Converts a measurement in Radians into an Azimuth.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Azimuth(Radian value)
-		{
-			return new Azimuth(value.ToDegrees());
-		}
+        /// <summary>
+        /// Converts a measurement in Radians into an Azimuth.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Azimuth(Radian value)
+        {
+            return new Azimuth(value.ToDegrees());
+        }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Azimuth.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Azimuth(double value)
-		{
-			return new Azimuth(value);
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Azimuth.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Azimuth(double value)
+        {
+            return new Azimuth(value);
+        }
 
         /// <summary>
         /// Converts a decimal degree measurement as a Double into an Azimuth.
@@ -1578,27 +1590,27 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             return new Azimuth(Convert.ToDouble(value));
         }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Azimuth.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator double(Azimuth value)
-		{
-			return value.DecimalDegrees;
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Azimuth.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator double(Azimuth value)
+        {
+            return value.DecimalDegrees;
+        }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Azimuth.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator float(Azimuth value)
-		{
-			return Convert.ToSingle(value.DecimalDegrees);
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Azimuth.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator float(Azimuth value)
+        {
+            return Convert.ToSingle(value.DecimalDegrees);
+        }
 
-        public static explicit operator Direction(Azimuth value) 
+        public static explicit operator Direction(Azimuth value)
         {
             return value.Direction;
         }
@@ -1609,15 +1621,15 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         }
 
 
-		/// <summary>
-		/// Converts a measurement in degrees as an Integer into an Azimuth.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Azimuth(int value)
-		{
-			return new Azimuth(value);
-		}
+        /// <summary>
+        /// Converts a measurement in degrees as an Integer into an Azimuth.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Azimuth(int value)
+        {
+            return new Azimuth(value);
+        }
 
         public static explicit operator Azimuth(Angle value)
         {
@@ -1639,28 +1651,28 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             return new Azimuth(value.DecimalDegrees);
         }
 
-		/// <summary>
-		/// Converts a measurement in the form of a formatted String into an Azimuth.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Azimuth(string value)
-		{
-			return new Azimuth(value, CultureInfo.CurrentCulture);
-		}
+        /// <summary>
+        /// Converts a measurement in the form of a formatted String into an Azimuth.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Azimuth(string value)
+        {
+            return new Azimuth(value, CultureInfo.CurrentCulture);
+        }
 
-		/// <summary>
-		/// Converts an Azimuth into a String.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		/// <remarks>This operator calls the ToString() method using the current culture.</remarks>
-		public static explicit operator string(Azimuth value)
-		{
-			return value.ToString("g", CultureInfo.CurrentCulture);
-		}
+        /// <summary>
+        /// Converts an Azimuth into a String.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <remarks>This operator calls the ToString() method using the current culture.</remarks>
+        public static explicit operator string(Azimuth value)
+        {
+            return value.ToString("g", CultureInfo.CurrentCulture);
+        }
 
-		#endregion
+        #endregion
 
         #region Operators
 
@@ -1686,22 +1698,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public static Azimuth operator *(Azimuth left, Azimuth right)
         {
-            return new Azimuth(left.DecimalDegrees * right.DecimalDegrees);
+            return new Azimuth(left.DecimalDegrees*right.DecimalDegrees);
         }
 
         public static Azimuth operator *(Azimuth left, double right)
         {
-            return new Azimuth(left.DecimalDegrees * right);
+            return new Azimuth(left.DecimalDegrees*right);
         }
 
         public static Azimuth operator /(Azimuth left, Azimuth right)
         {
-            return new Azimuth(left.DecimalDegrees / right.DecimalDegrees);
+            return new Azimuth(left.DecimalDegrees/right.DecimalDegrees);
         }
 
         public static Azimuth operator /(Azimuth left, double right)
         {
-            return new Azimuth(left.DecimalDegrees / right);
+            return new Azimuth(left.DecimalDegrees/right);
         }
 
         public static bool operator ==(Azimuth left, Azimuth right)
@@ -1763,7 +1775,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             return left.DecimalDegrees <= right;
         }
-
 
         #region Math methods
 
@@ -1907,12 +1918,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> to multiply with the current instance.</param>
         public Azimuth Multiply(double value)
         {
-            return new Azimuth(_DecimalDegrees * value);
+            return new Azimuth(_DecimalDegrees*value);
         }
 
         public Azimuth Multiply(Azimuth value)
         {
-            return new Azimuth(_DecimalDegrees * value.DecimalDegrees);
+            return new Azimuth(_DecimalDegrees*value.DecimalDegrees);
         }
 
         /// <summary>Divides the current instance by the specified value.</summary>
@@ -1931,12 +1942,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> representing a denominator to divide by.</param>
         public Azimuth Divide(double value)
         {
-            return new Azimuth(_DecimalDegrees / value);
+            return new Azimuth(_DecimalDegrees/value);
         }
 
         public Azimuth Divide(Azimuth value)
         {
-            return new Azimuth(_DecimalDegrees / value.DecimalDegrees);
+            return new Azimuth(_DecimalDegrees/value.DecimalDegrees);
         }
 
         /// <summary>Indicates if the current instance is smaller than the specified value.</summary>
@@ -2202,7 +2213,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </param>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -2455,7 +2466,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region IXmlSerializable Members
 
-
         XmlSchema IXmlSerializable.GetSchema()
         {
             return null;
@@ -2500,34 +2510,49 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
     {
         /// <summary>An azimuth of approximately 0°</summary>
         North,
+
         /// <summary>Between north and northeast</summary>
         NorthNortheast,
+
         /// <summary>Between north and east</summary>
         Northeast,
+
         /// <summary>Between east and northeast</summary>
         EastNortheast,
+
         /// <summary>An azimuth of approximately 90°</summary>
         East,
+
         /// <summary>Between east and southeast</summary>
         EastSoutheast,
+
         /// <summary>Between south and east</summary>
         Southeast,
+
         /// <summary>Between south and southeast</summary>
         SouthSoutheast,
+
         /// <summary>An azimuth of approximately 180°</summary>
         South,
+
         /// <summary>Between south and southwest</summary>
         SouthSouthwest,
+
         /// <summary>Between south and west</summary>
         Southwest,
+
         /// <summary>Between west and southwest</summary>
         WestSouthwest,
+
         /// <summary>An azimuth of approximately 270°</summary>
         West,
+
         /// <summary>Between west and northwest</summary>
         WestNorthwest,
+
         /// <summary>Between north and west</summary>
         Northwest,
+
         /// <summary>Between north and northwest</summary>
         NorthNorthwest
     }

@@ -21,7 +21,7 @@ namespace TreeGecko.Library.Common.Helpers
             {
                 throw new ArgumentNullException("_value", "Supplied date time string cannot be null");
             }
-            
+
             DateTime outputValue = DateTime.Parse(_value, null, DateTimeStyles.RoundtripKind);
             return outputValue;
         }
@@ -89,7 +89,7 @@ namespace TreeGecko.Library.Common.Helpers
                         }
                         else if (action == "subtract")
                         {
-                            tempDate = tempDate.AddDays(-1 * actionValue);
+                            tempDate = tempDate.AddDays(-1*actionValue);
                         }
                     }
                     output = tempDate;
@@ -101,7 +101,7 @@ namespace TreeGecko.Library.Common.Helpers
 
                 return output;
             }
-            
+
             return null;
         }
 

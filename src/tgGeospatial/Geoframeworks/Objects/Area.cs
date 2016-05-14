@@ -6,115 +6,116 @@ using System.Xml.Serialization;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>
-	/// Represents the measurement of surface area of a polygon on Earth's
-	/// surface.
-	/// </summary>
-	/// <remarks>
-	/// 	<para>This structure is used to represent measurements of arbitrary polygons on
-	///     Earth's surface. Measurements can be converted to different unit types, such as
-	///     acres, square kilometers, and square miles.</para>
-	/// 	<para>Instances of this structure are guaranteed to be thread-safe because they are
-	///     immutable (properties can only be modified via constructors).</para>
-	/// </remarks>
-	/// <example>
-	///     This example demonstrates how to create an <strong>Area</strong> structure and
-	///     convert it to another unit type.
-	///     <code lang="VB">
-	/// ' Declare a Area of 50 meters
-	/// Dim Area1 As New Area(50, AreaUnit.SquareMeters)
-	/// ' Convert it into acres
-	/// Dim Area2 As Area = Area2.ToAcres()
-	///     </code>
-	/// 	<code lang="CS">
-	/// // Declare a Area of 50 meters
-	/// Area Area1 = new Area(50, AreaUnit.SquareMeters);
-	/// // Convert it into acres
-	/// Area Area2 = Area2.ToAcres();
-	///     </code>
-	/// </example>
-	public struct Area : IFormattable, IComparable<Area>, IEquatable<Area>, IXmlSerializable
+    /// <summary>
+    /// Represents the measurement of surface area of a polygon on Earth's
+    /// surface.
+    /// </summary>
+    /// <remarks>
+    /// 	<para>This structure is used to represent measurements of arbitrary polygons on
+    ///     Earth's surface. Measurements can be converted to different unit types, such as
+    ///     acres, square kilometers, and square miles.</para>
+    /// 	<para>Instances of this structure are guaranteed to be thread-safe because they are
+    ///     immutable (properties can only be modified via constructors).</para>
+    /// </remarks>
+    /// <example>
+    ///     This example demonstrates how to create an <strong>Area</strong> structure and
+    ///     convert it to another unit type.
+    ///     <code lang="VB">
+    /// ' Declare a Area of 50 meters
+    /// Dim Area1 As New Area(50, AreaUnit.SquareMeters)
+    /// ' Convert it into acres
+    /// Dim Area2 As Area = Area2.ToAcres()
+    ///     </code>
+    /// 	<code lang="CS">
+    /// // Declare a Area of 50 meters
+    /// Area Area1 = new Area(50, AreaUnit.SquareMeters);
+    /// // Convert it into acres
+    /// Area Area2 = Area2.ToAcres();
+    ///     </code>
+    /// </example>
+    public struct Area : IFormattable, IComparable<Area>, IEquatable<Area>, IXmlSerializable
     {
         private double _Value;
-		private AreaUnit _Units;
+        private AreaUnit _Units;
 
         #region Constants
 
         private const double AcresPerSquareMeter = 0.0002471054;
-		private const double AcresPerSquareCentimeter = 2.471054e-8;
-		private const double AcresPerSquareStatuteMile = 640;
-		private const double AcresPerSquareKilometer = 247.1054;
-		private const double AcresPerSquareInch = 1.594225e-7;
-		private const double AcresPerSquareNauticalMile = 847.547736;
-		private const double AcresPerSquareFoot = 2.29568411e-5;
-		private const double SquareFeetPerSquareMeter = 10.76391;
-		private const double SquareFeetPerSquareCentimeter = 0.001076391;
-		private const double SquareFeetPerSquareStatuteMile = 27878400;
-		private const double SquareFeetPerSquareKilometer = 10763910.4;
-		private const double SquareFeetPerSquareInch = 0.00694444444;
-		private const double SquareFeetPerSquareNauticalMile = 36919179.4;
-		private const double SquareFeetPerAcre = 43560;
-		private const double SquareInchesPerSquareMeter = 1550.003;
-		private const double SquareInchesPerSquareCentimeter = 0.1550003;
-		private const double SquareInchesPerSquareStatuteMile = 4014489600;
-		private const double SquareInchesPerSquareKilometer = 1.5500031e09;
-		private const double SquareInchesPerSquareFoot = 144;
-		private const double SquareInchesPerSquareNauticalMile = 5.31636183e9;
-		private const double SquareInchesPerAcre = 6272640;
-		private const double SquareStatuteMilesPerSquareMeter = 3.861022e-7;
-		private const double SquareStatuteMilesPerSquareCentimeter = 3.861022e-11;
-		private const double SquareStatuteMilesPerSquareKilometer = 0.3861022;
-		private const double SquareStatuteMilesPerSquareInch = 2.490977e-10;
-		private const double SquareStatuteMilesPerSquareFoot = 3.58700643e-8;
-		private const double SquareStatuteMilesPerSquareNauticalMile = 1.32429334 ;
-		private const double SquareStatuteMilesPerAcre = 0.0015625;
-		private const double SquareNauticalMilesPerSquareMeter = 2.9155335e-07;
-		private const double SquareNauticalMilesPerSquareCentimeter = 2.9155335e-11;
-		private const double SquareNauticalMilesPerSquareKilometer = 0.29155335;
-		private const double SquareNauticalMilesPerSquareInch = 1.88098559e-10;
-		private const double SquareNauticalMilesPerSquareFoot = 2.70861925e-8;
-		private const double SquareNauticalMilesPerSquareStatuteMile = 0.755119709;
-		private const double SquareNauticalMilesPerAcre = 0.00117987455;
-		private const double SquareCentimetersPerSquareStatuteMile = 2.58998811e10;
-		private const double SquareCentimetersPerSquareKilometer = 10000000000;
-		private const double SquareCentimetersPerSquareFoot = 929.0304;
-		private const double SquareCentimetersPerSquareInch = 6.4516;
-		private const double SquareCentimetersPerSquareMeter = 10000;
-		private const double SquareCentimetersPerSquareNauticalMile = 34299040000;
-		private const double SquareCentimetersPerAcre = 40468564.2;
-		private const double SquareMetersPerSquareStatuteMile = 2589988.11;
-		private const double SquareMetersPerSquareCentimeter = 0.0001;
-		private const double SquareMetersPerSquareKilometer = 1000000;
-		private const double SquareMetersPerSquareFoot = 0.09290304;
-		private const double SquareMetersPerSquareInch = 0.00064516;
-		private const double SquareMetersPerAcre = 4046.85642;
-		private const double SquareMetersPerSquareNauticalMile = 3429904;
-		private const double SquareKilometersPerSquareMeter = 0.000001;
-		private const double SquareKilometersPerSquareCentimeter = 1e-10;
-		private const double SquareKilometersPerSquareStatuteMile = 2.589988;
-		private const double SquareKilometersPerSquareFoot = 9.290304e-8;
-		private const double SquareKilometersPerSquareInch = 6.4516e-10;
-		private const double SquareKilometersPerSquareNauticalMile = 3.429904;
-		private const double SquareKilometersPerAcre = 0.004046856;
-		
+        private const double AcresPerSquareCentimeter = 2.471054e-8;
+        private const double AcresPerSquareStatuteMile = 640;
+        private const double AcresPerSquareKilometer = 247.1054;
+        private const double AcresPerSquareInch = 1.594225e-7;
+        private const double AcresPerSquareNauticalMile = 847.547736;
+        private const double AcresPerSquareFoot = 2.29568411e-5;
+        private const double SquareFeetPerSquareMeter = 10.76391;
+        private const double SquareFeetPerSquareCentimeter = 0.001076391;
+        private const double SquareFeetPerSquareStatuteMile = 27878400;
+        private const double SquareFeetPerSquareKilometer = 10763910.4;
+        private const double SquareFeetPerSquareInch = 0.00694444444;
+        private const double SquareFeetPerSquareNauticalMile = 36919179.4;
+        private const double SquareFeetPerAcre = 43560;
+        private const double SquareInchesPerSquareMeter = 1550.003;
+        private const double SquareInchesPerSquareCentimeter = 0.1550003;
+        private const double SquareInchesPerSquareStatuteMile = 4014489600;
+        private const double SquareInchesPerSquareKilometer = 1.5500031e09;
+        private const double SquareInchesPerSquareFoot = 144;
+        private const double SquareInchesPerSquareNauticalMile = 5.31636183e9;
+        private const double SquareInchesPerAcre = 6272640;
+        private const double SquareStatuteMilesPerSquareMeter = 3.861022e-7;
+        private const double SquareStatuteMilesPerSquareCentimeter = 3.861022e-11;
+        private const double SquareStatuteMilesPerSquareKilometer = 0.3861022;
+        private const double SquareStatuteMilesPerSquareInch = 2.490977e-10;
+        private const double SquareStatuteMilesPerSquareFoot = 3.58700643e-8;
+        private const double SquareStatuteMilesPerSquareNauticalMile = 1.32429334;
+        private const double SquareStatuteMilesPerAcre = 0.0015625;
+        private const double SquareNauticalMilesPerSquareMeter = 2.9155335e-07;
+        private const double SquareNauticalMilesPerSquareCentimeter = 2.9155335e-11;
+        private const double SquareNauticalMilesPerSquareKilometer = 0.29155335;
+        private const double SquareNauticalMilesPerSquareInch = 1.88098559e-10;
+        private const double SquareNauticalMilesPerSquareFoot = 2.70861925e-8;
+        private const double SquareNauticalMilesPerSquareStatuteMile = 0.755119709;
+        private const double SquareNauticalMilesPerAcre = 0.00117987455;
+        private const double SquareCentimetersPerSquareStatuteMile = 2.58998811e10;
+        private const double SquareCentimetersPerSquareKilometer = 10000000000;
+        private const double SquareCentimetersPerSquareFoot = 929.0304;
+        private const double SquareCentimetersPerSquareInch = 6.4516;
+        private const double SquareCentimetersPerSquareMeter = 10000;
+        private const double SquareCentimetersPerSquareNauticalMile = 34299040000;
+        private const double SquareCentimetersPerAcre = 40468564.2;
+        private const double SquareMetersPerSquareStatuteMile = 2589988.11;
+        private const double SquareMetersPerSquareCentimeter = 0.0001;
+        private const double SquareMetersPerSquareKilometer = 1000000;
+        private const double SquareMetersPerSquareFoot = 0.09290304;
+        private const double SquareMetersPerSquareInch = 0.00064516;
+        private const double SquareMetersPerAcre = 4046.85642;
+        private const double SquareMetersPerSquareNauticalMile = 3429904;
+        private const double SquareKilometersPerSquareMeter = 0.000001;
+        private const double SquareKilometersPerSquareCentimeter = 1e-10;
+        private const double SquareKilometersPerSquareStatuteMile = 2.589988;
+        private const double SquareKilometersPerSquareFoot = 9.290304e-8;
+        private const double SquareKilometersPerSquareInch = 6.4516e-10;
+        private const double SquareKilometersPerSquareNauticalMile = 3.429904;
+        private const double SquareKilometersPerAcre = 0.004046856;
+
         #endregion
 
-		#region Fields
+        #region Fields
 
-		/// <summary>Represents an area with no value.</summary>
-		public static readonly Area Empty = new Area(0.0, AreaUnit.SquareMeters).ToLocalUnitType();
+        /// <summary>Represents an area with no value.</summary>
+        public static readonly Area Empty = new Area(0.0, AreaUnit.SquareMeters).ToLocalUnitType();
 
-		/// <summary>Represents an area of infinite value.</summary>
-		/// <remarks>
-		/// In some rare cases, the result of a mathematical formula might be infinity. This
-		/// field is used to represent such values when they exist.
-		/// </remarks>
-		public static readonly Area Infinity = new Area(double.PositiveInfinity, AreaUnit.SquareMeters).ToLocalUnitType();
+        /// <summary>Represents an area of infinite value.</summary>
+        /// <remarks>
+        /// In some rare cases, the result of a mathematical formula might be infinity. This
+        /// field is used to represent such values when they exist.
+        /// </remarks>
+        public static readonly Area Infinity =
+            new Area(double.PositiveInfinity, AreaUnit.SquareMeters).ToLocalUnitType();
 
-		/// <summary>Represents the largest possible area which can be stored.</summary>
+        /// <summary>Represents the largest possible area which can be stored.</summary>
         public static readonly Area Maximum = new Area(double.MaxValue, AreaUnit.SquareKilometers).ToLocalUnitType();
 
-		/// <summary>Represents the smallest possible area which can be stored.</summary>
+        /// <summary>Represents the smallest possible area which can be stored.</summary>
         public static readonly Area Minimum = new Area(double.MinValue, AreaUnit.SquareKilometers).ToLocalUnitType();
 
         /// <summary>
@@ -122,162 +123,163 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public static readonly Area Invalid = new Area(double.NaN, AreaUnit.SquareMeters);
 
-		#endregion
+        #endregion
 
-		#region  Constructors
+        #region  Constructors
 
-		/// <summary>Creates a new instance using the specified value and unit type.</summary>
-		/// <example>
-		///     This example uses a constructor to create a new <strong>Area</strong> of fifty
-		///     square kilometers. 
-		///     <code lang="VB">
-		/// Dim MyArea As New Area(50, AreaUnit.SquareKilometers)
-		///     </code>
-		/// 	<code lang="CS">
-		/// Area MyArea = new Area(50, AreaUnit.SquareKilometers);
-		///     </code>
-		/// </example>
-		public Area(double value, AreaUnit units)
-		{
-			_Value = value;
-			_Units = units;
-		}
+        /// <summary>Creates a new instance using the specified value and unit type.</summary>
+        /// <example>
+        ///     This example uses a constructor to create a new <strong>Area</strong> of fifty
+        ///     square kilometers. 
+        ///     <code lang="VB">
+        /// Dim MyArea As New Area(50, AreaUnit.SquareKilometers)
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Area MyArea = new Area(50, AreaUnit.SquareKilometers);
+        ///     </code>
+        /// </example>
+        public Area(double value, AreaUnit units)
+        {
+            _Value = value;
+            _Units = units;
+        }
 
-		/// <summary>Creates a new instance using the specified string.</summary>
-		/// <remarks>
-		/// This powerful constructor is used to convert an area measurement in the form of a
-		/// string into an object, such as one entered by a user or read from a file. This
-		/// constructor can accept any output created via the <see cref="ToString">ToString</see>
-		/// method.
-		/// </remarks>
-		/// <exception cref="ArgumentNullException" caption="ArgumentNullException">Parse method requires a valid Area measurement.</exception>
-		/// <exception cref="FormatException" caption="FormatException">1. The numeric portion of the Area measurement was not recognized.<br/>
-		/// 2. The Area unit type was not recognized or not specified.</exception>
-		/// <example>
-		///     This example demonstrates how the to use this constructor. 
-		///     <code lang="VB">
-		/// Dim MyArea As Area
-		/// ' Create a Area of 50 square kilometers
-		/// MyArea = New Area("50 sq. km")
-		/// ' Create a Area of 14,387 miles, then convert it into square inches
-		/// MyArea = New Area("14,387 sq. statute miles").ToSquareInches()
-		/// ' Create a Area of 50 square feet
-		/// MyArea = New Area("    50 sq '       ")
-		///     </code>
-		/// 	<code lang="CS">
-		/// Area MyArea;
-		/// ' Create a Area of 50 square kilometers
-		/// MyArea = new Area("50 sq. km");
-		/// ' Create a Area of 14,387 miles, then convert it into square inches
-		/// MyArea = new Area("14,387 sq. statute miles").ToSquareInches();
-		/// ' Create a Area of 50 square feet
-		/// MyArea = new Area("    50 sq '       ");
-		///     </code>
-		/// </example>
-		/// <returns>An <strong>Area</strong> object.</returns>
-		/// <seealso cref="Parse(System.String)">Parse(string) Method</seealso>
-		public Area(string value)
-			: this(value, CultureInfo.CurrentCulture)
-		{}
+        /// <summary>Creates a new instance using the specified string.</summary>
+        /// <remarks>
+        /// This powerful constructor is used to convert an area measurement in the form of a
+        /// string into an object, such as one entered by a user or read from a file. This
+        /// constructor can accept any output created via the <see cref="ToString">ToString</see>
+        /// method.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException" caption="ArgumentNullException">Parse method requires a valid Area measurement.</exception>
+        /// <exception cref="FormatException" caption="FormatException">1. The numeric portion of the Area measurement was not recognized.<br/>
+        /// 2. The Area unit type was not recognized or not specified.</exception>
+        /// <example>
+        ///     This example demonstrates how the to use this constructor. 
+        ///     <code lang="VB">
+        /// Dim MyArea As Area
+        /// ' Create a Area of 50 square kilometers
+        /// MyArea = New Area("50 sq. km")
+        /// ' Create a Area of 14,387 miles, then convert it into square inches
+        /// MyArea = New Area("14,387 sq. statute miles").ToSquareInches()
+        /// ' Create a Area of 50 square feet
+        /// MyArea = New Area("    50 sq '       ")
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Area MyArea;
+        /// ' Create a Area of 50 square kilometers
+        /// MyArea = new Area("50 sq. km");
+        /// ' Create a Area of 14,387 miles, then convert it into square inches
+        /// MyArea = new Area("14,387 sq. statute miles").ToSquareInches();
+        /// ' Create a Area of 50 square feet
+        /// MyArea = new Area("    50 sq '       ");
+        ///     </code>
+        /// </example>
+        /// <returns>An <strong>Area</strong> object.</returns>
+        /// <seealso cref="Parse(System.String)">Parse(string) Method</seealso>
+        public Area(string value)
+            : this(value, CultureInfo.CurrentCulture)
+        {
+        }
 
-		/// <summary>Creates a new instance using the specified string and culture.</summary>
-		/// <remarks>
-		/// This powerful constructor is used to convert an area measurement in the form of a
-		/// string into an object, such as one entered by a user or read from a file. This
-		/// constructor can accept any output created via the <see cref="ToString">ToString</see>
-		/// method.
-		/// </remarks>
-		/// <exception cref="ArgumentNullException" caption="ArgumentNullException">Parse method requires a valid Area measurement.</exception>
-		/// <exception cref="FormatException" caption="FormatException">1. The numeric portion of the Area measurement was not recognized.<br/>
-		/// 2. The Area unit type was not recognized or not specified.</exception>
-		/// <example>
-		///     This example demonstrates how the to use this constructor. 
-		///     <code lang="VB">
-		/// Dim MyArea As Area
-		/// ' Create a Area of 50 square kilometers
-		/// MyArea = New Area("50 sq. km", CultureInfo.CurrentCulture)
-		/// ' Create a Area of 14,387 miles, then convert it into square inches
-		/// MyArea = New Area("14,387 sq. statute miles", CultureInfo.CurrentCulture).ToSquareInches()
-		/// ' Create a Area of 50 square feet
-		/// MyArea = New Area("    50 sq '       ", CultureInfo.CurrentCulture)
-		///     </code>
-		/// 	<code lang="CS">
-		/// Area MyArea;
-		/// ' Create a Area of 50 square kilometers
-		/// MyArea = new Area("50 sq. km", CultureInfo.CurrentCulture);
-		/// ' Create a Area of 14,387 miles, then convert it into square inches
-		/// MyArea = new Area("14,387 sq. statute miles", CultureInfo.CurrentCulture).ToSquareInches();
-		/// ' Create a Area of 50 square feet
-		/// MyArea = new Area("    50 sq '       ", CultureInfo.CurrentCulture);
-		///     </code>
-		/// </example>
-		/// <returns>An <strong>Area</strong> object.</returns>
-		/// <seealso cref="Parse(System.String)">Parse(string) Method</seealso>
-		public Area(string value, CultureInfo culture)
-		{
-			// Anything to do?
-			if (value == null || value.Length == 0)
-			{
-				_Value = 0;
-				_Units = AreaUnit.SquareCentimeters;
-				return;					
-			}
+        /// <summary>Creates a new instance using the specified string and culture.</summary>
+        /// <remarks>
+        /// This powerful constructor is used to convert an area measurement in the form of a
+        /// string into an object, such as one entered by a user or read from a file. This
+        /// constructor can accept any output created via the <see cref="ToString">ToString</see>
+        /// method.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException" caption="ArgumentNullException">Parse method requires a valid Area measurement.</exception>
+        /// <exception cref="FormatException" caption="FormatException">1. The numeric portion of the Area measurement was not recognized.<br/>
+        /// 2. The Area unit type was not recognized or not specified.</exception>
+        /// <example>
+        ///     This example demonstrates how the to use this constructor. 
+        ///     <code lang="VB">
+        /// Dim MyArea As Area
+        /// ' Create a Area of 50 square kilometers
+        /// MyArea = New Area("50 sq. km", CultureInfo.CurrentCulture)
+        /// ' Create a Area of 14,387 miles, then convert it into square inches
+        /// MyArea = New Area("14,387 sq. statute miles", CultureInfo.CurrentCulture).ToSquareInches()
+        /// ' Create a Area of 50 square feet
+        /// MyArea = New Area("    50 sq '       ", CultureInfo.CurrentCulture)
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Area MyArea;
+        /// ' Create a Area of 50 square kilometers
+        /// MyArea = new Area("50 sq. km", CultureInfo.CurrentCulture);
+        /// ' Create a Area of 14,387 miles, then convert it into square inches
+        /// MyArea = new Area("14,387 sq. statute miles", CultureInfo.CurrentCulture).ToSquareInches();
+        /// ' Create a Area of 50 square feet
+        /// MyArea = new Area("    50 sq '       ", CultureInfo.CurrentCulture);
+        ///     </code>
+        /// </example>
+        /// <returns>An <strong>Area</strong> object.</returns>
+        /// <seealso cref="Parse(System.String)">Parse(string) Method</seealso>
+        public Area(string value, CultureInfo culture)
+        {
+            // Anything to do?
+            if (value == null || value.Length == 0)
+            {
+                _Value = 0;
+                _Units = AreaUnit.SquareCentimeters;
+                return;
+            }
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
 
-			string NumericPortion = null;
-			int Count = 0;
-			string Unit = null;
+            string NumericPortion = null;
+            int Count = 0;
+            string Unit = null;
 
-			try
-			{
-				// Convert to uppercase and remove commas
+            try
+            {
+                // Convert to uppercase and remove commas
                 value = value.Trim();
-				if (String.Compare(value, Properties.Resources.Common_Infinity, true, culture) == 0)
-				{
-					_Value = double.PositiveInfinity;
-					_Units = AreaUnit.SquareNauticalMiles;
-					return;
-				}
+                if (String.Compare(value, Properties.Resources.Common_Infinity, true, culture) == 0)
+                {
+                    _Value = double.PositiveInfinity;
+                    _Units = AreaUnit.SquareNauticalMiles;
+                    return;
+                }
                 if (String.Compare(value, Properties.Resources.Common_Empty, true, culture) == 0)
-				{
-					_Value = 0;
-					_Units = AreaUnit.SquareCentimeters;
-					return;					
-				}
+                {
+                    _Value = 0;
+                    _Units = AreaUnit.SquareCentimeters;
+                    return;
+                }
 
                 // Clean up the value
                 value = value.ToUpper(culture).Replace(culture.NumberFormat.NumberGroupSeparator, "");
 
-				// Go until the first non-number character
-				Count = 0;
-				while (Count < value.Length)
-				{
-					string Digit = value.Substring(Count, 1);
-					if (Digit == "0" || Digit == "1" || Digit == "2" || Digit == "3"
-						|| Digit == "4" || Digit == "5" || Digit == "6" || Digit == "7"
-						|| Digit == "8" || Digit == "9"
-						|| Digit == culture.NumberFormat.NumberGroupSeparator
-						|| Digit == culture.NumberFormat.NumberDecimalSeparator)
-						// Allow continuation
-						Count = Count + 1;
-					else
-						// Non-numeric character!
-						break;
-				}
-				Unit = value.Substring(Count).Trim();
-				// Get the numeric portion
-				if (Count > 0)
-					NumericPortion = value.Substring(0, Count);
-				else
-					NumericPortion = "0";
+                // Go until the first non-number character
+                Count = 0;
+                while (Count < value.Length)
+                {
+                    string Digit = value.Substring(Count, 1);
+                    if (Digit == "0" || Digit == "1" || Digit == "2" || Digit == "3"
+                        || Digit == "4" || Digit == "5" || Digit == "6" || Digit == "7"
+                        || Digit == "8" || Digit == "9"
+                        || Digit == culture.NumberFormat.NumberGroupSeparator
+                        || Digit == culture.NumberFormat.NumberDecimalSeparator)
+                        // Allow continuation
+                        Count = Count + 1;
+                    else
+                    // Non-numeric character!
+                        break;
+                }
+                Unit = value.Substring(Count).Trim();
+                // Get the numeric portion
+                if (Count > 0)
+                    NumericPortion = value.Substring(0, Count);
+                else
+                    NumericPortion = "0";
 
-				if(!double.TryParse(NumericPortion, NumberStyles.Any, culture, out _Value))
-					throw new ArgumentException(Properties.Resources.Area_InvalidNumericPortion, "value");
-				// Try to interpret the measurement
-				// Remove any notion of "square"
-				Unit = Unit.Replace("SQUARE", "S").Replace("SQ.", "S").Replace("SQ", "S").Replace(" ", "").Trim();
+                if (!double.TryParse(NumericPortion, NumberStyles.Any, culture, out _Value))
+                    throw new ArgumentException(Properties.Resources.Area_InvalidNumericPortion, "value");
+                // Try to interpret the measurement
+                // Remove any notion of "square"
+                Unit = Unit.Replace("SQUARE", "S").Replace("SQ.", "S").Replace("SQ", "S").Replace(" ", "").Trim();
 
                 switch (Unit)
                 {
@@ -285,7 +287,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     case "AC":
                     case "ACRE":
                     case "ACRES":
-					    _Units = AreaUnit.Acres;
+                        _Units = AreaUnit.Acres;
                         break;
                     case "SCM":
                     case "SCM.":
@@ -293,7 +295,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     case "SCENTIMETERS":
                     case "SCENTIMETRE":
                     case "SCENTIMETRES":
-					    _Units = AreaUnit.SquareCentimeters;
+                        _Units = AreaUnit.SquareCentimeters;
                         break;
                     case "SM":
                     case "SM.":
@@ -301,7 +303,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     case "SMETRES":
                     case "SMETRE":
                     case "SMETER":
-					    _Units = AreaUnit.SquareMeters;
+                        _Units = AreaUnit.SquareMeters;
                         break;
                     case "SKM":
                     case "SKM.":
@@ -309,56 +311,56 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     case "SKILOMETERS":
                     case "SKILOMETRE":
                     case "SKILOMETER":
-					    _Units = AreaUnit.SquareKilometers;
+                        _Units = AreaUnit.SquareKilometers;
                         break;
-				    case "SMI":
+                    case "SMI":
                     case "SMI.":
                     case "SMILE":
                     case "SMILES":
                     case "SSTATUTEMILES":
-					    _Units = AreaUnit.SquareStatuteMiles;
+                        _Units = AreaUnit.SquareStatuteMiles;
                         break;
                     case "SNM":
                     case "SNM.":
                     case "SNAUTICALMILE":
-					case "SNAUTICALMILES":
-					    _Units = AreaUnit.SquareNauticalMiles;
+                    case "SNAUTICALMILES":
+                        _Units = AreaUnit.SquareNauticalMiles;
                         break;
                     case "SIN":
                     case "SIN.":
                     case "S\"":
                     case "SINCHES":
-					case "SINCH":
-					    _Units = AreaUnit.SquareInches;
+                    case "SINCH":
+                        _Units = AreaUnit.SquareInches;
                         break;
                     case "SFT":
                     case "SFT.":
                     case "S'":
                     case "SFOOT":
                     case "SFEET":
-					    _Units = AreaUnit.SquareFeet;
+                        _Units = AreaUnit.SquareFeet;
                         break;
                     default:
                         if (_Value == 0)
                         {
-					        if (System.Globalization.RegionInfo.CurrentRegion.IsMetric)
-						        _Units = AreaUnit.SquareMeters;
-					        else
-						        _Units = AreaUnit.SquareFeet;
+                            if (System.Globalization.RegionInfo.CurrentRegion.IsMetric)
+                                _Units = AreaUnit.SquareMeters;
+                            else
+                                _Units = AreaUnit.SquareFeet;
                         }
-				        else
+                        else
                         {
-					        throw new ArgumentException(Properties.Resources.Area_InvalidUnitPortion, "value");
+                            throw new ArgumentException(Properties.Resources.Area_InvalidUnitPortion, "value");
                         }
                         break;
                 }
-			}
-			catch (Exception ex)
-			{
-				throw new ArgumentException(Properties.Resources.Area_InvalidFormat, "value", ex);
-			}
-		}
-        
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(Properties.Resources.Area_InvalidFormat, "value", ex);
+            }
+        }
+
         /// <summary>
         /// Creates a new instance by deserializing the specified XML.
         /// </summary>
@@ -373,7 +375,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             ReadXml(reader);
         }
 
-		#endregion
+        #endregion
 
         #region Public Properties
 
@@ -387,10 +389,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="Value">Value Property</seealso>
         public AreaUnit Units
         {
-            get
-            {
-                return _Units;
-            }
+            get { return _Units; }
         }
 
         /// <summary>Returns the numeric portion of an area measurement.</summary>
@@ -402,10 +401,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="Units">Units Property</seealso>
         public double Value
         {
-            get
-            {
-                return _Value;
-            }
+            get { return _Value; }
         }
 
         /// <summary>Indicates if the value of the current instance is zero.</summary>
@@ -415,10 +411,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </value>
         public bool IsEmpty
         {
-            get
-            {
-                return _Value == 0;
-            }
+            get { return _Value == 0; }
         }
 
         /// <summary>Indicates if the current instance is using a Metric unit.</summary>
@@ -438,8 +431,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             get
             {
                 return _Units == AreaUnit.SquareCentimeters
-                    || _Units == AreaUnit.SquareMeters
-                    || _Units == AreaUnit.SquareKilometers;
+                       || _Units == AreaUnit.SquareMeters
+                       || _Units == AreaUnit.SquareKilometers;
             }
         }
 
@@ -450,10 +443,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </value>
         public bool IsInfinity
         {
-            get
-            {
-                return double.IsInfinity(_Value);
-            }
+            get { return double.IsInfinity(_Value); }
         }
 
         #endregion
@@ -501,21 +491,21 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case AreaUnit.Acres:
-                    return new Area(_Value * SquareFeetPerAcre, AreaUnit.SquareFeet);
+                    return new Area(_Value*SquareFeetPerAcre, AreaUnit.SquareFeet);
                 case AreaUnit.SquareCentimeters:
-                    return new Area(_Value * SquareFeetPerSquareCentimeter, AreaUnit.SquareFeet);
+                    return new Area(_Value*SquareFeetPerSquareCentimeter, AreaUnit.SquareFeet);
                 case AreaUnit.SquareMeters:
-                    return new Area(_Value * SquareFeetPerSquareMeter, AreaUnit.SquareFeet);
+                    return new Area(_Value*SquareFeetPerSquareMeter, AreaUnit.SquareFeet);
                 case AreaUnit.SquareFeet:
                     return this;
                 case AreaUnit.SquareInches:
-                    return new Area(_Value * SquareFeetPerSquareInch, AreaUnit.SquareFeet);
+                    return new Area(_Value*SquareFeetPerSquareInch, AreaUnit.SquareFeet);
                 case AreaUnit.SquareKilometers:
-                    return new Area(_Value * SquareFeetPerSquareKilometer, AreaUnit.SquareFeet);
+                    return new Area(_Value*SquareFeetPerSquareKilometer, AreaUnit.SquareFeet);
                 case AreaUnit.SquareStatuteMiles:
-                    return new Area(_Value * SquareFeetPerSquareStatuteMile, AreaUnit.SquareFeet);
+                    return new Area(_Value*SquareFeetPerSquareStatuteMile, AreaUnit.SquareFeet);
                 case AreaUnit.SquareNauticalMiles:
-                    return new Area(_Value * SquareFeetPerSquareNauticalMile, AreaUnit.SquareFeet);
+                    return new Area(_Value*SquareFeetPerSquareNauticalMile, AreaUnit.SquareFeet);
                 default:
                     // This should never happen!  Included only to satisfy the compiler
                     return Area.Empty;
@@ -563,21 +553,21 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case AreaUnit.Acres:
-                    return new Area(_Value * SquareInchesPerAcre, AreaUnit.SquareInches);
+                    return new Area(_Value*SquareInchesPerAcre, AreaUnit.SquareInches);
                 case AreaUnit.SquareCentimeters:
-                    return new Area(_Value * SquareInchesPerSquareCentimeter, AreaUnit.SquareInches);
+                    return new Area(_Value*SquareInchesPerSquareCentimeter, AreaUnit.SquareInches);
                 case AreaUnit.SquareMeters:
-                    return new Area(_Value * SquareInchesPerSquareMeter, AreaUnit.SquareInches);
+                    return new Area(_Value*SquareInchesPerSquareMeter, AreaUnit.SquareInches);
                 case AreaUnit.SquareFeet:
-                    return new Area(_Value * SquareInchesPerSquareFoot, AreaUnit.SquareInches);
+                    return new Area(_Value*SquareInchesPerSquareFoot, AreaUnit.SquareInches);
                 case AreaUnit.SquareInches:
                     return this;
                 case AreaUnit.SquareKilometers:
-                    return new Area(_Value * SquareInchesPerSquareKilometer, AreaUnit.SquareInches);
+                    return new Area(_Value*SquareInchesPerSquareKilometer, AreaUnit.SquareInches);
                 case AreaUnit.SquareStatuteMiles:
-                    return new Area(_Value * SquareInchesPerSquareStatuteMile, AreaUnit.SquareInches);
+                    return new Area(_Value*SquareInchesPerSquareStatuteMile, AreaUnit.SquareInches);
                 case AreaUnit.SquareNauticalMiles:
-                    return new Area(_Value * SquareInchesPerSquareNauticalMile, AreaUnit.SquareInches);
+                    return new Area(_Value*SquareInchesPerSquareNauticalMile, AreaUnit.SquareInches);
                 default:
                     // This should never happen!  Included only to satisfy the compiler
                     return Area.Empty;
@@ -625,21 +615,21 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case AreaUnit.Acres:
-                    return new Area(_Value * SquareKilometersPerAcre, AreaUnit.SquareKilometers);
+                    return new Area(_Value*SquareKilometersPerAcre, AreaUnit.SquareKilometers);
                 case AreaUnit.SquareCentimeters:
-                    return new Area(_Value * SquareKilometersPerSquareCentimeter, AreaUnit.SquareKilometers);
+                    return new Area(_Value*SquareKilometersPerSquareCentimeter, AreaUnit.SquareKilometers);
                 case AreaUnit.SquareMeters:
-                    return new Area(_Value * SquareKilometersPerSquareMeter, AreaUnit.SquareKilometers);
+                    return new Area(_Value*SquareKilometersPerSquareMeter, AreaUnit.SquareKilometers);
                 case AreaUnit.SquareFeet:
-                    return new Area(_Value * SquareKilometersPerSquareFoot, AreaUnit.SquareKilometers);
+                    return new Area(_Value*SquareKilometersPerSquareFoot, AreaUnit.SquareKilometers);
                 case AreaUnit.SquareInches:
-                    return new Area(_Value * SquareKilometersPerSquareInch, AreaUnit.SquareKilometers);
+                    return new Area(_Value*SquareKilometersPerSquareInch, AreaUnit.SquareKilometers);
                 case AreaUnit.SquareKilometers:
                     return this;
                 case AreaUnit.SquareStatuteMiles:
-                    return new Area(_Value * SquareKilometersPerSquareStatuteMile, AreaUnit.SquareKilometers);
+                    return new Area(_Value*SquareKilometersPerSquareStatuteMile, AreaUnit.SquareKilometers);
                 case AreaUnit.SquareNauticalMiles:
-                    return new Area(_Value * SquareKilometersPerSquareNauticalMile, AreaUnit.SquareKilometers);
+                    return new Area(_Value*SquareKilometersPerSquareNauticalMile, AreaUnit.SquareKilometers);
                 default:
                     // This should never happen!  Included only to satisfy the compiler
                     return Area.Empty;
@@ -687,21 +677,21 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case AreaUnit.Acres:
-                    return new Area(_Value * SquareMetersPerAcre, AreaUnit.SquareMeters);
+                    return new Area(_Value*SquareMetersPerAcre, AreaUnit.SquareMeters);
                 case AreaUnit.SquareCentimeters:
-                    return new Area(_Value * SquareMetersPerSquareCentimeter, AreaUnit.SquareMeters);
+                    return new Area(_Value*SquareMetersPerSquareCentimeter, AreaUnit.SquareMeters);
                 case AreaUnit.SquareMeters:
                     return this;
                 case AreaUnit.SquareFeet:
-                    return new Area(_Value * SquareMetersPerSquareFoot, AreaUnit.SquareMeters);
+                    return new Area(_Value*SquareMetersPerSquareFoot, AreaUnit.SquareMeters);
                 case AreaUnit.SquareInches:
-                    return new Area(_Value * SquareMetersPerSquareInch, AreaUnit.SquareMeters);
+                    return new Area(_Value*SquareMetersPerSquareInch, AreaUnit.SquareMeters);
                 case AreaUnit.SquareKilometers:
-                    return new Area(_Value * SquareMetersPerSquareKilometer, AreaUnit.SquareMeters);
+                    return new Area(_Value*SquareMetersPerSquareKilometer, AreaUnit.SquareMeters);
                 case AreaUnit.SquareStatuteMiles:
-                    return new Area(_Value * SquareMetersPerSquareStatuteMile, AreaUnit.SquareMeters);
+                    return new Area(_Value*SquareMetersPerSquareStatuteMile, AreaUnit.SquareMeters);
                 case AreaUnit.SquareNauticalMiles:
-                    return new Area(_Value * SquareMetersPerSquareNauticalMile, AreaUnit.SquareMeters);
+                    return new Area(_Value*SquareMetersPerSquareNauticalMile, AreaUnit.SquareMeters);
                 default:
                     // This should never happen!  Included only to satisfy the compiler
                     return Area.Empty;
@@ -749,19 +739,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case AreaUnit.Acres:
-                    return new Area(_Value * SquareNauticalMilesPerAcre, AreaUnit.SquareNauticalMiles);
+                    return new Area(_Value*SquareNauticalMilesPerAcre, AreaUnit.SquareNauticalMiles);
                 case AreaUnit.SquareCentimeters:
-                    return new Area(_Value * SquareNauticalMilesPerSquareCentimeter, AreaUnit.SquareNauticalMiles);
+                    return new Area(_Value*SquareNauticalMilesPerSquareCentimeter, AreaUnit.SquareNauticalMiles);
                 case AreaUnit.SquareMeters:
-                    return new Area(_Value * SquareNauticalMilesPerSquareMeter, AreaUnit.SquareNauticalMiles);
+                    return new Area(_Value*SquareNauticalMilesPerSquareMeter, AreaUnit.SquareNauticalMiles);
                 case AreaUnit.SquareFeet:
-                    return new Area(_Value * SquareNauticalMilesPerSquareFoot, AreaUnit.SquareNauticalMiles);
+                    return new Area(_Value*SquareNauticalMilesPerSquareFoot, AreaUnit.SquareNauticalMiles);
                 case AreaUnit.SquareInches:
-                    return new Area(_Value * SquareNauticalMilesPerSquareInch, AreaUnit.SquareNauticalMiles);
+                    return new Area(_Value*SquareNauticalMilesPerSquareInch, AreaUnit.SquareNauticalMiles);
                 case AreaUnit.SquareKilometers:
-                    return new Area(_Value * SquareNauticalMilesPerSquareKilometer, AreaUnit.SquareNauticalMiles);
+                    return new Area(_Value*SquareNauticalMilesPerSquareKilometer, AreaUnit.SquareNauticalMiles);
                 case AreaUnit.SquareStatuteMiles:
-                    return new Area(_Value * SquareNauticalMilesPerSquareStatuteMile, AreaUnit.SquareNauticalMiles);
+                    return new Area(_Value*SquareNauticalMilesPerSquareStatuteMile, AreaUnit.SquareNauticalMiles);
                 case AreaUnit.SquareNauticalMiles:
                     return this;
                 default:
@@ -811,21 +801,21 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case AreaUnit.Acres:
-                    return new Area(_Value * SquareStatuteMilesPerAcre, AreaUnit.SquareStatuteMiles);
+                    return new Area(_Value*SquareStatuteMilesPerAcre, AreaUnit.SquareStatuteMiles);
                 case AreaUnit.SquareCentimeters:
-                    return new Area(_Value * SquareStatuteMilesPerSquareCentimeter, AreaUnit.SquareStatuteMiles);
+                    return new Area(_Value*SquareStatuteMilesPerSquareCentimeter, AreaUnit.SquareStatuteMiles);
                 case AreaUnit.SquareMeters:
-                    return new Area(_Value * SquareStatuteMilesPerSquareMeter, AreaUnit.SquareStatuteMiles);
+                    return new Area(_Value*SquareStatuteMilesPerSquareMeter, AreaUnit.SquareStatuteMiles);
                 case AreaUnit.SquareFeet:
-                    return new Area(_Value * SquareStatuteMilesPerSquareFoot, AreaUnit.SquareStatuteMiles);
+                    return new Area(_Value*SquareStatuteMilesPerSquareFoot, AreaUnit.SquareStatuteMiles);
                 case AreaUnit.SquareInches:
-                    return new Area(_Value * SquareStatuteMilesPerSquareInch, AreaUnit.SquareStatuteMiles);
+                    return new Area(_Value*SquareStatuteMilesPerSquareInch, AreaUnit.SquareStatuteMiles);
                 case AreaUnit.SquareKilometers:
-                    return new Area(_Value * SquareStatuteMilesPerSquareKilometer, AreaUnit.SquareStatuteMiles);
+                    return new Area(_Value*SquareStatuteMilesPerSquareKilometer, AreaUnit.SquareStatuteMiles);
                 case AreaUnit.SquareStatuteMiles:
                     return this;
                 case AreaUnit.SquareNauticalMiles:
-                    return new Area(_Value * SquareStatuteMilesPerSquareNauticalMile, AreaUnit.SquareStatuteMiles);
+                    return new Area(_Value*SquareStatuteMilesPerSquareNauticalMile, AreaUnit.SquareStatuteMiles);
                 default:
                     // This should never happen!  Included only to satisfy the compiler
                     return Area.Empty;
@@ -866,19 +856,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 case AreaUnit.Acres:
                     return this;
                 case AreaUnit.SquareCentimeters:
-                    return new Area(_Value * AcresPerSquareCentimeter, AreaUnit.Acres);
+                    return new Area(_Value*AcresPerSquareCentimeter, AreaUnit.Acres);
                 case AreaUnit.SquareMeters:
-                    return new Area(_Value * AcresPerSquareMeter, AreaUnit.Acres);
+                    return new Area(_Value*AcresPerSquareMeter, AreaUnit.Acres);
                 case AreaUnit.SquareFeet:
-                    return new Area(_Value * AcresPerSquareFoot, AreaUnit.Acres);
+                    return new Area(_Value*AcresPerSquareFoot, AreaUnit.Acres);
                 case AreaUnit.SquareInches:
-                    return new Area(_Value * AcresPerSquareInch, AreaUnit.Acres);
+                    return new Area(_Value*AcresPerSquareInch, AreaUnit.Acres);
                 case AreaUnit.SquareKilometers:
-                    return new Area(_Value * AcresPerSquareKilometer, AreaUnit.Acres);
+                    return new Area(_Value*AcresPerSquareKilometer, AreaUnit.Acres);
                 case AreaUnit.SquareStatuteMiles:
-                    return new Area(_Value * AcresPerSquareStatuteMile, AreaUnit.Acres);
+                    return new Area(_Value*AcresPerSquareStatuteMile, AreaUnit.Acres);
                 case AreaUnit.SquareNauticalMiles:
-                    return new Area(_Value * AcresPerSquareNauticalMile, AreaUnit.Acres);
+                    return new Area(_Value*AcresPerSquareNauticalMile, AreaUnit.Acres);
                 default:
                     // This should never happen!  Included only to satisfy the compiler
                     return Area.Empty;
@@ -917,21 +907,21 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (_Units)
             {
                 case AreaUnit.Acres:
-                    return new Area(_Value * SquareCentimetersPerAcre, AreaUnit.Acres);
+                    return new Area(_Value*SquareCentimetersPerAcre, AreaUnit.Acres);
                 case AreaUnit.SquareCentimeters:
                     return this;
                 case AreaUnit.SquareMeters:
-                    return new Area(_Value * SquareCentimetersPerSquareMeter, AreaUnit.Acres);
+                    return new Area(_Value*SquareCentimetersPerSquareMeter, AreaUnit.Acres);
                 case AreaUnit.SquareFeet:
-                    return new Area(_Value * SquareCentimetersPerSquareFoot, AreaUnit.Acres);
+                    return new Area(_Value*SquareCentimetersPerSquareFoot, AreaUnit.Acres);
                 case AreaUnit.SquareInches:
-                    return new Area(_Value * SquareCentimetersPerSquareInch, AreaUnit.Acres);
+                    return new Area(_Value*SquareCentimetersPerSquareInch, AreaUnit.Acres);
                 case AreaUnit.SquareKilometers:
-                    return new Area(_Value * SquareCentimetersPerSquareKilometer, AreaUnit.Acres);
+                    return new Area(_Value*SquareCentimetersPerSquareKilometer, AreaUnit.Acres);
                 case AreaUnit.SquareStatuteMiles:
-                    return new Area(_Value * SquareCentimetersPerSquareStatuteMile, AreaUnit.Acres);
+                    return new Area(_Value*SquareCentimetersPerSquareStatuteMile, AreaUnit.Acres);
                 case AreaUnit.SquareNauticalMiles:
-                    return new Area(_Value * SquareCentimetersPerSquareNauticalMile, AreaUnit.Acres);
+                    return new Area(_Value*SquareCentimetersPerSquareNauticalMile, AreaUnit.Acres);
                 default:
                     // This should never happen!  Included only to satisfy the compiler
                     return Area.Empty;
@@ -1134,7 +1124,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             return ToString(format, CultureInfo.CurrentCulture);
         }
 
-
         #region Math Methods
 
         /// <summary>Adds the specified area to the current instance.</summary>
@@ -1233,7 +1222,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public Area Multiply(Area value)
         {
-            return new Area(_Value * value.ToUnitType(_Units).Value, _Units);
+            return new Area(_Value*value.ToUnitType(_Units).Value, _Units);
         }
 
         /// <remarks>
@@ -1264,7 +1253,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public Area Divide(Area value)
         {
-            return new Area(_Value / value.ToUnitType(_Units).Value, _Units);
+            return new Area(_Value/value.ToUnitType(_Units).Value, _Units);
         }
 
         /// <summary>Returns the current instance increased by one.</summary>
@@ -1507,7 +1496,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </param>
         public static Area Random(Random generator)
         {
-            return new Area(generator.NextDouble() * 1000, AreaUnit.SquareMeters).ToLocalUnitType();
+            return new Area(generator.NextDouble()*1000, AreaUnit.SquareMeters).ToLocalUnitType();
         }
 
         #endregion
@@ -1524,7 +1513,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             // If the type is the same, compare the values
             if (obj is Area)
-                return Equals((Area)obj);
+                return Equals((Area) obj);
 
             // Not equal
             return false;
@@ -1580,71 +1569,71 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region Operators
 
-        public static Area operator +(Area left, Area right) 
-		{
-			return left.Add(right);
-		}
+        public static Area operator +(Area left, Area right)
+        {
+            return left.Add(right);
+        }
 
-		public static Area operator -(Area left, Area right) 
-		{
-			return left.Subtract(right);
-		}
+        public static Area operator -(Area left, Area right)
+        {
+            return left.Subtract(right);
+        }
 
-		public static Area operator *(Area left, Area right) 
-		{
-			return left.Multiply(right);
-		}
+        public static Area operator *(Area left, Area right)
+        {
+            return left.Multiply(right);
+        }
 
-		public static Area operator /(Area left, Area right) 
-		{
-			return left.Divide(right);
-		}
+        public static Area operator /(Area left, Area right)
+        {
+            return left.Divide(right);
+        }
 
-		public static bool operator <(Area left, Area right) 
-		{
-			return left.CompareTo(right) < 0;
-		}
+        public static bool operator <(Area left, Area right)
+        {
+            return left.CompareTo(right) < 0;
+        }
 
-		public static bool operator <=(Area left, Area right) 
-		{
-			return left.CompareTo(right) < 0 || left.Equals(right);
-		}
+        public static bool operator <=(Area left, Area right)
+        {
+            return left.CompareTo(right) < 0 || left.Equals(right);
+        }
 
-		public static bool operator ==(Area left, Area right) 
-		{
-			return left.Equals(right);
-		}
+        public static bool operator ==(Area left, Area right)
+        {
+            return left.Equals(right);
+        }
 
-		public static bool operator !=(Area left, Area right) 
-		{
-			return !(left == right);
-		}
+        public static bool operator !=(Area left, Area right)
+        {
+            return !(left == right);
+        }
 
-		public static bool operator >=(Area left, Area right) 
-		{
-			return left.CompareTo(right) > 0 || left.Equals(right);
-		}
-	
-		public static bool operator >(Area left, Area right) 
-		{
-			return left.CompareTo(right) > 0;
-		}
+        public static bool operator >=(Area left, Area right)
+        {
+            return left.CompareTo(right) > 0 || left.Equals(right);
+        }
 
-		#endregion
+        public static bool operator >(Area left, Area right)
+        {
+            return left.CompareTo(right) > 0;
+        }
 
-		#region Conversions
+        #endregion
 
-		public static explicit operator Area(string value) 
-		{
-			return Area.Parse(value, CultureInfo.CurrentCulture);
-		}
+        #region Conversions
 
-		public static explicit operator string(Area value)
-		{
-			return value.ToString("g", CultureInfo.CurrentCulture);
-		}
+        public static explicit operator Area(string value)
+        {
+            return Area.Parse(value, CultureInfo.CurrentCulture);
+        }
 
-		#endregion
+        public static explicit operator string(Area value)
+        {
+            return value.ToString("g", CultureInfo.CurrentCulture);
+        }
+
+        #endregion
 
         #region IComparable<Area> Members
 
@@ -1704,7 +1693,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool Equals(Area value, int decimals)
         {
             return Math.Round(Value, decimals) == Math.Round(value.ToUnitType(Units).Value, decimals);
-        }       
+        }
 
         #endregion
 
@@ -1736,7 +1725,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -1930,48 +1919,54 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             if (!reader.IsStartElement("Units"))
                 reader.ReadToDescendant("Units");
 
-            _Units = (AreaUnit)Enum.Parse(typeof(AreaUnit), reader.ReadElementContentAsString(), true);
+            _Units = (AreaUnit) Enum.Parse(typeof(AreaUnit), reader.ReadElementContentAsString(), true);
             _Value = reader.ReadElementContentAsDouble();
         }
 
         #endregion
     }
 
-	/// <summary>Indicates the unit of measure for area measurements.</summary>
-	/// <remarks>
-	/// This enumeration is most frequently used by the Units property of the Area
-	/// structure to describe an area measurement.
-	/// </remarks>
-	/// <seealso cref="Area.Value">Value Property (Area Class)</seealso>
-	/// <seealso cref="Area.Units">Units Property (Area Class)</seealso>
-	/// <example>
-	///     This example uses the <strong>AreaUnit</strong> enumeration to create a new
-	///     <strong>Area</strong> object.
-	///     <code lang="VB" title="[New Example]">
-	/// Dim Area1 As New Area(1, AreaUnit.SquareKilometers)
-	///     </code>
-	/// 	<code lang="CS" title="[New Example]">
-	/// Area Area1 = new Area(1, AreaUnit.SquareKilometers);
-	///     </code>
-	/// </example>
-	public enum AreaUnit: int
-	{
-		/// <summary>Metric System. Kilometers (thousands of meters).</summary>
-		SquareKilometers,
-		/// <summary>Metric System. 1/1000th of a square kilometer.</summary>
-		SquareMeters,
-		/// <summary>Metric System. 1/100th of a square meter.</summary>
-		SquareCentimeters,
-		/// <summary>Imperial System. A statute mile, most often referred to just as "mile."</summary>
-		SquareStatuteMiles,
-		/// <summary>Nautical miles, also known as "sea miles".</summary>
-		SquareNauticalMiles,
-		/// <summary>Imperial System. Feet.</summary>
-		SquareFeet,
-		/// <summary>Imperial System. Inches.</summary>
-		SquareInches,
-		/// <summary>Imperial System. Inches.</summary>
-		Acres
-}
+    /// <summary>Indicates the unit of measure for area measurements.</summary>
+    /// <remarks>
+    /// This enumeration is most frequently used by the Units property of the Area
+    /// structure to describe an area measurement.
+    /// </remarks>
+    /// <seealso cref="Area.Value">Value Property (Area Class)</seealso>
+    /// <seealso cref="Area.Units">Units Property (Area Class)</seealso>
+    /// <example>
+    ///     This example uses the <strong>AreaUnit</strong> enumeration to create a new
+    ///     <strong>Area</strong> object.
+    ///     <code lang="VB" title="[New Example]">
+    /// Dim Area1 As New Area(1, AreaUnit.SquareKilometers)
+    ///     </code>
+    /// 	<code lang="CS" title="[New Example]">
+    /// Area Area1 = new Area(1, AreaUnit.SquareKilometers);
+    ///     </code>
+    /// </example>
+    public enum AreaUnit : int
+    {
+        /// <summary>Metric System. Kilometers (thousands of meters).</summary>
+        SquareKilometers,
 
+        /// <summary>Metric System. 1/1000th of a square kilometer.</summary>
+        SquareMeters,
+
+        /// <summary>Metric System. 1/100th of a square meter.</summary>
+        SquareCentimeters,
+
+        /// <summary>Imperial System. A statute mile, most often referred to just as "mile."</summary>
+        SquareStatuteMiles,
+
+        /// <summary>Nautical miles, also known as "sea miles".</summary>
+        SquareNauticalMiles,
+
+        /// <summary>Imperial System. Feet.</summary>
+        SquareFeet,
+
+        /// <summary>Imperial System. Inches.</summary>
+        SquareInches,
+
+        /// <summary>Imperial System. Inches.</summary>
+        Acres
+    }
 }

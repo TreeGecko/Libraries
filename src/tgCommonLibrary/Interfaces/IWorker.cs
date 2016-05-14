@@ -7,6 +7,6 @@ namespace TreeGecko.Library.Common.Interfaces
         void Start();
         void Stop();
 
-		event WorkCompleteHandler WorkComplete;
+        event WorkCompleteHandler WorkComplete;
     }
 }

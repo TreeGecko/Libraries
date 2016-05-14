@@ -4,9 +4,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using TreeGecko.Library.Common.Helpers;
 using TreeGecko.Library.Common.Interfaces;
-using TreeGecko.Library.Geospatial.Objects;
+using TreeGecko.Library.Common.Objects;
 
-namespace TreeGecko.Library.Common.Objects
+namespace TreeGecko.Library.Geospatial.Objects
 {
     public class GeoPoints : List<GeoPoint>, ITGSerializable
     {

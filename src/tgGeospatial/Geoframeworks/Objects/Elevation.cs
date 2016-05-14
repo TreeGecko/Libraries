@@ -9,44 +9,47 @@ using TreeGecko.Library.Geospatial.Geoframeworks.Interfaces;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>Represents a vertical angular measurement between -90° and 90°.</summary>
-	/// <remarks>
-	/// This class is used to indicate a vertical angle where 90° represents a point
-	/// directly overhead, 0° represents the horizon (striaght ahead), and -90° represents a
-	/// point straight down. This class is typically combined with an <strong>Elevation</strong>
-	/// object (which measures a horizontal angle) to form a three-dimensional direction to an
-	/// object in space, such as a GPS satellite.
-	/// </remarks>
-	/// <example>
-	/// These examples create new instances of <strong>Elevation</strong> objects.
-	/// </example>
-	/// <seealso cref="Angle">Angle Class</seealso>
-	/// <seealso cref="Azimuth">Azimuth Class</seealso>
-	/// <seealso cref="Latitude">Latitude Class</seealso>
-	/// <seealso cref="Longitude">Longitude Class</seealso>
-	/// <example>
-	///     These examples create new instances of Elevation objects. 
-	///     <code lang="VB" description="Create an angle of 90°">
-	/// Dim MyElevation As New Elevation(90)
-	///     </code>
-	/// 	<code lang="CS" description="Create an angle of 90°">
-	/// Elevation MyElevation = new Elevation(90);
-	///     </code>
-	/// 	<code lang="C++" description="Create an angle of 90°">
-	/// Elevation MyElevation = new Elevation(90);
-	///     </code>
-	/// 	<code lang="VB" description="Create an angle of 105°30'21.4">
-	/// Dim MyElevation1 As New Elevation(105, 30, 21.4)
-	///     </code>
-	/// 	<code lang="CS" description="Create an angle of 105°30'21.4">
-	/// Elevation MyElevation = new Elevation(105, 30, 21.4);
-	///     </code>
-	/// 	<code lang="C++" description="Create an angle of 105°30'21.4">
-	/// Elevation MyElevation = new Elevation(105, 30, 21.4);
-	///     </code>
-	/// </example>
-    [TypeConverter("GeoFramework.Design.ElevationConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a")]
-    public struct Elevation : IFormattable, IComparable<Elevation>, IEquatable<Elevation>, ICloneable<Elevation>, IXmlSerializable
+    /// <summary>Represents a vertical angular measurement between -90° and 90°.</summary>
+    /// <remarks>
+    /// This class is used to indicate a vertical angle where 90° represents a point
+    /// directly overhead, 0° represents the horizon (striaght ahead), and -90° represents a
+    /// point straight down. This class is typically combined with an <strong>Elevation</strong>
+    /// object (which measures a horizontal angle) to form a three-dimensional direction to an
+    /// object in space, such as a GPS satellite.
+    /// </remarks>
+    /// <example>
+    /// These examples create new instances of <strong>Elevation</strong> objects.
+    /// </example>
+    /// <seealso cref="Angle">Angle Class</seealso>
+    /// <seealso cref="Azimuth">Azimuth Class</seealso>
+    /// <seealso cref="Latitude">Latitude Class</seealso>
+    /// <seealso cref="Longitude">Longitude Class</seealso>
+    /// <example>
+    ///     These examples create new instances of Elevation objects. 
+    ///     <code lang="VB" description="Create an angle of 90°">
+    /// Dim MyElevation As New Elevation(90)
+    ///     </code>
+    /// 	<code lang="CS" description="Create an angle of 90°">
+    /// Elevation MyElevation = new Elevation(90);
+    ///     </code>
+    /// 	<code lang="C++" description="Create an angle of 90°">
+    /// Elevation MyElevation = new Elevation(90);
+    ///     </code>
+    /// 	<code lang="VB" description="Create an angle of 105°30'21.4">
+    /// Dim MyElevation1 As New Elevation(105, 30, 21.4)
+    ///     </code>
+    /// 	<code lang="CS" description="Create an angle of 105°30'21.4">
+    /// Elevation MyElevation = new Elevation(105, 30, 21.4);
+    ///     </code>
+    /// 	<code lang="C++" description="Create an angle of 105°30'21.4">
+    /// Elevation MyElevation = new Elevation(105, 30, 21.4);
+    ///     </code>
+    /// </example>
+    [TypeConverter(
+        "GeoFramework.Design.ElevationConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a"
+        )]
+    public struct Elevation : IFormattable, IComparable<Elevation>, IEquatable<Elevation>, ICloneable<Elevation>,
+        IXmlSerializable
     {
         private double m_DecimalDegrees;
 
@@ -59,76 +62,85 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region Fields
 
         /// <summary>Represents the minimum value of an angle in one turn of a circle.</summary>
-		/// <remarks>
-		/// This member is typically used for looping through the entire range of possible
-		/// angles. It is possible to create angular values below this value, such as -720°.
-		/// </remarks>
-		/// <example>
-		///     This example creates an angle representing the minimum allowed value. 
-		///     <code lang="VB">
-		/// Dim MyElevation As Elevation = Elevation.Minimum
-		///     </code>
-		/// 	<code lang="CS">
-		/// Elevation MyElevation = Elevation.Minimum;
-		///     </code>
-		/// 	<code lang="C++">
-		/// Elevation MyElevation = Elevation.Minimum;
-		///     </code>
-		/// </example>
-		/// <value>An Elevation with a value of -359.999999°.</value>
-		public static readonly Elevation Minimum = new Elevation(-90);
-		/// <summary>Represents an angle with no value.</summary>
-		/// <remarks>
-		/// This member is typically used to initialize an angle variable to zero. When an
-		/// angle has a value of zero, its <see cref="IsEmpty">IsEmpty</see> property returns
-		/// <strong>True</strong>.
-		/// </remarks>
-		/// <value>An Elevation containing a value of zero (0°).</value>
-		/// <seealso cref="IsEmpty">IsEmpty Property</seealso>
-		public static readonly Elevation Empty = new Elevation(0.0);
-		/// <summary>
-		/// Represents an angle with infinite value.
-		/// </summary>
-		/// <remarks>
-		/// In some cases, the result of an angular calculation may be infinity. This member
-		/// is used in such cases. The <see cref="DecimalDegrees">DecimalDegrees</see> property is
-		/// set to Double.PositiveInfinity.
-		/// </remarks>
-		public static readonly Elevation Infinity = new Elevation(double.PositiveInfinity);
+        /// <remarks>
+        /// This member is typically used for looping through the entire range of possible
+        /// angles. It is possible to create angular values below this value, such as -720°.
+        /// </remarks>
+        /// <example>
+        ///     This example creates an angle representing the minimum allowed value. 
+        ///     <code lang="VB">
+        /// Dim MyElevation As Elevation = Elevation.Minimum
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Elevation MyElevation = Elevation.Minimum;
+        ///     </code>
+        /// 	<code lang="C++">
+        /// Elevation MyElevation = Elevation.Minimum;
+        ///     </code>
+        /// </example>
+        /// <value>An Elevation with a value of -359.999999°.</value>
+        public static readonly Elevation Minimum = new Elevation(-90);
+
+        /// <summary>Represents an angle with no value.</summary>
+        /// <remarks>
+        /// This member is typically used to initialize an angle variable to zero. When an
+        /// angle has a value of zero, its <see cref="IsEmpty">IsEmpty</see> property returns
+        /// <strong>True</strong>.
+        /// </remarks>
+        /// <value>An Elevation containing a value of zero (0°).</value>
+        /// <seealso cref="IsEmpty">IsEmpty Property</seealso>
+        public static readonly Elevation Empty = new Elevation(0.0);
+
+        /// <summary>
+        /// Represents an angle with infinite value.
+        /// </summary>
+        /// <remarks>
+        /// In some cases, the result of an angular calculation may be infinity. This member
+        /// is used in such cases. The <see cref="DecimalDegrees">DecimalDegrees</see> property is
+        /// set to Double.PositiveInfinity.
+        /// </remarks>
+        public static readonly Elevation Infinity = new Elevation(double.PositiveInfinity);
+
         /// <summary>
         /// Represents an invalid or unspecified value.
         /// </summary>
         public static readonly Elevation Invalid = new Elevation(double.NaN);
-		/// <summary>Represents the maximum value of an angle in one turn of a circle.</summary>
-		/// <remarks>
-		/// This member is typically used for looping through the entire range of possible
-		/// angles, or to test the range of a value. It is possible to create angular values below
-		/// this value, such as 720°.
-		/// </remarks>
-		/// <example>
-		///     This example creates an angle representing the maximum allowed value of 359.9999°. 
-		///     <code lang="VB">
-		/// Dim MyElevation As Elevation = Elevation.Maximum
-		///     </code>
-		/// 	<code lang="CS">
-		/// Elevation MyElevation = Elevation.Maximum;
-		///     </code>
-		/// </example>
-		public static readonly Elevation Maximum = new Elevation(90.0);
-		/// <summary>Represents the point directly overhead.</summary>
-		/// <value>An <strong>Elevation</strong> object.</value>
-		public static readonly Elevation Zenith = new Elevation(90.0);
-		/// <value>An <strong>Elevation</strong> object.</value>
-		/// <summary>Represents a vertical direction halfway up from the horizon.</summary>
-		public static readonly Elevation HalfwayAboveHorizon = new Elevation(45.0);
-		/// <value>An <strong>Elevation</strong> object.</value>
-		/// <summary>Represents a vertical direction halfway below the horizon.</summary>
-		public static readonly Elevation HalfwayBelowHorizon = new Elevation(-45.0);
-		/// <value>An <strong>Elevation</strong> object.</value>
-		public static readonly Elevation Horizon = new Elevation(0.0);
-		/// <summary>Represents the point directly below one's feet.</summary>
-		/// <value>An <strong>Elevation</strong> object.</value>
-		public static readonly Elevation Nadir = new Elevation(-90.0);
+
+        /// <summary>Represents the maximum value of an angle in one turn of a circle.</summary>
+        /// <remarks>
+        /// This member is typically used for looping through the entire range of possible
+        /// angles, or to test the range of a value. It is possible to create angular values below
+        /// this value, such as 720°.
+        /// </remarks>
+        /// <example>
+        ///     This example creates an angle representing the maximum allowed value of 359.9999°. 
+        ///     <code lang="VB">
+        /// Dim MyElevation As Elevation = Elevation.Maximum
+        ///     </code>
+        /// 	<code lang="CS">
+        /// Elevation MyElevation = Elevation.Maximum;
+        ///     </code>
+        /// </example>
+        public static readonly Elevation Maximum = new Elevation(90.0);
+
+        /// <summary>Represents the point directly overhead.</summary>
+        /// <value>An <strong>Elevation</strong> object.</value>
+        public static readonly Elevation Zenith = new Elevation(90.0);
+
+        /// <value>An <strong>Elevation</strong> object.</value>
+        /// <summary>Represents a vertical direction halfway up from the horizon.</summary>
+        public static readonly Elevation HalfwayAboveHorizon = new Elevation(45.0);
+
+        /// <value>An <strong>Elevation</strong> object.</value>
+        /// <summary>Represents a vertical direction halfway below the horizon.</summary>
+        public static readonly Elevation HalfwayBelowHorizon = new Elevation(-45.0);
+
+        /// <value>An <strong>Elevation</strong> object.</value>
+        public static readonly Elevation Horizon = new Elevation(0.0);
+
+        /// <summary>Represents the point directly below one's feet.</summary>
+        /// <value>An <strong>Elevation</strong> object.</value>
+        public static readonly Elevation Nadir = new Elevation(-90.0);
 
         #endregion
 
@@ -221,7 +233,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <exception cref="FormatException" caption="FormatException">The specified text was not fully understood as an angular measurement.</exception>
         public Elevation(string value)
             : this(value, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
         /// <remarks>
         /// This constructor parses the specified string into an <strong>Elevation</strong>
@@ -287,7 +300,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                             return;
                         }
                         // Look at the number of digits, this might be HHHMMSS format.
-                        else if (Values[0].Length == 7 && Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
+                        else if (Values[0].Length == 7 &&
+                                 Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
                         {
                             m_DecimalDegrees = ToDecimalDegrees(
                                 int.Parse(Values[0].Substring(0, 3), culture),
@@ -295,7 +309,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                                 double.Parse(Values[0].Substring(5, 2), culture));
                             return;
                         }
-                        else if (Values[0].Length == 8 && Values[0][0] == '-' && Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
+                        else if (Values[0].Length == 8 && Values[0][0] == '-' &&
+                                 Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
                         {
                             m_DecimalDegrees = ToDecimalDegrees(
                                 int.Parse(Values[0].Substring(0, 4), culture),
@@ -322,7 +337,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                         return;
                     default: // Hours, minutes and seconds  (most likely)
                         // If this is a fractional value, remember that it is
-                        if (Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1 || Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1)
+                        if (Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1 ||
+                            Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1)
                         {
                             throw new ArgumentException(Properties.Resources.Angle_OnlyRightmostIsDecimal, "value");
                         }
@@ -385,10 +401,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public double DecimalDegrees
         {
-            get
-            {
-                return m_DecimalDegrees;
-            }
+            get { return m_DecimalDegrees; }
         }
 
         /// <summary>Returns the minutes and seconds as a single numeric value.</summary>
@@ -421,9 +434,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             get
             {
-                return Math.Round((Math.Abs(m_DecimalDegrees - Math.Truncate(m_DecimalDegrees)) * 60.0),
+                return Math.Round((Math.Abs(m_DecimalDegrees - Math.Truncate(m_DecimalDegrees))*60.0),
                     // Apparently we must round to two less places to preserve accuracy
-                        MaximumPrecisionDigits - 2);
+                    MaximumPrecisionDigits - 2);
             }
         }
 
@@ -454,10 +467,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public int Hours
         {
-            get
-            {
-                return (int)Math.Truncate(m_DecimalDegrees);
-            }
+            get { return (int) Math.Truncate(m_DecimalDegrees); }
         }
 
         /// <summary>Returns the integer minutes portion of an angular measurement.</summary>
@@ -489,8 +499,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             {
                 return Convert.ToInt32(
                     Math.Abs(Math.Truncate(Math.Round(
-                    // Calculations appear to support one less digit than the maximum allowed precision
-                                (m_DecimalDegrees - Hours) * 60.0, MaximumPrecisionDigits - 1))));
+                        // Calculations appear to support one less digit than the maximum allowed precision
+                        (m_DecimalDegrees - Hours)*60.0, MaximumPrecisionDigits - 1))));
             }
         }
 
@@ -523,9 +533,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             get
             {
                 return Math.Round(
-                                (Math.Abs(m_DecimalDegrees - Hours) * 60.0 - Minutes) * 60.0,
+                    (Math.Abs(m_DecimalDegrees - Hours)*60.0 - Minutes)*60.0,
                     // This property appears to support one less digit than the maximum allowed
-                                MaximumPrecisionDigits - 4);
+                    MaximumPrecisionDigits - 4);
             }
         }
 
@@ -537,19 +547,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="Empty">Empty Field</seealso>
         public bool IsEmpty
         {
-            get
-            {
-                return (m_DecimalDegrees == 0);
-            }
+            get { return (m_DecimalDegrees == 0); }
         }
 
         /// <summary>Indicates if the current instance represents an infinite value.</summary>
         public bool IsInfinity
         {
-            get
-            {
-                return double.IsInfinity(m_DecimalDegrees);
-            }
+            get { return double.IsInfinity(m_DecimalDegrees); }
         }
 
         /// <summary>
@@ -583,14 +587,14 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             // Calculate the number of times the degree value winds completely 
             // through a hemisphere
-            int HemisphereFlips = Convert.ToInt32(Math.Floor(m_DecimalDegrees / 180.0));
+            int HemisphereFlips = Convert.ToInt32(Math.Floor(m_DecimalDegrees/180.0));
 
             // If the value is in the southern hemisphere, apply another flip
             if (m_DecimalDegrees < 0)
                 HemisphereFlips++;
 
             // Calculate the new value
-            double NewValue = m_DecimalDegrees % 180;
+            double NewValue = m_DecimalDegrees%180;
 
             // if the value is > 90, return 180 - X
             if (NewValue > 90)
@@ -601,7 +605,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 NewValue = -180.0 - NewValue;
 
             // Account for flips around hemispheres by flipping the sign
-            if (HemisphereFlips % 2 != 0)
+            if (HemisphereFlips%2 != 0)
                 return new Elevation(-NewValue);
             else
                 return new Elevation(NewValue);
@@ -673,7 +677,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     // Yes.  Continue on
                     continue;
                 // Is the seconds value closer to the current or next interval?
-                if (NewSeconds < (value + NextInterval) * 0.5)
+                if (NewSeconds < (value + NextInterval)*0.5)
                     // Closer to the current interval, so adjust it
                     NewSeconds = value;
                 else
@@ -816,7 +820,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             // Convert objects to an Elevation as needed before comparison
             if (obj is Elevation || obj is double || obj is string || obj is int || obj is float)
-                return m_DecimalDegrees.Equals(((Elevation)obj).DecimalDegrees);
+                return m_DecimalDegrees.Equals(((Elevation) obj).DecimalDegrees);
 
             // Nothing else will work, so False
             return false;
@@ -867,7 +871,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region Static Methods
 
-
         /// <overloads>Converts a measurement to its equivalent value between -90 and 
         /// 90 degrees.</overloads>
         public static Elevation Normalize(double decimalDegrees)
@@ -904,8 +907,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    ? -Math.Round(-hours + minutes / 60.0 + seconds / 3600.0, MaximumPrecisionDigits)
             //    : Math.Round(hours + minutes / 60.0 + seconds / 3600.0, MaximumPrecisionDigits);
             return hours < 0
-                ? -(-hours + minutes / 60.0 + seconds / 3600.0)
-                : (hours + minutes / 60.0 + seconds / 3600.0);
+                ? -(-hours + minutes/60.0 + seconds/3600.0)
+                : (hours + minutes/60.0 + seconds/3600.0);
         }
 
         /// <summary>Converts arbitrary hour and decimal minutes into decimal degrees.</summary>
@@ -926,8 +929,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    ? -Math.Round(-hours + decimalMinutes / 60.0, MaximumPrecisionDigits)
             //    : Math.Round(hours + decimalMinutes / 60.0, MaximumPrecisionDigits);
             return hours < 0
-                ? -(-hours + decimalMinutes / 60.0)
-                : (hours + decimalMinutes / 60.0);
+                ? -(-hours + decimalMinutes/60.0)
+                : (hours + decimalMinutes/60.0);
         }
 
         /// <summary>Converts an hour value into decimal degrees.</summary>
@@ -961,7 +964,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </param>
         public static Elevation Random(Random generator)
         {
-            return new Elevation(generator.NextDouble() * 360.0);
+            return new Elevation(generator.NextDouble()*360.0);
         }
 
 
@@ -1118,22 +1121,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public static Elevation operator *(Elevation left, Elevation right)
         {
-            return new Elevation(left.DecimalDegrees * right.DecimalDegrees);
+            return new Elevation(left.DecimalDegrees*right.DecimalDegrees);
         }
 
         public static Elevation operator *(Elevation left, double right)
         {
-            return new Elevation(left.DecimalDegrees * right);
+            return new Elevation(left.DecimalDegrees*right);
         }
 
         public static Elevation operator /(Elevation left, Elevation right)
         {
-            return new Elevation(left.DecimalDegrees / right.DecimalDegrees);
+            return new Elevation(left.DecimalDegrees/right.DecimalDegrees);
         }
 
         public static Elevation operator /(Elevation left, double right)
         {
-            return new Elevation(left.DecimalDegrees / right);
+            return new Elevation(left.DecimalDegrees/right);
         }
 
         public static bool operator ==(Elevation left, Elevation right)
@@ -1336,12 +1339,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> to multiply with the current instance.</param>
         public Elevation Multiply(double value)
         {
-            return new Elevation(m_DecimalDegrees * value);
+            return new Elevation(m_DecimalDegrees*value);
         }
 
         public Elevation Multiply(Elevation value)
         {
-            return new Elevation(m_DecimalDegrees * value.DecimalDegrees);
+            return new Elevation(m_DecimalDegrees*value.DecimalDegrees);
         }
 
         /// <summary>Divides the current instance by the specified value.</summary>
@@ -1360,12 +1363,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> representing a denominator to divide by.</param>
         public Elevation Divide(double value)
         {
-            return new Elevation(m_DecimalDegrees / value);
+            return new Elevation(m_DecimalDegrees/value);
         }
 
         public Elevation Divide(Elevation value)
         {
-            return new Elevation(m_DecimalDegrees / value.DecimalDegrees);
+            return new Elevation(m_DecimalDegrees/value.DecimalDegrees);
         }
 
         /// <summary>Indicates if the current instance is smaller than the specified value.</summary>
@@ -1444,27 +1447,27 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #endregion
 
-		#region Conversions
+        #region Conversions
 
-		/// <summary>
-		/// Converts a measurement in Radians into an Elevation.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Elevation(Radian value)
-		{
+        /// <summary>
+        /// Converts a measurement in Radians into an Elevation.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Elevation(Radian value)
+        {
             return new Elevation(value.ToDegrees());
-		}
+        }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Elevation.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Elevation(double value)
-		{
-			return new Elevation(value);
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Elevation.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Elevation(double value)
+        {
+            return new Elevation(value);
+        }
 
         /// <summary>
         /// Converts a decimal degree measurement as a Double into an Elevation.
@@ -1476,35 +1479,35 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             return new Elevation(Convert.ToDouble(value));
         }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Elevation.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator double(Elevation value)
-		{
-			return value.DecimalDegrees;
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Elevation.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator double(Elevation value)
+        {
+            return value.DecimalDegrees;
+        }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Elevation.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator float(Elevation value)
-		{
-			return Convert.ToSingle(value.DecimalDegrees);
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Elevation.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator float(Elevation value)
+        {
+            return Convert.ToSingle(value.DecimalDegrees);
+        }
 
-		/// <summary>
-		/// Converts a measurement in degrees as an Integer into an Elevation.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Elevation(int value)
-		{
-			return new Elevation(value);
-		}
+        /// <summary>
+        /// Converts a measurement in degrees as an Integer into an Elevation.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Elevation(int value)
+        {
+            return new Elevation(value);
+        }
 
         public static explicit operator Elevation(Angle value)
         {
@@ -1526,28 +1529,28 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             return new Elevation(value.DecimalDegrees);
         }
 
-		/// <summary>
-		/// Converts a measurement in the form of a formatted String into an Elevation.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Elevation(string value)
-		{
-			return new Elevation(value, CultureInfo.CurrentCulture);
-		}
+        /// <summary>
+        /// Converts a measurement in the form of a formatted String into an Elevation.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Elevation(string value)
+        {
+            return new Elevation(value, CultureInfo.CurrentCulture);
+        }
 
-		/// <summary>
-		/// Converts an Elevation into a String.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		/// <remarks>This operator calls the ToString() method using the current culture.</remarks>
-		public static explicit operator string(Elevation value)
-		{
-			return value.ToString("g", CultureInfo.CurrentCulture);
-		}
+        /// <summary>
+        /// Converts an Elevation into a String.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <remarks>This operator calls the ToString() method using the current culture.</remarks>
+        public static explicit operator string(Elevation value)
+        {
+            return value.ToString("g", CultureInfo.CurrentCulture);
+        }
 
-		#endregion
+        #endregion
 
         #region ICloneable<Elevation> Members
 
@@ -1590,7 +1593,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;

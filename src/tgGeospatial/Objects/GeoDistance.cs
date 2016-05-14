@@ -1,7 +1,6 @@
-﻿using TreeGecko.Library.Common.Enums;
-using DistanceUnits = TreeGecko.Library.Geospatial.Enums.DistanceUnits;
+﻿using DistanceUnits = TreeGecko.Library.Geospatial.Enums.DistanceUnits;
 
-namespace TreeGecko.Library.Common.Objects
+namespace TreeGecko.Library.Geospatial.Objects
 {
     public class GeoDistance
     {
@@ -26,7 +25,7 @@ namespace TreeGecko.Library.Common.Objects
         /// 
         /// </summary>
         public DistanceUnits DistanceUnit { get; private set; }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -42,7 +41,7 @@ namespace TreeGecko.Library.Common.Objects
 
             if (!factor.Equals(0.0))
             {
-                return Meters / factor;
+                return Meters/factor;
             }
 
             return 0;
@@ -54,12 +53,11 @@ namespace TreeGecko.Library.Common.Objects
 
             if (!factor.Equals(0.0))
             {
-                return Meters / factor;
+                return Meters/factor;
             }
 
             return 0;
         }
-
 
 
         public void SetValue(DistanceUnits _distanceUnit, double _value)
@@ -111,15 +109,13 @@ namespace TreeGecko.Library.Common.Objects
         public static double GetMeters(DistanceUnits _distanceUnit, double _value)
         {
             double factor = GetFactor(_distanceUnit);
-            return _value * factor;
+            return _value*factor;
         }
 
         public override string ToString()
         {
             return string.Format("{0} meters", Meters)
-            ;
+                ;
         }
-
-
     }
 }

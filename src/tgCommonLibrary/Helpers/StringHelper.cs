@@ -25,13 +25,13 @@ namespace TreeGecko.Library.Common.Helpers
         {
             byte[] temp;
 
-            if (_value==null)
+            if (_value == null)
             {
                 temp = Encoding.UTF8.GetBytes("");
             }
             else
             {
-                temp = Encoding.UTF8.GetBytes(_value);                
+                temp = Encoding.UTF8.GetBytes(_value);
             }
 
             return Convert.ToBase64String(temp);
@@ -48,6 +48,5 @@ namespace TreeGecko.Library.Common.Helpers
 
             return Encoding.UTF8.GetString(temp);
         }
-
     }
 }

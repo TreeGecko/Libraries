@@ -1,6 +1,4 @@
-﻿using TreeGecko.Library.Common.Enums;
-using TreeGecko.Library.Common.Objects;
-using TreeGecko.Library.Geospatial.Geoframeworks;
+﻿using TreeGecko.Library.Common.Objects;
 using TreeGecko.Library.Geospatial.Geoframeworks.Objects;
 using TreeGecko.Library.Geospatial.Objects;
 using DistanceUnits = TreeGecko.Library.Geospatial.Enums.DistanceUnits;
@@ -38,8 +36,8 @@ namespace TreeGecko.Library.Geospatial.Helpers
         /// <returns></returns>
         public static GeoPoint Average(GeoPoint _start, GeoPoint _newPosition)
         {
-            double x = (_start.X + _newPosition.X) / 2;
-            double y = (_start.Y + _newPosition.Y) / 2;
+            double x = (_start.X + _newPosition.X)/2;
+            double y = (_start.Y + _newPosition.Y)/2;
 
             GeoPoint pos = new GeoPoint(x, y);
 
@@ -114,26 +112,26 @@ namespace TreeGecko.Library.Geospatial.Helpers
             return returnValue;
         }
 
-		/// <summary>
-		/// Gets the bearing.
-		/// </summary>
-		/// <returns>
-		/// The bearing.
-		/// </returns>
-		/// <param name='_pointFrom'>
-		/// Point from.
-		/// </param>
-		/// <param name='_pointTo'>
-		/// Point to.
-		/// </param>
-		public static double GetBearing(GeoPoint _pointFrom, GeoPoint _pointTo)
-		{
-			Position pFrom = new Position(new Longitude(_pointFrom.X), new Latitude(_pointFrom.Y));
+        /// <summary>
+        /// Gets the bearing.
+        /// </summary>
+        /// <returns>
+        /// The bearing.
+        /// </returns>
+        /// <param name='_pointFrom'>
+        /// Point from.
+        /// </param>
+        /// <param name='_pointTo'>
+        /// Point to.
+        /// </param>
+        public static double GetBearing(GeoPoint _pointFrom, GeoPoint _pointTo)
+        {
+            Position pFrom = new Position(new Longitude(_pointFrom.X), new Latitude(_pointFrom.Y));
             Position pTo = new Position(new Longitude(_pointTo.X), new Latitude(_pointTo.Y));
 
-			Azimuth bearing = pFrom.BearingTo(pTo);
+            Azimuth bearing = pFrom.BearingTo(pTo);
 
-			return bearing.DecimalDegrees;
-		}
+            return bearing.DecimalDegrees;
+        }
     }
 }

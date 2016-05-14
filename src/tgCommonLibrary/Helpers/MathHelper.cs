@@ -3,30 +3,30 @@ using System.Collections.Generic;
 
 namespace TreeGecko.Library.Common.Helpers
 {
-
     public class MathHelper
     {
         public static double ToRadians(double _degrees)
         {
             //180 degress per pi
-            return (_degrees * Math.PI) / 180;
+            return (_degrees*Math.PI)/180;
         }
 
         public static double ToDegrees(double _radians)
         {
             //180 degress per pi
-            return (_radians * 180) / Math.PI;
+            return (_radians*180)/Math.PI;
         }
+
         public static Decimal ToRadians(Decimal _degrees)
         {
             //180 degress per pi
-            return (_degrees * Convert.ToDecimal(Math.PI)) / 180;
+            return (_degrees*Convert.ToDecimal(Math.PI))/180;
         }
 
         public static Decimal ToDegrees(Decimal _radians)
         {
             //180 degress per pi
-            return (_radians * 180) / Convert.ToDecimal(Math.PI);
+            return (_radians*180)/Convert.ToDecimal(Math.PI);
         }
 
         public static double GetSum(List<double> _values)
@@ -47,7 +47,7 @@ namespace TreeGecko.Library.Common.Helpers
 
             if (_values.Count > 0)
             {
-                return sum / _values.Count;
+                return sum/_values.Count;
             }
             return 0;
         }
@@ -58,7 +58,7 @@ namespace TreeGecko.Library.Common.Helpers
 
             foreach (double d in _values)
             {
-                results.Add(d * d);
+                results.Add(d*d);
             }
 
             return results;
@@ -66,10 +66,10 @@ namespace TreeGecko.Library.Common.Helpers
 
         public static double GetStandardDeviation(List<double> _values)
         {
-            return Math.Sqrt(GetVariance(_values));           
+            return Math.Sqrt(GetVariance(_values));
         }
 
-        public static List<double> FilterValues(List<double> _values, 
+        public static List<double> FilterValues(List<double> _values,
             double _mean, double _allowedDeviation)
         {
             List<double> result = new List<double>();
@@ -91,9 +91,9 @@ namespace TreeGecko.Library.Common.Helpers
         {
             double n = _values.Count;
 
-            double v1 = n * GetSum(GetSquares(_values));
+            double v1 = n*GetSum(GetSquares(_values));
             double v2 = Math.Pow(GetSum(_values), 2);
-            return (1 / (n * (n - 1))) * (v1 - v2);            
+            return (1/(n*(n - 1)))*(v1 - v2);
         }
 
         public static double GetMin(List<double> _values)
@@ -125,7 +125,5 @@ namespace TreeGecko.Library.Common.Helpers
 
             return max;
         }
-
-
     }
 }

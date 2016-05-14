@@ -106,7 +106,5 @@ namespace TreeGecko.Library.Net.Managers
         }
 
         #endregion
-
-
     }
 }

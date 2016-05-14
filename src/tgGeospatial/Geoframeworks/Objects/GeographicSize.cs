@@ -4,14 +4,16 @@ using System.Globalization;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-	/// <summary>
-	/// Represents a two-dimensional rectangular area.
-	/// </summary>
-	/// <remarks>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
-	///     immutable (it's properties can only be set via constructors).</para>
+    /// <summary>
+    /// Represents a two-dimensional rectangular area.
+    /// </summary>
+    /// <remarks>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
+    ///     immutable (it's properties can only be set via constructors).</para>
     /// </remarks>
-    [TypeConverter("TreeGecko.Library.GeoFramework.Design.GeographicSizeConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a")]
+    [TypeConverter(
+        "TreeGecko.Library.GeoFramework.Design.GeographicSizeConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a"
+        )]
     public struct GeographicSize : IFormattable, IEquatable<GeographicSize>
     {
         private readonly Distance m_Width;
@@ -21,10 +23,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         /// <summary>Represents a size with no value.</summary>
         public static readonly GeographicSize Empty = new GeographicSize(Distance.Empty, Distance.Empty);
-		/// <summary>Represents a size with no value.</summary>
+
+        /// <summary>Represents a size with no value.</summary>
         public static readonly GeographicSize Minimum = new GeographicSize(Distance.Minimum, Distance.Minimum);
-		/// <summary>Represents the largest possible size on Earth's surface.</summary>
-		public static readonly GeographicSize Maximum = new GeographicSize(Distance.Maximum, Distance.Maximum);
+
+        /// <summary>Represents the largest possible size on Earth's surface.</summary>
+        public static readonly GeographicSize Maximum = new GeographicSize(Distance.Maximum, Distance.Maximum);
+
         /// <summary>Represents an invalid geographic size.</summary>
         public static readonly GeographicSize Invalid = new GeographicSize(Distance.Invalid, Distance.Invalid);
 
@@ -45,7 +50,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value"></param>
         public GeographicSize(string value)
             : this(value, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
         /// <summary>
         /// Creates a new instance from the specified string in the specified culture.
@@ -68,7 +74,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     m_Height = Distance.Parse(Values[1], culture);
                     break;
                 default:
-                    throw new ArgumentException("A GeographicSize could not be created from a string because the string was not in an identifiable format.  The format should be \"(w,h)\" where \"w\" represents a width in degrees, and \"h\" represents a height in degrees.  The values should be separated by a comma (or other character depending on the current culture).");
+                    throw new ArgumentException(
+                        "A GeographicSize could not be created from a string because the string was not in an identifiable format.  The format should be \"(w,h)\" where \"w\" represents a width in degrees, and \"h\" represents a height in degrees.  The values should be separated by a comma (or other character depending on the current culture).");
             }
         }
 
@@ -77,12 +84,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region Public Properties
 
         /// <summary>Returns the ratio of the size's width to its height.</summary>
-		public float AspectRatio
-		{
-			get
-			{
-                return Convert.ToSingle(m_Width.ToMeters().Value / m_Height.ToMeters().Value);
-			}
+        public float AspectRatio
+        {
+            get { return Convert.ToSingle(m_Width.ToMeters().Value/m_Height.ToMeters().Value); }
         }
 
         /// <summary>
@@ -90,109 +94,97 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public Distance Width
         {
-            get
-            {
-                return m_Width;
-            }
+            get { return m_Width; }
         }
 
         /// <summary>Returns the top-to-bottom size.</summary>
         public Distance Height
         {
-            get
-            {
-                return m_Height;
-            }
+            get { return m_Height; }
         }
 
         /// <summary>Indicates if the size has zero values.</summary>
         public bool IsEmpty
         {
-            get
-            {
-                return (m_Width.IsEmpty && m_Height.IsEmpty);
-            }
+            get { return (m_Width.IsEmpty && m_Height.IsEmpty); }
         }
 
         /// <summary>Returns whether the current instance has invalid values.</summary>
         public bool IsInvalid
         {
-            get
-            {
-                return m_Width.IsInvalid && m_Height.IsInvalid;
-            }
+            get { return m_Width.IsInvalid && m_Height.IsInvalid; }
         }
 
         #endregion
 
         #region Public Methods
 
-		public GeographicSize ToAspectRatio(Distance width, Distance height)
-		{
-			// Calculate the aspect ratio
-			return ToAspectRatio(Convert.ToSingle(width.Divide(height).Value));
-		}
+        public GeographicSize ToAspectRatio(Distance width, Distance height)
+        {
+            // Calculate the aspect ratio
+            return ToAspectRatio(Convert.ToSingle(width.Divide(height).Value));
+        }
 
-		public GeographicSize ToAspectRatio(float aspectRatio)
-		{
-			float CurrentAspect = AspectRatio;
-			
+        public GeographicSize ToAspectRatio(float aspectRatio)
+        {
+            float CurrentAspect = AspectRatio;
+
             // Do the values already match?
-			if(CurrentAspect == aspectRatio) 
+            if (CurrentAspect == aspectRatio)
                 return this;
 
             // Convert to meters first
             Distance WidthMeters = m_Width.ToMeters();
             Distance HeightMeters = m_Height.ToMeters();
-            
+
             // Is the new ratio higher or lower?
-			if(aspectRatio > CurrentAspect)
-			{
-				// Inflate the GeographicRectDistance to the new height minus the current height				
-				return new GeographicSize(
-                    WidthMeters.Add(HeightMeters.Multiply(aspectRatio).Subtract(WidthMeters)), 
+            if (aspectRatio > CurrentAspect)
+            {
+                // Inflate the GeographicRectDistance to the new height minus the current height				
+                return new GeographicSize(
+                    WidthMeters.Add(HeightMeters.Multiply(aspectRatio).Subtract(WidthMeters)),
                     HeightMeters);
-			}
-			else
-			{
-				// Inflate the GeographicRectDistance to the new height minus the current height
-				return new GeographicSize(
-                    WidthMeters, 
+            }
+            else
+            {
+                // Inflate the GeographicRectDistance to the new height minus the current height
+                return new GeographicSize(
+                    WidthMeters,
                     HeightMeters.Add(WidthMeters.Divide(aspectRatio).Subtract(HeightMeters)));
-			}
+            }
         }
 
-		/// <summary>Adds the specified size to the current instance.</summary>
-		public GeographicSize Add(GeographicSize size)
-		{
-			return new GeographicSize(m_Width.Add(size.Width), m_Height.Add(size.Height));
-		}
+        /// <summary>Adds the specified size to the current instance.</summary>
+        public GeographicSize Add(GeographicSize size)
+        {
+            return new GeographicSize(m_Width.Add(size.Width), m_Height.Add(size.Height));
+        }
 
-		/// <summary>Subtracts the specified size from the current instance.</summary>
-		public GeographicSize Subtract(GeographicSize size)
-		{
-			return new GeographicSize(m_Width.Subtract(size.Width), m_Height.Subtract(size.Height));
-		}
-	
+        /// <summary>Subtracts the specified size from the current instance.</summary>
+        public GeographicSize Subtract(GeographicSize size)
+        {
+            return new GeographicSize(m_Width.Subtract(size.Width), m_Height.Subtract(size.Height));
+        }
+
         /// <summary>
         /// Multiplies the width and height by the specified size.
         /// </summary>
         /// <param name="size">A <strong>GeographicSize</strong> specifying how to much to multiply the width and height.</param>
         /// <returns>A <strong>GeographicSize</strong> representing the product of the current instance with the specified size.<returns>
-		public GeographicSize Multiply(GeographicSize size)
-		{
+        public GeographicSize Multiply(GeographicSize size)
+        {
             return new GeographicSize(m_Width.Multiply(size.Width), m_Height.Multiply(size.Height));
-		}
+        }
 
         /// <summary>
         /// Divides the width and height by the specified size.
         /// </summary>
         /// <param name="size"></param>
         /// <returns></returns>
-		public GeographicSize Divide(GeographicSize size)
-		{
+        public GeographicSize Divide(GeographicSize size)
+        {
             return new GeographicSize(m_Width.Divide(size.Width), m_Height.Divide(size.Height));
-		}
+        }
 
         public string ToString(string format)
         {
@@ -206,7 +198,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public override bool Equals(object obj)
         {
             if (obj is GeographicSize)
-                return Equals((GeographicSize)obj);
+                return Equals((GeographicSize) obj);
             return false;
         }
 
@@ -233,10 +225,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         /// <param name="value">A <strong>String</strong> describing a width, followed by a height.</param>
         /// <returns>A <strong>GeographicSize</strong> whose Width and Height properties match the specified string.</returns>
-		public static GeographicSize Parse(string value)
-		{
-			return Parse(value, CultureInfo.CurrentCulture);
-		}
+        public static GeographicSize Parse(string value)
+        {
+            return Parse(value, CultureInfo.CurrentCulture);
+        }
 
         /// <summary>
         /// Returns a GeographicSize whose value matches the specified string.
@@ -244,8 +236,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>String</strong> describing a width, followed by a height.</param>
         /// <returns>A <strong>GeographicSize</strong> whose Width and Height properties match the specified string.</returns>
         /// <param name="culture">A <strong>CultureInfo</strong> object describing how to parse the specified string.</param>
-		public static GeographicSize Parse(string value, CultureInfo culture)
-		{
+        public static GeographicSize Parse(string value, CultureInfo culture)
+        {
             return new GeographicSize(value, culture);
         }
 
@@ -253,14 +245,14 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region Conversions
 
-		public static explicit operator GeographicSize(string value)
-		{
-			return new GeographicSize(value, CultureInfo.CurrentCulture);
-		}
+        public static explicit operator GeographicSize(string value)
+        {
+            return new GeographicSize(value, CultureInfo.CurrentCulture);
+        }
 
-		public static explicit operator string(GeographicSize value)
-		{
-			return value.ToString();
+        public static explicit operator string(GeographicSize value)
+        {
+            return value.ToString();
         }
 
         #endregion
@@ -275,7 +267,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool Equals(GeographicSize value)
         {
             return Width.Equals(value.Width)
-                && Height.Equals(value.Height);
+                   && Height.Equals(value.Height);
         }
 
         /// <summary>
@@ -287,7 +279,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public bool Equals(GeographicSize value, int decimals)
         {
             return m_Width.Equals(value.Width, decimals)
-                && m_Height.Equals(value.Height, decimals);
+                   && m_Height.Equals(value.Height, decimals);
         }
 
         #endregion
@@ -295,8 +287,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region IFormattable Members
 
         public string ToString(string format, IFormatProvider formatProvider)
-		{
-            CultureInfo culture = (CultureInfo)formatProvider;
+        {
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -305,8 +297,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 format = "G";
 
             return m_Width.ToString(format, culture)
-                + culture.TextInfo.ListSeparator + " "
-                + m_Height.ToString(format, culture);
+                   + culture.TextInfo.ListSeparator + " "
+                   + m_Height.ToString(format, culture);
         }
 
         #endregion

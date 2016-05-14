@@ -5,8 +5,8 @@ using TreeGecko.Library.Common.Interfaces;
 
 namespace TreeGecko.Library.Common.Objects
 {
-    public class TGListWrapper<T> : ITGSerializable 
-        where T:ITGSerializable, new()
+    public class TGListWrapper<T> : ITGSerializable
+        where T : ITGSerializable, new()
     {
         /// <summary>
         /// 

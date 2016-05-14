@@ -9,48 +9,50 @@ using TreeGecko.Library.Geospatial.Geoframeworks.Interfaces;
 
 namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 {
-
-	/// <summary>Represents a line of constant distance north or south of the equator.</summary>
-	/// <remarks>
-	/// 	<para>Latitudes measure a distance North or South away from the equator. Latitudes
-	///     can range from -90° (at the South pole) to 90° (the North pole), with 0°
-	///     representing the equator. Latitudes are commonly paired with Longitudes to mark a
-	///     specific location on Earth's surface.</para>
-	/// 	<para>Latitudes are expressed in either of two major formats. The first format uses
-	///     only positive numbers and the letter "N" or "S" to indicate the hemisphere (i.e.
-	///     "45°N" or "60°S"). The second format allows negative numbers an omits the single
-	///     character (i.e. 45 or -60).</para>
-	/// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
-	///     immutable (its properties can only be changed via constructors).</para>
-	/// </remarks>
-	/// <seealso cref="Longitude">Longitude Class</seealso>
-	/// <seealso cref="Position">Position Class</seealso>
+    /// <summary>Represents a line of constant distance north or south of the equator.</summary>
+    /// <remarks>
+    /// 	<para>Latitudes measure a distance North or South away from the equator. Latitudes
+    ///     can range from -90° (at the South pole) to 90° (the North pole), with 0°
+    ///     representing the equator. Latitudes are commonly paired with Longitudes to mark a
+    ///     specific location on Earth's surface.</para>
+    /// 	<para>Latitudes are expressed in either of two major formats. The first format uses
+    ///     only positive numbers and the letter "N" or "S" to indicate the hemisphere (i.e.
+    ///     "45°N" or "60°S"). The second format allows negative numbers an omits the single
+    ///     character (i.e. 45 or -60).</para>
+    /// 	<para>Instances of this class are guaranteed to be thread-safe because the class is
+    ///     immutable (its properties can only be changed via constructors).</para>
+    /// </remarks>
+    /// <seealso cref="Longitude">Longitude Class</seealso>
+    /// <seealso cref="Position">Position Class</seealso>
     /// <seealso cref="Azimuth">Azimuth Class</seealso>
-	/// <seealso cref="Elevation">Elevation Class</seealso>
-	/// <seealso cref="Angle">Angle Class</seealso>
-	/// <example>
-	///     These examples create new instances of Latitude objects. 
-	///     <code lang="VB" description="Create an angle of 90°">
-	/// Dim MyLatitude As New Latitude(90)
-	///     </code>
-	/// 	<code lang="CS" description="Create an angle of 90°">
-	/// Latitude MyLatitude = new Latitude(90);
-	///     </code>
-	/// 	<code lang="C++" description="Create an angle of 90°">
-	/// Latitude MyLatitude = new Latitude(90);
-	///     </code>
-	/// 	<code lang="VB" description="Create an angle of 105°30'21.4">
-	/// Dim MyLatitude1 As New Latitude(105, 30, 21.4)
-	///     </code>
-	/// 	<code lang="CS" description="Create an angle of 105°30'21.4">
-	/// Latitude MyLatitude = new Latitude(105, 30, 21.4);
-	///     </code>
-	/// 	<code lang="C++" description="Create an angle of 105°30'21.4">
-	/// Latitude MyLatitude = new Latitude(105, 30, 21.4);
-	///     </code>
-	/// </example>
-    [TypeConverter("GeoFramework.Design.LatitudeConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a")]
-    public struct Latitude : IFormattable, IComparable<Latitude>, IEquatable<Latitude>, ICloneable<Latitude>, IXmlSerializable
+    /// <seealso cref="Elevation">Elevation Class</seealso>
+    /// <seealso cref="Angle">Angle Class</seealso>
+    /// <example>
+    ///     These examples create new instances of Latitude objects. 
+    ///     <code lang="VB" description="Create an angle of 90°">
+    /// Dim MyLatitude As New Latitude(90)
+    ///     </code>
+    /// 	<code lang="CS" description="Create an angle of 90°">
+    /// Latitude MyLatitude = new Latitude(90);
+    ///     </code>
+    /// 	<code lang="C++" description="Create an angle of 90°">
+    /// Latitude MyLatitude = new Latitude(90);
+    ///     </code>
+    /// 	<code lang="VB" description="Create an angle of 105°30'21.4">
+    /// Dim MyLatitude1 As New Latitude(105, 30, 21.4)
+    ///     </code>
+    /// 	<code lang="CS" description="Create an angle of 105°30'21.4">
+    /// Latitude MyLatitude = new Latitude(105, 30, 21.4);
+    ///     </code>
+    /// 	<code lang="C++" description="Create an angle of 105°30'21.4">
+    /// Latitude MyLatitude = new Latitude(105, 30, 21.4);
+    ///     </code>
+    /// </example>
+    [TypeConverter(
+        "GeoFramework.Design.LatitudeConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a"
+        )]
+    public struct Latitude : IFormattable, IComparable<Latitude>, IEquatable<Latitude>, ICloneable<Latitude>,
+        IXmlSerializable
     {
         private double _DecimalDegrees;
 
@@ -62,28 +64,36 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         #region Fields
 
-		/// <summary>Represents a latitude of 0°.</summary>
-		public static readonly Latitude Equator = new Latitude(0.0);
-		/// <summary>Represents a latitude of 0°.</summary>
-		public static readonly Latitude Empty = new Latitude(0.0);
-		/// <summary>Represents a latitude of 23.5°S.</summary>
-		public static readonly Latitude TropicOfCapricorn = new Latitude(-23.5);
-		/// <summary>Represents a latitude of 23.5°N.</summary>
-		public static readonly Latitude TropicOfCancer = new Latitude(23.5);
-		/// <summary>Represents a latitude of 90°N.</summary>
-		public static readonly Latitude NorthPole = new Latitude(90.0);
-		/// <summary>Represents a latitude of 90°S.</summary>
-		public static readonly Latitude SouthPole = new Latitude(-90.0);
-		/// <summary>Represents the minimum possible latitude -90°.</summary>
-		public static readonly Latitude Minimum = new Latitude(-90.0);
-		/// <summary>Represents the maximum possible latitude of 90°.</summary>
-		public static readonly Latitude Maximum = new Latitude(90.0);
+        /// <summary>Represents a latitude of 0°.</summary>
+        public static readonly Latitude Equator = new Latitude(0.0);
+
+        /// <summary>Represents a latitude of 0°.</summary>
+        public static readonly Latitude Empty = new Latitude(0.0);
+
+        /// <summary>Represents a latitude of 23.5°S.</summary>
+        public static readonly Latitude TropicOfCapricorn = new Latitude(-23.5);
+
+        /// <summary>Represents a latitude of 23.5°N.</summary>
+        public static readonly Latitude TropicOfCancer = new Latitude(23.5);
+
+        /// <summary>Represents a latitude of 90°N.</summary>
+        public static readonly Latitude NorthPole = new Latitude(90.0);
+
+        /// <summary>Represents a latitude of 90°S.</summary>
+        public static readonly Latitude SouthPole = new Latitude(-90.0);
+
+        /// <summary>Represents the minimum possible latitude -90°.</summary>
+        public static readonly Latitude Minimum = new Latitude(-90.0);
+
+        /// <summary>Represents the maximum possible latitude of 90°.</summary>
+        public static readonly Latitude Maximum = new Latitude(90.0);
+
         /// <summary>
         /// Represents an invalid or unspecified value.
         /// </summary>
         public static readonly Latitude Invalid = new Latitude(double.NaN);
 
-		#endregion
+        #endregion
 
         #region  Constructors
 
@@ -232,9 +242,10 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public Latitude(string value)
             : this(value, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
-        
+
         public Latitude(string value, CultureInfo culture)
         {
             // Is the value null or empty?
@@ -306,16 +317,18 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                             return;
                         }
                         // Look at the number of digits, this might be HHHMMSS format.
-                        else if (Values[0].Length == 7 && Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
+                        else if (Values[0].Length == 7 &&
+                                 Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
                         {
                             _DecimalDegrees = ToDecimalDegrees(
-                                                int.Parse(Values[0].Substring(0, 3), culture),
-                                                int.Parse(Values[0].Substring(3, 2), culture),
-                                                double.Parse(Values[0].Substring(5, 2), culture),
-                                                hemisphere);
+                                int.Parse(Values[0].Substring(0, 3), culture),
+                                int.Parse(Values[0].Substring(3, 2), culture),
+                                double.Parse(Values[0].Substring(5, 2), culture),
+                                hemisphere);
                             break;
                         }
-                        else if (Values[0].Length == 8 && Values[0][0] == '-' && Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
+                        else if (Values[0].Length == 8 && Values[0][0] == '-' &&
+                                 Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) == -1)
                         {
                             _DecimalDegrees = ToDecimalDegrees(
                                 int.Parse(Values[0].Substring(0, 4), culture),
@@ -340,23 +353,24 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
                         // Set decimal degrees
                         _DecimalDegrees = ToDecimalDegrees(
-                                                int.Parse(Values[0], culture),
-                                                float.Parse(Values[1], culture),
-                                                hemisphere);
+                            int.Parse(Values[0], culture),
+                            float.Parse(Values[1], culture),
+                            hemisphere);
                         break;
                     default: // Hours, minutes and seconds  (most likely)
                         // If this is a fractional value, remember that it is
-                        if (Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1 || Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1)
+                        if (Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1 ||
+                            Values[0].IndexOf(culture.NumberFormat.NumberDecimalSeparator) != -1)
                         {
                             throw new ArgumentException(Properties.Resources.Latitude_OnlyRightmostIsDecimal, "value");
                         }
 
                         // Set decimal degrees
                         _DecimalDegrees = ToDecimalDegrees(
-                                                int.Parse(Values[0], culture),
-                                                int.Parse(Values[1], culture),
-                                                double.Parse(Values[2], culture),
-                                                hemisphere);
+                            int.Parse(Values[0], culture),
+                            int.Parse(Values[1], culture),
+                            double.Parse(Values[2], culture),
+                            hemisphere);
                         break;
                 }
             }
@@ -410,10 +424,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public double DecimalDegrees
         {
-            get
-            {
-                return _DecimalDegrees;
-            }
+            get { return _DecimalDegrees; }
         }
 
         /// <summary>Returns the minutes and seconds as a single numeric value.</summary>
@@ -446,9 +457,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             get
             {
-                return Math.Round((Math.Abs(_DecimalDegrees - Math.Truncate(_DecimalDegrees)) * 60.0),
+                return Math.Round((Math.Abs(_DecimalDegrees - Math.Truncate(_DecimalDegrees))*60.0),
                     // Apparently we must round to two less places to preserve accuracy
-                        MaximumPrecisionDigits - 2);
+                    MaximumPrecisionDigits - 2);
             }
         }
 
@@ -479,10 +490,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public int Hours
         {
-            get
-            {
-                return (int)Math.Truncate(_DecimalDegrees);
-            }
+            get { return (int) Math.Truncate(_DecimalDegrees); }
         }
 
         /// <summary>Returns the integer minutes portion of an angular measurement.</summary>
@@ -512,10 +520,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             get
             {
-
-                return (int)(Math.Abs(Math.Truncate(Math.Round(
+                return (int) (Math.Abs(Math.Truncate(Math.Round(
                     // Calculations appear to support one less digit than the maximum allowed precision
-                                (_DecimalDegrees - Hours) * 60.0, MaximumPrecisionDigits - 1))));
+                    (_DecimalDegrees - Hours)*60.0, MaximumPrecisionDigits - 1))));
             }
         }
 
@@ -547,9 +554,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             get
             {
                 return Math.Round(
-                                (Math.Abs(_DecimalDegrees - Hours) * 60.0 - Minutes) * 60.0,
+                    (Math.Abs(_DecimalDegrees - Hours)*60.0 - Minutes)*60.0,
                     // This property appears to support one less digit than the maximum allowed
-                                MaximumPrecisionDigits - 4);
+                    MaximumPrecisionDigits - 4);
             }
         }
 
@@ -571,19 +578,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <seealso cref="Empty">Empty Field</seealso>
         public bool IsEmpty
         {
-            get
-            {
-                return _DecimalDegrees == 0;
-            }
+            get { return _DecimalDegrees == 0; }
         }
 
         /// <summary>Indicates if the current instance represents an infinite value.</summary>
         public bool IsInfinity
         {
-            get
-            {
-                return double.IsInfinity(_DecimalDegrees);
-            }
+            get { return double.IsInfinity(_DecimalDegrees); }
         }
 
         /// <summary>
@@ -688,7 +689,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public Radian ToRadians()
         {
-            return new Radian(_DecimalDegrees * Radian.RadiansPerDegree);
+            return new Radian(_DecimalDegrees*Radian.RadiansPerDegree);
         }
 
         /// <summary>
@@ -705,14 +706,14 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
             // Calculate the number of times the degree value winds completely 
             // through a hemisphere
-            int HemisphereFlips = Convert.ToInt32(Math.Floor(_DecimalDegrees / 180.0));
+            int HemisphereFlips = Convert.ToInt32(Math.Floor(_DecimalDegrees/180.0));
 
             // If the value is in the southern hemisphere, apply another flip
             if (_DecimalDegrees < 0)
                 HemisphereFlips++;
 
             // Calculate the new value
-            double NewValue = _DecimalDegrees % 180;
+            double NewValue = _DecimalDegrees%180;
 
             // if the value is > 90, return 180 - X
             if (NewValue > 90)
@@ -723,7 +724,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 NewValue = -180.0 - NewValue;
 
             // Account for flips around hemispheres by flipping the sign
-            if (HemisphereFlips % 2 != 0)
+            if (HemisphereFlips%2 != 0)
                 return new Latitude(-NewValue);
             else
                 return new Latitude(NewValue);
@@ -849,7 +850,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     // Yes.  Continue on
                     continue;
                 // Is the seconds value closer to the current or next interval?
-                if (NewSeconds < (value + NextInterval) * 0.5)
+                if (NewSeconds < (value + NextInterval)*0.5)
                     // Closer to the current interval, so adjust it
                     NewSeconds = value;
                 else
@@ -882,7 +883,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         {
             // Only other Latitude objects are allowed
             if (obj is Latitude)
-                return Equals((Latitude)obj);
+                return Equals((Latitude) obj);
             return false;
         }
 
@@ -946,7 +947,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Returns a random latitude based on the specified seed.</summary>
         public static Latitude Random(Random generator)
         {
-            return new Latitude((generator.NextDouble() * 180.0) - 90.0);
+            return new Latitude((generator.NextDouble()*180.0) - 90.0);
         }
 
         /// <summary>
@@ -969,7 +970,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <returns></returns>
         public static Latitude Random(Random generator, Latitude northernmost, Latitude southernmost)
         {
-            return new Latitude(((northernmost.DecimalDegrees - southernmost.DecimalDegrees) * generator.NextDouble())
+            return new Latitude(((northernmost.DecimalDegrees - southernmost.DecimalDegrees)*generator.NextDouble())
                                 + southernmost.DecimalDegrees);
         }
 
@@ -1002,8 +1003,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    ? -Math.Round(-hours + minutes / 60.0 + seconds / 3600.0, MaximumPrecisionDigits)
             //    : Math.Round(hours + minutes / 60.0 + seconds / 3600.0, MaximumPrecisionDigits);
             return hours < 0
-                ? -(-hours + minutes / 60.0 + seconds / 3600.0)
-                : (hours + minutes / 60.0 + seconds / 3600.0);
+                ? -(-hours + minutes/60.0 + seconds/3600.0)
+                : (hours + minutes/60.0 + seconds/3600.0);
         }
 
         /// <summary>Converts arbitrary hour and decimal minutes into decimal degrees.</summary>
@@ -1024,8 +1025,8 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             //    ? -Math.Round(-hours + decimalMinutes / 60.0, MaximumPrecisionDigits)
             //    : Math.Round(hours + decimalMinutes / 60.0, MaximumPrecisionDigits);
             return hours < 0
-                ? -(-hours + decimalMinutes / 60.0)
-                : (hours + decimalMinutes / 60.0);
+                ? -(-hours + decimalMinutes/60.0)
+                : (hours + decimalMinutes/60.0);
         }
 
         /// <summary>Converts an hour value into decimal degrees.</summary>
@@ -1064,9 +1065,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (hemisphere)
             {
                 case LatitudeHemisphere.South:
-                    return -Math.Abs(hours) - decimalMinutes / 60.0;
+                    return -Math.Abs(hours) - decimalMinutes/60.0;
                 case LatitudeHemisphere.North:
-                    return Math.Abs(hours) + decimalMinutes / 60.0;
+                    return Math.Abs(hours) + decimalMinutes/60.0;
                 default:
                     return ToDecimalDegrees(hours, decimalMinutes);
             }
@@ -1100,7 +1101,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                 default:
                     return decimalDegrees;
             }
-
         }
 
         /// <summary>Converts arbitrary hour, minute and seconds into decimal degrees.</summary>
@@ -1130,9 +1130,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             switch (hemisphere)
             {
                 case LatitudeHemisphere.South:
-                    return -Math.Abs(hours) - minutes / 60.0 - seconds / 3600.0;
+                    return -Math.Abs(hours) - minutes/60.0 - seconds/3600.0;
                 case LatitudeHemisphere.North:
-                    return Math.Abs(hours) + minutes / 60.0 + seconds / 3600.0;
+                    return Math.Abs(hours) + minutes/60.0 + seconds/3600.0;
                 default:
                     return ToDecimalDegrees(hours, minutes, seconds);
             }
@@ -1293,22 +1293,22 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public static Latitude operator *(Latitude left, Latitude right)
         {
-            return new Latitude(left.DecimalDegrees * right.DecimalDegrees);
+            return new Latitude(left.DecimalDegrees*right.DecimalDegrees);
         }
 
         public static Latitude operator *(Latitude left, double right)
         {
-            return new Latitude(left.DecimalDegrees * right);
+            return new Latitude(left.DecimalDegrees*right);
         }
 
         public static Latitude operator /(Latitude left, Latitude right)
         {
-            return new Latitude(left.DecimalDegrees / right.DecimalDegrees);
+            return new Latitude(left.DecimalDegrees/right.DecimalDegrees);
         }
 
         public static Latitude operator /(Latitude left, double right)
         {
-            return new Latitude(left.DecimalDegrees / right);
+            return new Latitude(left.DecimalDegrees/right);
         }
 
         public static bool operator ==(Latitude left, Latitude right)
@@ -1511,12 +1511,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> to multiply with the current instance.</param>
         public Latitude Multiply(double value)
         {
-            return new Latitude(_DecimalDegrees * value);
+            return new Latitude(_DecimalDegrees*value);
         }
 
         public Latitude Multiply(Latitude value)
         {
-            return new Latitude(_DecimalDegrees * value.DecimalDegrees);
+            return new Latitude(_DecimalDegrees*value.DecimalDegrees);
         }
 
         /// <summary>Divides the current instance by the specified value.</summary>
@@ -1535,12 +1535,12 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <param name="value">A <strong>Double</strong> representing a denominator to divide by.</param>
         public Latitude Divide(double value)
         {
-            return new Latitude(_DecimalDegrees / value);
+            return new Latitude(_DecimalDegrees/value);
         }
 
         public Latitude Divide(Latitude value)
         {
-            return new Latitude(_DecimalDegrees / value.DecimalDegrees);
+            return new Latitude(_DecimalDegrees/value.DecimalDegrees);
         }
 
         /// <summary>Indicates if the current instance is smaller than the specified value.</summary>
@@ -1622,24 +1622,24 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region Conversions
 
         /// <summary>
-		/// Converts a measurement in Radians into an Latitude.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Latitude(Radian value)
-		{
+        /// Converts a measurement in Radians into an Latitude.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Latitude(Radian value)
+        {
             return new Latitude(value.ToDegrees());
         }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Latitude.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Latitude(double value)
-		{
-			return new Latitude(value);
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Latitude.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Latitude(double value)
+        {
+            return new Latitude(value);
+        }
 
         /// <summary>
         /// Converts a decimal degree measurement as a Double into an Latitude.
@@ -1651,35 +1651,35 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             return new Latitude(Convert.ToDouble(value));
         }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Latitude.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator double(Latitude value)
-		{
-			return value.DecimalDegrees;
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Latitude.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator double(Latitude value)
+        {
+            return value.DecimalDegrees;
+        }
 
-		/// <summary>
-		/// Converts a decimal degree measurement as a Double into an Latitude.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator float(Latitude value)
-		{
-			return Convert.ToSingle(value.DecimalDegrees);
-		}
+        /// <summary>
+        /// Converts a decimal degree measurement as a Double into an Latitude.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator float(Latitude value)
+        {
+            return Convert.ToSingle(value.DecimalDegrees);
+        }
 
-		/// <summary>
-		/// Converts a measurement in degrees as an Integer into an Latitude.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Latitude(int value)
-		{
-			return new Latitude(value);
-		}
+        /// <summary>
+        /// Converts a measurement in degrees as an Integer into an Latitude.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Latitude(int value)
+        {
+            return new Latitude(value);
+        }
 
         public static explicit operator Latitude(Angle value)
         {
@@ -1701,28 +1701,28 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             return new Latitude(value.DecimalDegrees);
         }
 
-		/// <summary>
-		/// Converts a measurement in the form of a formatted String into an Latitude.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static explicit operator Latitude(string value)
-		{
-			return new Latitude(value, CultureInfo.CurrentCulture);
-		}
+        /// <summary>
+        /// Converts a measurement in the form of a formatted String into an Latitude.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static explicit operator Latitude(string value)
+        {
+            return new Latitude(value, CultureInfo.CurrentCulture);
+        }
 
-		/// <summary>
-		/// Converts an Latitude into a String.
-		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		/// <remarks>This operator calls the ToString() method using the current culture.</remarks>
-		public static explicit operator string(Latitude value)
-		{
-			return value.ToString("g", CultureInfo.CurrentCulture);
-		}
+        /// <summary>
+        /// Converts an Latitude into a String.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <remarks>This operator calls the ToString() method using the current culture.</remarks>
+        public static explicit operator string(Latitude value)
+        {
+            return value.ToString("g", CultureInfo.CurrentCulture);
+        }
 
-		#endregion
+        #endregion
 
         #region ICloneable<Latitude> Members
 
@@ -1736,7 +1736,6 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #endregion
 
         #region IEquatable<Latitude> Members
-
 
         /// <summary>
         /// Compares the current instance to another instance using the specified
@@ -1800,13 +1799,13 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         #region IComparable<Latitude> Members
 
         public int CompareTo(Latitude obj)
-		{
+        {
             return _DecimalDegrees.CompareTo(obj.DecimalDegrees);
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region IFormattable Members
+        #region IFormattable Members
 
         /// <summary>Outputs the angle as a string using the specified format.</summary>
         /// <returns>A <strong>String</strong> in the specified format.</returns>
@@ -1834,7 +1833,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </example>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            CultureInfo culture = (CultureInfo)formatProvider;
+            CultureInfo culture = (CultureInfo) formatProvider;
 
             if (culture == null)
                 culture = CultureInfo.CurrentCulture;
@@ -1896,7 +1895,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
                     else
                     {
                         if (format.IndexOf("I") > -1)
-                            format = format.Replace(SubFormat, Math.Abs((long)Hours).ToString(NewFormat, culture));
+                            format = format.Replace(SubFormat, Math.Abs((long) Hours).ToString(NewFormat, culture));
                         else
                             format = format.Replace(SubFormat, Hours.ToString(NewFormat, culture));
                     }
@@ -1984,10 +1983,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             }
         }
 
-		#endregion
+        #endregion
 
         #region IXmlSerializable Members
-
 
         XmlSchema IXmlSerializable.GetSchema()
         {
@@ -2029,10 +2027,11 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
     {
         /// <summary>Missing latitude information.</summary>
         None = 0,
+
         /// <summary>The latitude is north of the equator.</summary>
         North = 1,
+
         /// <summary>The latitude is south of the equator.</summary>
         South = 2
     }
 }
-

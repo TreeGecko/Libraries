@@ -37,7 +37,9 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
     ///     time a value is parsed from a <strong>String</strong> or output as a String using
     ///     the <strong>ToString</strong> method.</para>
     /// </remarks>
-    [TypeConverter("GeoFramework.Design.PercentConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a")]
+    [TypeConverter(
+        "GeoFramework.Design.PercentConverter, GeoFramework.Design, Culture=neutral, Version=2.0.0.0, PublicKeyToken=d77afaeb30e3236a"
+        )]
     public struct Percent : IFormattable, IComparable<Percent>, IEquatable<Percent>
     {
         private readonly float _Value;
@@ -50,18 +52,21 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <strong>0.0</strong>.
         /// </value>
         public static readonly Percent Zero = new Percent(0.0f);
+
         /// <summary>Represents a value of one hundred percent.</summary>
         /// <value>
         /// A <strong>Percentage</strong> value, meaning <strong>100%</strong> or
         /// <strong>1.0</strong>.
         /// </value>
         public static readonly Percent OneHundredPercent = new Percent(1.0f);
+
         /// <summary>Represents a percentage of fifty percent.</summary>
         /// <value>
         /// A <strong>Percentage</strong> value, representing <strong>50%</strong> or
         /// <strong>0.5</strong>.
         /// </value>
         public static readonly Percent FiftyPercent = new Percent(0.5f);
+
         public static readonly Percent TenPercent = new Percent(0.1f);
         public static readonly Percent TwentyPercent = new Percent(0.2f);
         public static readonly Percent ThirtyPercent = new Percent(0.3f);
@@ -70,6 +75,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         public static readonly Percent SeventyPercent = new Percent(0.7f);
         public static readonly Percent EightyPercent = new Percent(0.8f);
         public static readonly Percent NinetyPercent = new Percent(0.9f);
+
         /// <summary>Represents a value of twenty-five percent.</summary>
         /// <value>
         /// A <strong>Percentage</strong> value, representing <strong>25%</strong> or
@@ -92,18 +98,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
 
         public Percent(string value)
             : this(value, CultureInfo.CurrentCulture)
-        { }
+        {
+        }
 
         public Percent(string value, CultureInfo culture)
         {
             // Replace the "%" percent sign cuz .Net formating does EVERYTHING else a 
             // number string could have in it but not a freekun % sign.
-            value = value.Trim().Replace(culture.NumberFormat.PercentSymbol, string.Empty); 
+            value = value.Trim().Replace(culture.NumberFormat.PercentSymbol, string.Empty);
 
             /* Parse the value as a float, then divide by 100.  In other words,
              * "15%" will become 0.15f
              */
-            _Value = float.Parse(value, NumberStyles.Any, culture.NumberFormat) * 0.01f;
+            _Value = float.Parse(value, NumberStyles.Any, culture.NumberFormat)*0.01f;
         }
 
         #endregion
@@ -119,10 +126,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <strong>Value</strong> of <strong>1.0</strong>.</remarks>
         public float Value
         {
-            get
-            {
-                return _Value;
-            }
+            get { return _Value; }
         }
 
         /// <summary>
@@ -130,10 +134,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// </summary>
         public bool IsEmpty
         {
-            get
-            {
-                return _Value.Equals(0);
-            }
+            get { return _Value.Equals(0); }
         }
 
         #endregion
@@ -143,19 +144,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Returns the percentage of the specified value.</summary>
         public double PercentageOf(double value)
         {
-            return value * _Value;
+            return value*_Value;
         }
 
         /// <summary>Returns the percentage of the specified value.</summary>
         public float PercentageOf(float value)
         {
-            return value * _Value;
+            return value*_Value;
         }
 
         /// <summary>Returns the percentage of the specified value.</summary>
         public float PercentageOf(int value)
         {
-            return value * _Value;
+            return value*_Value;
         }
 
         #endregion
@@ -169,7 +170,7 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
             if (!(obj is Percent))
                 return false;
 
-            return ((Percent)obj).Value.Equals(_Value);
+            return ((Percent) obj).Value.Equals(_Value);
         }
 
         public override int GetHashCode()
@@ -228,19 +229,19 @@ namespace TreeGecko.Library.Geospatial.Geoframeworks.Objects
         /// <summary>Returns the percentage of the specified value.</summary>
         public Percent Multiply(double value)
         {
-            return new Percent(Convert.ToSingle(_Value * value));
+            return new Percent(Convert.ToSingle(_Value*value));
         }
 
         /// <summary>Returns the percentage of the specified value.</summary>
         public Percent Multiply(float value)
         {
-            return new Percent(_Value * value);
+            return new Percent(_Value*value);
         }
 
         /// <summary>Returns the percentage of the specified value.</summary>
         public Percent Multiply(int value)
         {
-            return new Percent(_Value * value);
+            return new Percent(_Value*value);
         }
 
         #endregion
