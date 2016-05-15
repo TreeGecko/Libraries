@@ -78,6 +78,7 @@
     <Compile Include="Common\Helpers\DictionaryMockObject.cs" />
     <Compile Include="Common\Helpers\DirectoryHelperTests.cs" />
     <Compile Include="Common\Helpers\GuidHelperTests.cs" />
+    <Compile Include="Common\Helpers\JsonHelperTests.cs" />
     <Compile Include="Common\Objects\AbstractTGObjectTests.cs" />
     <Compile Include="Common\Objects\TGSerializedObjectTests.cs" />
     <Compile Include="Common\Security\CryptoStringTests.cs" />
