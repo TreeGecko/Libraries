@@ -24,5 +24,12 @@ namespace tgTests.Common.Helpers
             bool result = GuidHelper.IsValidGuidString(temp);
             Assert.IsFalse(result);
         }
+
+        [Test]
+        public void TestThree()
+        {
+            bool result = GuidHelper.IsValidGuidString(null);
+            Assert.IsFalse(result);
+        }
     }
 }
