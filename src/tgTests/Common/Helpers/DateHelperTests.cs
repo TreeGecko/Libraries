@@ -35,25 +35,73 @@ namespace tgTests.Common.Helpers
         [Test]
         public void ParseDateTimeNow()
         {
-            DateTime outputDateTime = DateHelper.ParseDateTimeString("now");
+            DateTime? outputDateTime = DateHelper.ParseDate("now");
         }
 
         [Test]
         public void ParseDateTimeToday()
         {
-            DateTime outputDateTime = DateHelper.ParseDateTimeString("today");
+            DateTime? outputDateTime = DateHelper.ParseDate("today");
         }
 
         [Test]
         public void ParseDateTimeYesterday()
         {
-            DateTime outputDateTime = DateHelper.ParseDateTimeString("yesterday");
+            DateTime? outputDateTime = DateHelper.ParseDate("yesterday");
         }
 
         [Test]
         public void ParseDateTimeTomorrow()
         {
-            DateTime outputDateTime = DateHelper.ParseDateTimeString("tomorrow");
+            DateTime? outputDateTime = DateHelper.ParseDate("tomorrow");
+        }
+
+        [Test]
+        public void ParseDateTimeNowMinus()
+        {
+            DateTime? outputDateTime = DateHelper.ParseDate("now-1");
+        }
+
+        [Test]
+        public void ParseDateTimeTodayMinus()
+        {
+            DateTime? outputDateTime = DateHelper.ParseDate("today-2");
+        }
+
+        [Test]
+        public void ParseDateTimeYesterdayMinus()
+        {
+            DateTime? outputDateTime = DateHelper.ParseDate("yesterday-2");
+        }
+
+        [Test]
+        public void ParseDateTimeTomorrowMinus()
+        {
+            DateTime? outputDateTime = DateHelper.ParseDate("tomorrow-2");
+        }
+
+        [Test]
+        public void ParseDateTimeNowPlus()
+        {
+            DateTime? outputDateTime = DateHelper.ParseDate("now+1");
+        }
+
+        [Test]
+        public void ParseDateTimeTodayPlus()
+        {
+            DateTime? outputDateTime = DateHelper.ParseDate("today+2");
+        }
+
+        [Test]
+        public void ParseDateTimeYesterdayPlus()
+        {
+            DateTime? outputDateTime = DateHelper.ParseDate("yesterday+2");
+        }
+
+        [Test]
+        public void ParseDateTimeTomorrowPlus()
+        {
+            DateTime? outputDateTime = DateHelper.ParseDate("tomorrow+2");
         }
 
         [Test]

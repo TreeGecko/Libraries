@@ -64,6 +64,10 @@ namespace TreeGecko.Library.Common.Helpers
                             actionValue = 0;
                         }
                     }
+                    else
+                    {
+                        prefix = temp;
+                    }
 
                     switch (prefix)
                     {
