@@ -63,7 +63,17 @@ namespace TreeGecko.Library.Common.Helpers
             FileCopy(_srcdir, _destdir, _recursive, null);
         }
 
-        public static void FileCopy(string _srcdir, string _destdir, bool _recursive,
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_srcdir"></param>
+        /// <param name="_destdir"></param>
+        /// <param name="_recursive"></param>
+        /// <param name="_ignoreExtension"></param>
+        public static void FileCopy(
+            string _srcdir, 
+            string _destdir, 
+            bool _recursive,
             string[] _ignoreExtension)
         {
             DirectoryInfo dir;
