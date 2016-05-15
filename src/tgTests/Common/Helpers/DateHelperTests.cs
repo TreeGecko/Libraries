@@ -24,11 +24,36 @@ namespace tgTests.Common.Helpers
             try
             {
                 DateTime outputDateTime = DateHelper.ParseDateTimeString(null);
+                Assert.Fail("Should have had an exception");
             }
             catch (Exception ex)
             {
                 Assert.IsInstanceOf<ArgumentNullException>(ex);
             }
+        }
+
+        [Test]
+        public void ParseDateTimeNow()
+        {
+            DateTime outputDateTime = DateHelper.ParseDateTimeString("now");
+        }
+
+        [Test]
+        public void ParseDateTimeToday()
+        {
+            DateTime outputDateTime = DateHelper.ParseDateTimeString("today");
+        }
+
+        [Test]
+        public void ParseDateTimeYesterday()
+        {
+            DateTime outputDateTime = DateHelper.ParseDateTimeString("yesterday");
+        }
+
+        [Test]
+        public void ParseDateTimeTomorrow()
+        {
+            DateTime outputDateTime = DateHelper.ParseDateTimeString("tomorrow");
         }
 
         [Test]
