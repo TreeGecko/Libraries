@@ -1,9 +1,10 @@
 ﻿using System;
+using TreeGecko.Library.Common.Interfaces;
 using TreeGecko.Library.Common.Objects;
 
 namespace tgTests.Mongo.Daos
 {
-    public class MockObject : AbstractTGObject
+    public class MockObject : AbstractTGObject, INamedObject
     {
         public Guid MockObjectGuid { get; set; }
         public string Name { get; set; }
