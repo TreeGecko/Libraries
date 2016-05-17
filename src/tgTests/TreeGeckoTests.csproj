@@ -84,6 +84,7 @@
     <Compile Include="Common\Security\CryptoStringTests.cs" />
     <Compile Include="Common\Security\MD5HashTests.cs" />
     <Compile Include="Geospatial\Helpers\ConversionHelperTests.cs" />
+    <Compile Include="Geospatial\Objects\GeoPointTests.cs" />
     <Compile Include="Mongo\Daos\AbstractMongoDAOTests.cs" />
     <Compile Include="Mongo\Daos\MockCoreManager.cs" />
     <Compile Include="Mongo\Daos\MockMongoDAO.cs" />
@@ -122,7 +123,6 @@
   <ItemGroup>
     <Folder Include="AWS\" />
     <Folder Include="Common\Managers\" />
-    <Folder Include="Geospatial\Objects\" />
     <Folder Include="Loggly\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
