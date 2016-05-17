@@ -94,5 +94,36 @@ namespace tgTests.Geospatial.Objects
             Assert.AreEqual(gp.Y, gp2.Y);
         }
 
+        [Test]
+        public void ParseGeoJsonText2()
+        {
+            GeoPoint gp = GeoPoint.ParseGeoJson(null);
+
+            Assert.IsNull(gp);
+        }
+
+        [Test]
+        public void ParseGeoJsonText3()
+        {
+            GeoPoint gp = GeoPoint.ParseGeoJson("blah blah blah");
+
+            Assert.IsNull(gp);
+        }
+
+        [Test]
+        public void ParseGeoJsonText4()
+        {
+            GeoPoint gp = new GeoPoint(-104, 39);
+
+            string text = gp.ToGeoJson();
+            Assert.IsNotNull(text);
+
+            GeoPoint gp2 = new GeoPoint();
+            gp2.FromGeoJson(text);
+
+            Assert.IsNotNull(gp2);
+            Assert.AreEqual(gp.X, gp2.X);
+            Assert.AreEqual(gp.Y, gp2.Y);
+        }
     }
 }
