@@ -9,9 +9,9 @@ Tree Gecko C# Libraries
 
 The libraries are broken down into the following
 
-*Common
-*Geospatial
-*MongoDb
-*Net
-*AWS
-*Loggly
+* Common
+* Geospatial
+* MongoDb
+* Net
+* AWS
+* Loggly
