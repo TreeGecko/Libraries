@@ -154,7 +154,9 @@ namespace TreeGecko.Library.Mongo.DAOs
             return objRet;
         }
 
-        public List<T> GetByQuery(Guid _objectParentIdentifier, string[] _objectVersionIdentifiers)
+        public List<T> GetByQuery(
+            Guid _objectParentIdentifier, 
+            string[] _objectVersionIdentifiers)
         {
             List<T> objRet = new List<T>();
 
@@ -174,7 +176,9 @@ namespace TreeGecko.Library.Mongo.DAOs
             return objRet;
         }
 
-        public List<T> GetByQuery(Guid _objectParentIdentifier, Guid _objectDeviceIdentifier)
+        public List<T> GetByQuery(
+            Guid _objectParentIdentifier, 
+            Guid _objectDeviceIdentifier)
         {
             List<T> objRet = new List<T>();
             var query = new QueryDocument
@@ -191,7 +195,9 @@ namespace TreeGecko.Library.Mongo.DAOs
             return objRet;
         }
 
-        public List<T> GetByQuery(Guid _objectParentIdentifier, Guid _objectDeviceIdentifier,
+        public List<T> GetByQuery(
+            Guid _objectParentIdentifier, 
+            Guid _objectDeviceIdentifier,
             string[] _objectVersionIdentifiers)
         {
             List<T> objRet = new List<T>();
@@ -627,6 +633,22 @@ namespace TreeGecko.Library.Mongo.DAOs
             IMongoQuery query = GetQuery(_columnName, _value);
 
             return GetOneItem<U>(query);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="_columnName"></param>
+        /// <param name="_value"></param>
+        /// <param name="_sortColumn"></param>
+        /// <returns></returns>
+        public U GetOneItem<U>(string _columnName, string _value, string _sortColumn) where U : AbstractTGObject, new()
+        {
+            IMongoQuery query = GetQuery(_columnName, _value);
+            MongoCursor cursor = MongoCollection.Find(query).SetSortOrder(SortBy.Ascending(_sortColumn));
+
+            return GetOneItem<U>(cursor);
         }
 
         /// <summary>
