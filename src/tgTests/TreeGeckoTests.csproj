@@ -107,6 +107,10 @@
       <Project>{17be4975-0a99-490e-aa0a-99f6d38f6b8d}</Project>
       <Name>tgGeospatial</Name>
     </ProjectReference>
+    <ProjectReference Include="..\tgLoggly\tgLoggly.csproj">
+      <Project>{9f2b0f0c-b007-420d-b6e3-920a8756d47f}</Project>
+      <Name>tgLoggly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\tgMongo\tgMongo.csproj">
       <Project>{30c94612-2107-49fd-bea7-9789af896b01}</Project>
       <Name>tgMongo</Name>
